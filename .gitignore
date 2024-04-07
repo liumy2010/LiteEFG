@@ -1,0 +1,20 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+!LICENSE
+
+### Above combination will ignore all files without extension ###
+
+*.o
+.vscode/settings.json
+*.so
+.nfs*
+build/*
+LiteEFG.egg-info/
+dist/
+*.pyc
