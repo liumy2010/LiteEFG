@@ -33,12 +33,12 @@ public:
     using Object = std::variant<int, double, GraphNode>;
 
     static int num_nodes;
-    static int graph_status;
+    static int graph_status, graph_color;
     static std::vector<GraphNode>* graph_nodes;
     static std::vector<std::pair<double, int> > constants_list;
 
     int idx, order; // idx: address of node, order: the order of node to be executed
-    int status; //status of a node
+    int status, color; //status and color of a node
     std::vector<int> dependency; // idx of the nodes that this node depends on
     std::shared_ptr<Operation> operation; // operation.Execute(dependency) --> *this
     
@@ -123,7 +123,7 @@ public:
 
     static GraphNode Maximum(const GraphNode& lhs, const Object& rhs);
     static GraphNode Minimum(const GraphNode& lhs, const Object& rhs);
-    static GraphNode Aggregate(const GraphNode& node, const std::string& aggregator_name, const std::string& object_name="children", const double& padding=0.0);
+    static GraphNode Aggregate(const GraphNode& node, const std::string& aggregator_name, const std::string& object_name="children", const std::string& player_name="self", const double& padding=0.0);
 
     static GraphNode Project(const GraphNode& node, const std::string& distance_name, const Object& gamma);
     static GraphNode Project(const GraphNode& node, const std::string& distance_name, const Object& gamma, const GraphNode& mu);

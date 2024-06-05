@@ -128,8 +128,13 @@ public:
 
 class AggregateOperation : public Operation {
 public:
+    enum InfoIndex {
+        padding = 0,
+        object = 1,
+        player = 2,
+    };
     std::shared_ptr<Operation> aggregator;
-    AggregateOperation(std::shared_ptr<Operation> aggregator_, const std::string& object="children", const double& padding=0.0, const bool& is_static_=false);
+    AggregateOperation(std::shared_ptr<Operation> aggregator_, const std::string& object="children", const std::string& player="self", const double& padding=0.0, const bool& is_static_=false);
     void Execute(Vector& result, const std::vector<Vector*>& inputs) override;
 }; 
 

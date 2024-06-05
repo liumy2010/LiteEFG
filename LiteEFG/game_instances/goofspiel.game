@@ -1,0 +1,1136 @@
+# Goofspiel instance with parameters:
+#
+# Opt {
+#     game_tree: true,
+#     num_players: 2,
+#     hand_size: 3,
+#     draw_from: None,
+#     sorted_deck: false,
+#     limited_information: false,
+#     discard_on_tie: false,
+#     output_file: "GameInstances/goofspiel.game",
+# }
+#
+node / chance actions reveal_i1r1=0.33333334 reveal_i2r2=0.33333334 reveal_i3r3=0.33333334
+node /C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i2r2=0.5 reveal_i3r3=0.5
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i2r2=0.5 reveal_i3r3=0.5
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=2 2=4
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=4 2=2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=4 2=2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=2 2=4
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i2r2=0.5 reveal_i3r3=0.5
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=5 2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=4 2=2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=5 2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=5 2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=4 2=2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=5 2=1
+node /C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i2r2=0.5 reveal_i3r3=0.5
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=4 2=2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=2 2=4
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=2 2=4
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=4 2=2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i2r2=0.5 reveal_i3r3=0.5
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i2r2=0.5 reveal_i3r3=0.5
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=4 2=2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=2 2=4
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=2 2=4
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=4 2=2
+node /C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i2r2=0.5 reveal_i3r3=0.5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=1 2=5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=2 2=4
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=1 2=5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=1 2=5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=2 2=4
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=1 2=5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i2r2=0.5 reveal_i3r3=0.5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=2 2=4
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=4 2=2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=4 2=2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=2 2=4
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i2r2=0.5 reveal_i3r3=0.5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i1r1=0.5 reveal_i3r3=0.5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=4 2=2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=2 2=4
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=2 2=4
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=4 2=2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i1r1=0.5 reveal_i3r3=0.5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=1 2=5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=1 2=5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i1r1=0.5 reveal_i3r3=0.5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=4 2=2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=4 2=2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=4 2=2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=4 2=2
+node /C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i1r1=0.5 reveal_i3r3=0.5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=5 2=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=5 2=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i1r1=0.5 reveal_i3r3=0.5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=4 2=2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=2 2=4
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=2 2=4
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=4 2=2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i1r1=0.5 reveal_i3r3=0.5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=1 2=5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=1 2=5
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i1r1=0.5 reveal_i3r3=0.5
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=2 2=4
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=2 2=4
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=2 2=4
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=2 2=4
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i1r1=0.5 reveal_i3r3=0.5
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=5 2=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=5 2=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i1r1=0.5 reveal_i3r3=0.5
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=4 2=2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=2 2=4
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i3r3=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=2 2=4
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=4 2=2
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3 player 1 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i1r1=0.5 reveal_i2r2=0.5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i1r1=0.5 reveal_i2r2=0.5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=2 2=4
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=2 2=4
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=1 2=5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=1 2=5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=2 2=4
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=2 2=4
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i1r1=0.5 reveal_i2r2=0.5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=2 2=4
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=2 2=4
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i1r1=0.5 reveal_i2r2=0.5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=4 2=2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=5 2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=4 2=2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=4 2=2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=5 2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=4 2=2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i1r1=0.5 reveal_i2r2=0.5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i1r1=0.5 reveal_i2r2=0.5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=2 2=4
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=1 2=5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=2 2=4
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2 leaf payoffs 1=2 2=4
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1 leaf payoffs 1=1 2=5
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=2 2=4
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i3r3 player 2 actions reveal_i1r1 reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1 chance actions reveal_i1r1=0.5 reveal_i2r2=0.5
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=4 2=2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=4 2=2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2 chance actions reveal_i1r1=0.5 reveal_i2r2=0.5
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=5 2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=4 2=2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=4 2=2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3 leaf payoffs 1=4 2=2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=4 2=2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i3r3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3 leaf payoffs 1=5 2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3 chance actions reveal_i1r1=0.5 reveal_i2r2=0.5
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i2r2=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2 player 1 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2 leaf payoffs 1=3 2=3
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1 leaf payoffs 1=2.5 2=3.5
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 player 2 actions reveal_i1r1 reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i2r2
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2 leaf payoffs 1=3.5 2=2.5
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2 chance actions reveal_i1r1=1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1 player 1 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 player 2 actions reveal_i1r1
+node /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1 leaf payoffs 1=3 2=3
+infoset pl2_0__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[None,_None]_}],_winners:_[]_} nodes /C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i2r2 /C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_1__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_2__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_3__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_4__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_5__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_6__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_7__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2
+infoset pl2_8__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2
+infoset pl2_9__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2
+infoset pl2_46__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_47__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_48__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 /C:reveal_i1r1/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_49__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_50__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_51__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_52__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2
+infoset pl2_53__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2
+infoset pl2_54__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i1r1/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2
+infoset pl2_91__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[None,_None]_}],_winners:_[]_} nodes /C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i2r2 /C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_92__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_93__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_94__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_95__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_96__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_97__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_98__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2
+infoset pl2_99__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2
+infoset pl2_100__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2
+infoset pl2_137__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2 /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_138__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2 /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_139__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2 /C:reveal_i2r2/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_140__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_141__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_142__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_143__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i3r3/P1:reveal_i2r2
+infoset pl2_144__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i3r3/P1:reveal_i2r2
+infoset pl2_145__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i2r2/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i3r3/P1:reveal_i2r2
+infoset pl2_182__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_}],_bids:_[PlayerMap_{_data:_[None,_None]_}],_winners:_[]_} nodes /C:reveal_i3r3/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i2r2 /C:reveal_i3r3/P1:reveal_i3r3
+infoset pl2_183__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2 /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_184__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2 /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_185__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2 /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_186__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_187__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_188__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i3r3
+infoset pl2_189__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i1r1/P1:reveal_i2r2
+infoset pl2_190__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i1r1/P1:reveal_i2r2
+infoset pl2_191__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_1,_rank:_1_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i1r1/P1:reveal_i2r2
+infoset pl2_228__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2 /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_229__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2 /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_230__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_1,_rank:_1_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2 /C:reveal_i3r3/P1:reveal_i1r1/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_231__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_232__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_233__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_2,_rank:_2_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[false,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i2r2/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i3r3
+infoset pl2_234__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_1,_rank:_1_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i1r1/C:reveal_i2r2/P1:reveal_i2r2
+infoset pl2_235__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_2,_rank:_2_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_false]_}]_} nodes /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i2r2/C:reveal_i2r2/P1:reveal_i2r2
+infoset pl2_236__PlayerInformation_{_player:_Player(2),_initial_hand:_[Card_{_id:_1,_rank:_1_},_Card_{_id:_2,_rank:_2_},_Card_{_id:_3,_rank:_3_}],_prize_cards:_[Card_{_id:_3,_rank:_3_},_Card_{_id:_2,_rank:_2_}],_bids:_[PlayerMap_{_data:_[Some(Card_{_id:_3,_rank:_3_}),_Some(Card_{_id:_3,_rank:_3_})]_},_PlayerMap_{_data:_[None,_None]_}],_winners:_[PlayerMap_{_data:_[true,_true]_}]_} nodes /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i1r1 /C:reveal_i3r3/P1:reveal_i3r3/P2:reveal_i3r3/C:reveal_i2r2/P1:reveal_i2r2

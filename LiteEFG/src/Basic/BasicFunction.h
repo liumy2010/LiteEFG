@@ -12,6 +12,8 @@ namespace Basic{
 extern std::default_random_engine generator;
 extern std::uniform_real_distribution<double> uniform;
 
+void SetSeed(const unsigned int& seed);
+
 double Sqr(const double& x);
 
 int Sample(const std::vector<double>& probs);

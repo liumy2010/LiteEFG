@@ -37,19 +37,23 @@ public:
     Graph graph;
     std::vector<std::vector<int>> children; // children infoset of each sequence (infoset, action)
     std::pair<int, int> parent; // parent sequence (infoset, action) of each infoset
+    std::vector<std::vector<std::pair<int, int>>> parent_sequences; // parent sequence of each player
     int first_visited, player, size;
     double reach;
 
     std::vector<std::vector<Vector> > results; // results of computation graph
     std::vector<int> aggregator_dependency; // dependency of the aggregator
-    std::vector<int> aggregator_type; // type of the aggregator
+    std::vector<bool> is_aggregator; // whether the node is an aggregator
 
     Infoset();
 
-    void UpdateGraph(const int& status=GraphNode::NodeStatus::backward_node);
+    static void ComputeParentInfoset(std::vector<Node*>& nodes, std::vector<std::vector<Infoset>>& infosets);
+    void UpdateGraph(const int& status, const std::vector<bool>& is_color_to_update);
     void InitializeAggregator();
-    void AggregateChildren(Infoset& child, const int& status=GraphNode::NodeStatus::backward_node);
-    void AggregateParent(Infoset& parent, const int& status=GraphNode::NodeStatus::backward_node);
+    void AggregateChildren(Infoset& child, const int& action, const int& status, 
+                                                              const std::vector<bool>& is_color_to_update);
+    void AggregateParent(Infoset& parent, const int& action, const int& status,
+                                                             const std::vector<bool>& is_color_to_update);
     void InitializeGraph(const double& reach);
 
     Vector GetResult(const int& opIndex);

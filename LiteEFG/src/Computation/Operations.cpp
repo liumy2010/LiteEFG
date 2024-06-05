@@ -247,21 +247,28 @@ void NegativeEntropyOperation::Execute(Vector& result, const std::vector<Vector*
     result[0] = sum;
 }
 
-AggregateOperation::AggregateOperation(std::shared_ptr<Operation> aggregator_, const std::string& object, const double& padding, const bool& is_static_) : Operation("Aggregate_"+object, is_static_), aggregator{aggregator_} {
+AggregateOperation::AggregateOperation(std::shared_ptr<Operation> aggregator_, const std::string& object, const std::string& player, const double& padding, const bool& is_static_)
+                                        : Operation("Aggregate", is_static_), aggregator{aggregator_} {
     if(aggregator -> name != "Max" && aggregator -> name != "Min" && aggregator -> name != "Sum") {
         throw std::invalid_argument("Aggregator must be Max, Min, Sum or Mean");
     }
     if(object != "children" && object != "parent") {
         throw std::invalid_argument("Aggregate object must be children or parent");
     }
-    info = Vector(1, padding);
+    if(player != "self" && player != "opponents") {
+        throw std::invalid_argument("Player to be aggregated must be self or opponents");
+    }
+    info = Vector(3, 0.0);
+    info[AggregateOperation::InfoIndex::padding] = padding;
+    info[AggregateOperation::InfoIndex::object] = (object == "children") ? 1.0 : -1.0;
+    info[AggregateOperation::InfoIndex::player] = (player == "self") ? 1.0 : -1.0;
 }
 
 void AggregateOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
     result.Resize(inputs.size()); // Since result will never be one of the inputs for aggregator operation, it is fine here
     for(int i = 0; i < inputs.size(); ++i) {
         if(inputs[i] -> size == 0){
-            result[i] = info[0];
+            result[i] = info[AggregateOperation::InfoIndex::padding];
             continue;
         }
         aggregator -> Execute(tmp, {inputs[i]}); // Maybe inefficient {}

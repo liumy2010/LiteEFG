@@ -8,17 +8,30 @@
 
 Environment::Environment(const int& player_num_, const std::string& traverse_)
     : player_num{player_num_} {
-    
+
     if(traverse_ == "Enumerate") traverse = Traverse::Enumerate;
     else if(traverse_ == "Outcome") traverse = Traverse::Outcome;
     else if(traverse_ == "External") traverse = Traverse::External;
     else throw std::invalid_argument("Only support [Enumerate, Outcome, External] for traverse");
 }
 
-void Environment::GetGraph(const Graph& graph_){
+void Environment::SetGraph(const Graph& graph_){
     graph = graph_;
     if(!Flags_Initialized){
         Initialize();
+    }
+
+    num_colors = graph.UpdateColorMapping(color_mapping);
+    is_color_to_update.resize(num_colors, true);
+
+    Is_Aggregate_Opponents = false;
+    for(int i=0; i<graph.graph_nodes.size(); i++){
+        if(graph.graph_nodes[i].operation!=NULL && graph.graph_nodes[i].operation->name == "Aggregate") {
+            if(graph.graph_nodes[i].operation->info[AggregateOperation::InfoIndex::player] < 0.0){
+                Is_Aggregate_Opponents = true;
+                break;
+            }
+        }
     }
 
     for(int player=1; player<=player_num;player++){
@@ -37,18 +50,18 @@ void Environment::GetGraph(const Graph& graph_){
     for(int player=1; player<=player_num;player++){
         for(int i=infosets[player].size()-1; i>0; i--){
             Infoset& infoset = infosets[player][i];
-            infoset.AggregateParent(infosets[player][infoset.parent.first], GraphNode::NodeStatus::static_backward_node);
-            infoset.UpdateGraph(GraphNode::NodeStatus::static_backward_node);
-            infosets[player][infoset.parent.first].AggregateChildren(infoset, GraphNode::NodeStatus::static_backward_node);
+            AggregateInformation(infoset, true, GraphNode::NodeStatus::static_backward_node);
+            infoset.UpdateGraph(GraphNode::NodeStatus::static_backward_node, is_color_to_update);
+            AggregateInformation(infoset, false, GraphNode::NodeStatus::static_backward_node);
         }
         for(int i=infosets[player].size()-1; i>0; i--){
             Infoset& infoset = infosets[player][i];
-            infosets[player][infoset.parent.first].AggregateChildren(infoset, GraphNode::NodeStatus::static_forward_node);
+            AggregateInformation(infoset, false, GraphNode::NodeStatus::static_forward_node);
         }
         for(int i=1; i<infosets[player].size(); i++){
             Infoset& infoset = infosets[player][i];
-            infoset.AggregateParent(infosets[player][infoset.parent.first], GraphNode::NodeStatus::static_forward_node);
-            infoset.UpdateGraph(GraphNode::NodeStatus::static_forward_node);
+            AggregateInformation(infoset, true, GraphNode::NodeStatus::static_forward_node);
+            infoset.UpdateGraph(GraphNode::NodeStatus::static_forward_node, is_color_to_update);
         }
     }
 }
@@ -81,7 +94,11 @@ void Environment::Initialize(){
     }
 
     for (auto* node : nodes){
-        while(infosets[node -> player].size() <= node -> infoset) infosets[node->player].push_back(Infoset());
+        while(infosets[node -> player].size() <= node -> infoset) 
+            infosets[node->player].push_back(Infoset());
+
+        while(infoset_names[node->player].size() < node -> infoset) 
+            infoset_names[node->player].push_back(std::to_string(infoset_names[node->player].size()-1));
 
         Infoset& infoset = infosets[node->player][node -> infoset];
         while(infoset.children.size() < node -> next_node.size())
@@ -125,6 +142,8 @@ void Environment::Initialize(){
         }
     }
 
+    Infoset::ComputeParentInfoset(nodes, infosets);
+
     // Initialize sequence form strategy_names
     while(sequence_form_strategies.size() <= player_num){
         int player = sequence_form_strategies.size();
@@ -139,6 +158,24 @@ bool CheckValidPlayer(const int& player, const int& upd_player){
 
 bool CheckValidNode(Node* node, const int& upd_player){
     return (CheckValidPlayer(node -> player, upd_player) && !node -> is_terminal);
+}
+
+void Environment::AggregateInformation(Infoset& infoset, const bool& is_parent, const int& node_status){
+    if(is_parent){
+        for(int player=1; player<=player_num; player++) if(player == infoset.player || Is_Aggregate_Opponents){
+            for(int i=0; i<infoset.parent_sequences[player].size(); ++i){
+                std::pair parent_sequence = infoset.parent_sequences[player][i];
+                infoset.AggregateParent(infosets[player][parent_sequence.first], parent_sequence.second, node_status, is_color_to_update);
+            }
+        }
+    } else{
+        for(int player=1; player<=player_num; player++) if(player == infoset.player || Is_Aggregate_Opponents){
+            for(int i=0; i<infoset.parent_sequences[player].size(); ++i){
+                std::pair parent_sequence = infoset.parent_sequences[player][i];
+                infosets[player][parent_sequence.first].AggregateChildren(infoset, parent_sequence.second, node_status, is_color_to_update);
+            }
+        }
+    }
 }
 
 void Environment::UpdateTraverse(const int& upd_player){
@@ -185,30 +222,30 @@ void Environment::UpdateTraverse(const int& upd_player){
 
     for(int t=traverse_infoset.size()-1; t>=0; t--){
         Infoset& infoset = *traverse_infoset[t];
-        infoset.AggregateParent(infosets[infoset.player][infoset.parent.first], GraphNode::NodeStatus::backward_node);
-        infoset.UpdateGraph(GraphNode::NodeStatus::backward_node);
-        infosets[infoset.player][infoset.parent.first].AggregateChildren(infoset, GraphNode::NodeStatus::backward_node);
+        AggregateInformation(infoset, true, GraphNode::NodeStatus::backward_node);
+        infoset.UpdateGraph(GraphNode::NodeStatus::backward_node, is_color_to_update);
+        AggregateInformation(infoset, false, GraphNode::NodeStatus::backward_node);
     }
 
     for(int t=0; t<traverse_infoset.size(); t++){
         Infoset& infoset = *traverse_infoset[t];
-        infosets[infoset.player][infoset.parent.first].AggregateChildren(infoset, GraphNode::NodeStatus::forward_node);
+        AggregateInformation(infoset, false, GraphNode::NodeStatus::forward_node);
     }
 
     for(int t=0; t<traverse_infoset.size(); t++){
         Infoset& infoset = *traverse_infoset[t];
-        infoset.AggregateParent(infosets[infoset.player][infoset.parent.first], GraphNode::NodeStatus::forward_node);
-        infoset.UpdateGraph(GraphNode::NodeStatus::forward_node);
+        AggregateInformation(infoset, true, GraphNode::NodeStatus::forward_node);
+        infoset.UpdateGraph(GraphNode::NodeStatus::forward_node, is_color_to_update);
     }
 }
 
-void Environment::Update(const GraphNode& strategy_node, const int& upd_player){
+void Environment::Update(const GraphNode& strategy_node, const int& upd_player, std::vector<int> upd_color){
     std::vector<GraphNode> strategy_nodes;
     for(int i=1;i<=player_num;i++) strategy_nodes.push_back(strategy_node);
-    Update(strategy_nodes, upd_player);
+    Update(strategy_nodes, upd_player, upd_color);
 }
 
-void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_player){
+void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_player, std::vector<int> upd_color){
     /*
         strategy_name is the name of the variable in results that contains the strategy_name to traverse the tree
         traverse is the method to traverse the tree
@@ -219,6 +256,17 @@ void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_p
     }
 
     strategy_nodes.insert(strategy_nodes.begin(), strategy_nodes[0]); // chance player, just a placeholder
+    for(int i=0; i<num_colors; i++) is_color_to_update[i] = false;
+    for(int i=0; i<upd_color.size(); i++) {
+        if(upd_color[i] == -1){
+            for(int j=0; j<num_colors; j++) is_color_to_update[j] = true;
+            break;
+        }
+        auto color = color_mapping.find(upd_color[i]);
+        if(color == color_mapping.end())
+            throw std::invalid_argument("Invalid color: " + std::to_string(upd_color[i]));
+        is_color_to_update[color -> second] = true;
+    }
 
     traverse_order.clear();
     nodes[0] -> reach.Resize(player_num+1); // players include chance player, with chance player idx = 0
@@ -378,4 +426,38 @@ std::vector<double> Environment::GetSequenceFormStrategy(const int& player, cons
     for(int i=0; i<ret_strategy.size(); ++i)
         ret_strategy[i] = sequence_form_strategies[player].strategy[i];
     return ret_strategy;
+}
+
+std::vector<std::pair<std::string, std::vector<double>> > Environment::GetValue(const int& player, const GraphNode& node){
+    std::vector<std::pair<std::string, std::vector<double>> > ret;
+    for(int i=1; i<infosets[player].size(); ++i){
+        Infoset& infoset = infosets[player][i];
+        std::vector<double> values;
+        values.resize(infoset.results[node.idx][0].size, 0.0);
+        for(int j=0; j<infoset.results[node.idx][0].size; ++j)
+            values[j] = infoset.results[node.idx][0][j];
+        ret.push_back({infoset_names[player][i-1], values});
+    }
+    return ret;
+}
+
+std::vector<std::pair<std::string, std::vector<double>> > Environment::GetStrategy(const int& player, const GraphNode& strategy_node, const std::string& type_name){
+    std::vector<std::pair<std::string, std::vector<double>> > ret;
+    sequence_form_strategies[player].GetSequenceFormStrategy(strategy_node.idx, type_name);
+    for(int i=1, start_idx, end_idx; i<infosets[player].size(); ++i){
+        Infoset& infoset = infosets[player][i];
+        std::vector<double> values;
+        start_idx = sequence_form_strategies[player].start_sequence[i];
+        end_idx = sequence_form_strategies[player].end_sequence[i];
+        values.resize(end_idx - start_idx, 0.0);
+
+        double sum = 0.0;
+        for(int j=start_idx; j<end_idx; ++j)
+            values[j-start_idx] = sequence_form_strategies[player].strategy[j],
+            sum += values[j-start_idx];
+        for(int j=0; j<values.size(); ++j)
+            values[j] = (sum < Constants::EPS) ? 1.0 / values.size() : values[j] / sum;
+        ret.push_back({infoset_names[player][i-1], values});
+    }
+    return ret;
 }

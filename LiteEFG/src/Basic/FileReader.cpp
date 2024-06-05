@@ -7,7 +7,7 @@
 
 FileReader::FileReader(const std::string& file_name_) {
     file = fopen(file_name_.c_str(), "r");
-    if(file == NULL) throw std::runtime_error("File not found");
+    if(file == NULL) throw std::runtime_error("File " + file_name_ + " not found");
     cursor = file_end = NULL;
 }
 

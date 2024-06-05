@@ -5,13 +5,11 @@
 #   International Conference on Learning Representations (2023)
 #######################################################
 
-import LiteEFG as leg
-import argparse
+import LiteEFG
 from typing import Literal
-from tqdm import tqdm
 
-class MMD(leg.Graph):
-    def __init__(self, eta, tau, gamma, regularizer: Literal["Euclidean", "Entropy"], feedback="Q", weighted=False):
+class graph(LiteEFG.Graph):
+    def __init__(self, eta=0.005, tau=0.05, gamma=0.0, regularizer: Literal["Euclidean", "Entropy"]="Entropy", feedback="Q", weighted=False):
         super().__init__()
 
         self.eta = eta
@@ -20,33 +18,33 @@ class MMD(leg.Graph):
         self.regularizer = regularizer
         self.feedback = feedback
 
-        self.backward(is_static=True)
+        with LiteEFG.backward(is_static=True):
 
-        self.alpha = 1.0
-        if weighted:
-            self.alpha = leg.const(1, 1.0)
-            self.alpha.inplace(leg.aggregate(self.alpha, "sum"))
-            self.alpha.inplace((self.alpha.max() + 1) * 2)
+            self.alpha = 1.0
+            if weighted:
+                self.alpha = LiteEFG.const(1, 1.0)
+                self.alpha.inplace(LiteEFG.aggregate(self.alpha, "sum"))
+                self.alpha.inplace((self.alpha.max() + 1) * 2)
 
-        self.ev = leg.const(1, 0.0)
-        self.coef = self.alpha * self.tau
-        self.mu = self.subtree_size.normalize(p_norm=1.0, ignore_negative=True)
-        self.eta_coef = self.eta * self.coef
-        
-        self.u = leg.const(self.action_set_size, 1.0 / self.action_set_size)
+            self.ev = LiteEFG.const(1, 0.0)
+            self.coef = self.alpha * self.tau
+            self.mu = self.subtree_size.normalize(p_norm=1.0, ignore_negative=True)
+            self.eta_coef = self.eta * self.coef
+            
+            self.u = LiteEFG.const(self.action_set_size, 1.0 / self.action_set_size)
 
-        self.backward()
+        with LiteEFG.backward():
 
-        if(self.feedback in ["Q", "traj-Q", "counterfactual"]):
-            self.FullInformation()
-        elif self.feedback == "Outcome":
-            self.OutcomeSampling()
+            if(self.feedback in ["Q", "traj-Q", "counterfactual"]):
+                self.full_information()
+            elif self.feedback == "Outcome":
+                self.outcome_sampling()
 
         print("===============Graph is ready for MMD===============")
         print("eta: %f, tau: %f, gamma: %f, regularizer: %s, feedback: %s" % (self.eta, self.tau, self.gamma, self.regularizer, self.feedback))
         print("====================================================\n")
     
-    def FullInformation(self):
+    def full_information(self):
         if self.feedback == "counterfactual":
             self.m_th = 1.0
         elif self.feedback == "traj-Q":
@@ -55,22 +53,22 @@ class MMD(leg.Graph):
             self.m_th = self.opponent_reach_prob
         
         self.eta_tau = self.eta_coef + 1
-        gradient = leg.aggregate(self.ev, "sum") + self.utility
+        gradient = LiteEFG.aggregate(self.ev, "sum") + self.utility
 
-        self.ev.inplace(leg.dot(gradient, self.u))
+        self.ev.inplace(LiteEFG.dot(gradient, self.u))
         
-        self.Update(self.u, self.u, gradient / (self.m_th / self.eta * self.alpha))
+        self._update(self.u, self.u, gradient / (self.m_th / self.eta * self.alpha))
     
-    def OutcomeSampling(self):
+    def outcome_sampling(self):
         self.m_th = 1.0 / self.reach_prob
         self.eta_tau = self.eta_coef + 1 # 1 + eta * tau * alpha / m_th
-        gradient = leg.aggregate(self.ev, "sum") + self.utility
+        gradient = LiteEFG.aggregate(self.ev, "sum") + self.utility
 
         self.ev.inplace(gradient.sum())
 
-        self.Update(self.u, self.u, gradient / (self.u / self.eta * self.alpha))
+        self._update(self.u, self.u, gradient / (self.u / self.eta * self.alpha))
 
-    def Update(self, upd_u, ref_u, gradient):
+    def _update(self, upd_u, ref_u, gradient):
         if self.regularizer == "Euclidean":
             upd_u.inplace((ref_u + gradient) / self.eta_tau)
             upd_u.inplace(upd_u.project(distance="L2", gamma=self.gamma, mu=self.mu))
@@ -80,19 +78,22 @@ class MMD(leg.Graph):
             upd_u.inplace(upd_u.exp())
             upd_u.inplace(upd_u.project(distance="KL", gamma=self.gamma, mu=self.mu))
     
-    def UpdateGraph(self, env):
-        env.Update(self.u)
+    def update_graph(self, env : LiteEFG.Environment) -> None:
+        env.update(self.u)
     
-    def Strategy(self):
+    def current_strategy(self) -> LiteEFG.GraphNode:
         return self.u
     
 if __name__ == "__main__":
+    import argparse
+
     parser = argparse.ArgumentParser()
+    parser.add_argument("--game", type=str, default="leduc_poker")
     parser.add_argument("--iter", type=int, default=100000)
     parser.add_argument("--print_freq", type=int, default=1000)
 
-    parser.add_argument("--eta", type=float, default=0.1)
-    parser.add_argument("--tau", type=float, default=0.01)
+    parser.add_argument("--eta", help="learning rate", type=float, default=0.1)
+    parser.add_argument("--tau", help="regularization coefficient", type=float, default=0.01)
     parser.add_argument("--gamma", type=float, default=0.01)
     parser.add_argument("--regularizer", type=str, choices=["Euclidean", "Entropy"], default="Euclidean")
     parser.add_argument("--feedback", type=str, choices=["Q", "traj-Q", "counterfactual", "Outcome"], default="Q")
@@ -102,16 +103,10 @@ if __name__ == "__main__":
 
     traverse_type = "Enumerate" if(args.feedback != "Outcome") else "Outcome"
 
-    env = leg.FileEnv("GameInstances/liars_dice.game", traverse_type=traverse_type)
-    alg = MMD(args.eta, args.tau, args.gamma, args.regularizer, args.feedback, args.weighted)
-    env.GetGraph(alg)
-
-    for i in tqdm(range(args.iter)):
-        alg.UpdateGraph(env)
-        if i % args.print_freq == 0:
-            print(i, env.Exploitability(alg.Strategy()))
-            # do not need to update strategy for algorithms only need last-iterate
-            # it will be faster since LiteEFG do not need to maintain the sequence-form strategy
-            # UpdateStrategy() will enumerate all infosets. However, when using outcome-sampling, at each iteration,
-            # the algorithm will only update a trajectory of length height
-            # Solution: lazy-update, TBD
+    from utils import train
+    train(graph(args.eta, args.tau, args.gamma, args.regularizer, args.feedback, args.weighted), traverse_type, "default", args.iter, args.print_freq, args.game)
+    # do not need to update strategy for algorithms only need last-iterate
+    # it will be faster since LiteEFG do not need to maintain the sequence-form strategy
+    # update_strategy() will enumerate all infosets. However, when using outcome-sampling, at each iteration,
+    # the algorithm will only update a trajectory of length height
+    # Solution: lazy-update, TBD

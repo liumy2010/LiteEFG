@@ -23,24 +23,30 @@ FileEnvironment::FileEnvironment(const std::string& file_name_, const std::strin
     file_nodes.clear();
     node_map.clear();
     
-    std::string name, player_name;
+    std::string name, player_name, temp_name;
     char c;
-
+    bool is_openspiel = false;
+    
+    player_num = -1;
     while((c=file_reader.Read()) == '#'){ // Jump the descriptions of the game
         file_reader.NextWord();
-        file_reader.GetWord(name);
-        if(name == "num_players:"){
-            file_reader.GetWord(name);
+        char cc = file_reader.GetWord(name);
+        if(name == "num_players:" || name == "players:"){
+            cc = file_reader.GetWord(name);
             name = name.substr(0, name.size()-1);
             player_num = std::stoi(name);
+        } else if(name == "openspiel,"){
+            is_openspiel = true;
+        } else if(name == "}"){
             break;
         }
-        file_reader.NextLine();
+        if(cc != '\n') file_reader.NextLine();
     }
     while((c=file_reader.Read()) == '#')
         file_reader.NextLine();
 
-    Environment(player_num, traverse_); // Call the constructor of Environment
+    if(player_num == -1) throw std::runtime_error("Please specify the number of players at the beginning of the file");
+    infoset_names.resize(player_num+1);
     infoset_num = std::vector<int>(player_num+1, 0);
     
     while(true){
@@ -114,17 +120,20 @@ FileEnvironment::FileEnvironment(const std::string& file_name_, const std::strin
                 infoset pl1_0__1?/ nodes /C:12 /C:13 
             */
             file_reader.NextWord();
-            file_reader.NextWord();
+            file_reader.GetWord(temp_name);
             file_reader.NextWord();
 
             char ccc;
+            int player;
             while(true){
                 ccc = file_reader.GetWord(name);
                 auto it = node_map.find(name);
-                if(it == node_map.end()) throw std::runtime_error("Please specify all nodes before defining infosets");
-                file_nodes[it -> second].infoset = infoset_num[file_nodes[it -> second].player] + 1;
-                if(ccc == '\n') {++infoset_num[file_nodes[it -> second].player]; break;}
+                if(it == node_map.end()) throw std::runtime_error("Please specify all nodes before defining infosets: Infoset: " + temp_name + " Node: " + name);
+                player = file_nodes[it -> second].player;
+                file_nodes[it -> second].infoset = infoset_num[player] + 1;
+                if(ccc == '\n') {++infoset_num[player]; break;}
             }
+            infoset_names[player].push_back(temp_name);
         }
         else break;
         c = file_reader.Read();
@@ -133,11 +142,22 @@ FileEnvironment::FileEnvironment(const std::string& file_name_, const std::strin
     for(auto& node : file_nodes){
         if(node.player !=0 && node.infoset == 0) node.infoset = ++infoset_num[node.player];
         // sometimes singleton infosets are not mentioned in the file, so we need to add them manually
-        for(int i=0; i<node.actions.size(); ++i){
-            name = (node.name.back() == '/') ? node.name : node.name + '/';
-            name = (node.player == 0) ? name + "C:" : name + 'P' + std::to_string(node.player) + ':';
-            name += node.actions[i];
-            node.next_node.push_back(node_map[name]);
+    }
+
+    if(!is_openspiel){
+        for(auto& node : file_nodes){
+            for(int i=0; i<node.actions.size(); ++i){
+                name = (node.name.back() == '/') ? node.name : node.name + '/';
+                name = (node.player == 0) ? name + "C:" : name + 'P' + std::to_string(node.player) + ':';
+                name += node.actions[i];
+                node.next_node.push_back(node_map[name]);
+            }
+        }
+    } else{
+        for(auto& node : file_nodes){
+            for(int i=0; i<node.actions.size(); ++i){
+                node.next_node.push_back(node_map[node.actions[i]]);
+            }
         }
     }
     for(auto& node : file_nodes){

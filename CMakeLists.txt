@@ -11,11 +11,11 @@ file(GLOB_RECURSE all_src
 )
 
 message(${all_src})
-pybind11_add_module(LiteEFG ${all_src})
-target_include_directories(LiteEFG PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/LiteEFG/src)
-target_compile_options(LiteEFG PRIVATE -O3)
+pybind11_add_module(_LiteEFG ${all_src})
+target_include_directories(_LiteEFG PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/LiteEFG/src)
+target_compile_options(_LiteEFG PRIVATE -O3)
 
 # EXAMPLE_VERSION_INFO is defined by setup.py and passed into the C++ code as a
 # define (VERSION_INFO) here.
-target_compile_definitions(LiteEFG
+target_compile_definitions(_LiteEFG
                            PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})

@@ -42,7 +42,6 @@ void Node::Preprocessing(std::vector<Node*>& nodes, const int& player_num_){
         node -> idx = idx++;
         node -> is_terminal = (node -> next_node.size() == 0);
         
-
         if(node->player && !node -> is_terminal) {
             if(node -> player != 0 && node -> infoset == 0)
                 throw std::invalid_argument("Infoset index should start from 1, node idx: " + std::to_string(node->idx-1) + " does not satisfy it");
@@ -89,58 +88,105 @@ Infoset::Infoset() {
     parent = std::make_pair(0, 0); // root infoset
 }
 
-void Infoset::UpdateGraph(const int& status) {
-    graph.Update(results, status);
+void Infoset::ComputeParentInfoset(std::vector<Node*>& nodes, std::vector<std::vector<Infoset>>& infosets){
+    int player_num = infosets.size()-1;
+    std::vector<std::tuple<int, int, int> > tmp;
+    std::vector<Node*> current_nodes;
+    for(int i=1; i<=player_num; ++i){
+        current_nodes.clear();
+        for(auto* node : nodes){
+            if(node->player == i && ! node->is_terminal){
+                current_nodes.push_back(node);
+            }
+        }
+        for(int k=0; k<infosets[i].size(); ++k){
+            infosets[i][k].parent_sequences.resize(player_num+1);
+        }
+        for(int j=1; j<=player_num; ++j){ // Compute the parent infoset belongs to player j for each infoset belongs to player i
+            tmp.clear();
+            for(int k=0; k<current_nodes.size(); ++k){
+                if(current_nodes[k]->parent_infoset[j].first != 0){
+                    tmp.push_back(std::make_tuple(current_nodes[k]->infoset, current_nodes[k]->parent_infoset[j].first, current_nodes[k]->parent_infoset[j].second));
+                }
+            }
+            std::sort(tmp.begin(), tmp.end());
+            for(int k=0; k<tmp.size(); ++k){
+                if(k==0 || std::get<0>(tmp[k]) != std::get<0>(tmp[k-1]) || std::get<1>(tmp[k]) != std::get<1>(tmp[k-1]) 
+                                                                        || std::get<2>(tmp[k]) != std::get<2>(tmp[k-1])){
+                    infosets[i][std::get<0>(tmp[k])].parent_sequences[j].push_back(std::make_pair(std::get<1>(tmp[k]), std::get<2>(tmp[k])));
+                }
+            }
+        }
+    }
+}
+
+void Infoset::UpdateGraph(const int& status, const std::vector<bool>& is_color_to_update) {
+    graph.Update(results, status, is_color_to_update);
 }
 
 void Infoset::InitializeAggregator(){
-    for(int i=0; i<graph.graph_nodes.size(); i++) {
-        if(graph.graph_nodes[i].operation!=NULL && graph.graph_nodes[i].operation->name == "Aggregate_children"){
-            graph.graph_nodes[i].dependency.resize(children.size() + 1);
-            graph.graph_nodes[i].dependency.back() = graph.graph_nodes[i].dependency[0];
-            for(int action=0; action<children.size(); action++){
-                graph.graph_nodes[i].dependency[action] = graph.graph_nodes.size();
+    for(int i=0; i<graph.graph_nodes.size(); i++){
+        if(graph.graph_nodes[i].operation!=NULL && graph.graph_nodes[i].operation->name == "Aggregate") {
+            if(graph.graph_nodes[i].operation->info[AggregateOperation::InfoIndex::object] > 0.0){ // aggregate children
+                graph.graph_nodes[i].dependency.resize(children.size() + 1);
+                graph.graph_nodes[i].dependency.back() = graph.graph_nodes[i].dependency[0];
+                for(int action=0; action<children.size(); action++){
+                    graph.graph_nodes[i].dependency[action] = graph.graph_nodes.size();
+                    graph.graph_nodes.push_back(GraphNode(graph.graph_nodes.size(), {}, NULL, GraphNode::NodeStatus::smallest_status));
+                }
+            } else{ // aggregate parent
+                graph.graph_nodes[i].dependency.resize(2);
+                graph.graph_nodes[i].dependency.back() = graph.graph_nodes[i].dependency[0];
+                graph.graph_nodes[i].dependency[0] = graph.graph_nodes.size();
                 graph.graph_nodes.push_back(GraphNode(graph.graph_nodes.size(), {}, NULL, GraphNode::NodeStatus::smallest_status));
             }
-        } else if(graph.graph_nodes[i].operation!=NULL && graph.graph_nodes[i].operation->name == "Aggregate_parent"){
-            graph.graph_nodes[i].dependency.resize(2);
-            graph.graph_nodes[i].dependency.back() = graph.graph_nodes[i].dependency[0];
-            graph.graph_nodes[i].dependency[0] = graph.graph_nodes.size();
-            graph.graph_nodes.push_back(GraphNode(graph.graph_nodes.size(), {}, NULL, GraphNode::NodeStatus::smallest_status));
         }
     }
 
+    is_aggregator.resize(graph.graph_nodes.size(), false);
     results.resize(graph.graph_nodes.size(), {});
     aggregator_dependency.resize(graph.graph_nodes.size(), -1);
-    aggregator_type.resize(graph.graph_nodes.size(), -1);
     graph.Initialize();
     for(int i=0; i<graph.graph_nodes.size(); i++) {
         GraphNode& graph_node = graph.graph_nodes[i];
-        if(graph_node.operation!=NULL && Basic::IsPrefixString(graph_node.operation->name, "Aggregate")){
+        if(graph_node.operation!=NULL && graph_node.operation->name == "Aggregate"){
             aggregator_dependency[i] = graph_node.dependency.back();
-            aggregator_type[i] = (graph_node.operation->name == "Aggregate_children") ? 0 : 1;
             graph_node.dependency.pop_back();
+            is_aggregator[i] = true;
         }
     }
 }
 
-void Infoset::AggregateChildren(Infoset& child_infoset, const int& status) {
-    for(int i=graph.start_idx[status]; i<graph.start_idx[status+1]; i++) if(graph.graph_nodes[i].status == status && aggregator_type[i]==0){
+void Infoset::AggregateChildren(Infoset& child_infoset, const int& action, const int& status, const std::vector<bool>& is_color_to_update) {
+    for(int i=graph.start_idx[status]; i<graph.start_idx[status+1]; i++) if(is_aggregator[i]){
         GraphNode& graph_node = graph.graph_nodes[i];
-        int dependency = aggregator_dependency[i];
-        results[graph_node.dependency[child_infoset.parent.second]][0].Concat(child_infoset.results[dependency][0]);
+        if(graph_node.status == status && is_color_to_update[graph_node.color] && graph_node.operation->info[AggregateOperation::InfoIndex::object]>0.0){
+            if((player == child_infoset.player && graph_node.operation->info[AggregateOperation::InfoIndex::player]>0.0) ||
+                (player != child_infoset.player && graph_node.operation->info[AggregateOperation::InfoIndex::player]<0.0)){
+                int dependency = aggregator_dependency[i];
+                results[graph_node.dependency[action]][0].Concat(child_infoset.results[dependency][0]);
+            }
+        }
     }
 }
 
-void Infoset::AggregateParent(Infoset& parent_infoset, const int& status) {
+void Infoset::AggregateParent(Infoset& parent_infoset, const int& action, const int& status, const std::vector<bool>& is_color_to_update) {
     if(parent.first==0) return;
-    for(int i=graph.start_idx[status]; i<graph.start_idx[status+1]; i++) if(graph.graph_nodes[i].status == status && aggregator_type[i]==1){
+    for(int i=graph.start_idx[status]; i<graph.start_idx[status+1]; i++) if(is_aggregator[i]){
         GraphNode& graph_node = graph.graph_nodes[i];
-        int dependency = aggregator_dependency[i];
-        results[graph_node.dependency[0]][0].Concat(parent_infoset.results[dependency][0]);
+        if(graph_node.status == status && is_color_to_update[graph_node.color] && graph_node.operation->info[AggregateOperation::InfoIndex::object]<0.0){
+            if((player == parent_infoset.player && graph_node.operation->info[AggregateOperation::InfoIndex::player]>0.0) ||
+                (player != parent_infoset.player && graph_node.operation->info[AggregateOperation::InfoIndex::player]<0.0)){
+                int dependency = aggregator_dependency[i], size = parent_infoset.results[dependency][0].size;
+                results[graph_node.dependency[0]][0].Resize(1);
+                if(size != 1 && size != parent_infoset.children.size())
+                    throw std::invalid_argument("x in aggregate(x, object=\"parent\") should be either size 1 or size equal to the number of children of the parent infoset");
+                results[graph_node.dependency[0]][0][0] = (size==1) ? parent_infoset.results[dependency][0][0]
+                                                                    : parent_infoset.results[dependency][0][action];
+            }
+        }
     }
 }
-
 
 void Infoset::InitializeGraph(const double& reach){
     results[GraphNode::NodeIdx::utility][0].Set(0.0);
@@ -157,10 +203,10 @@ void Infoset::InitializeGraph(const double& reach){
                 results[idx][0].Resize(0);
                 /*if(aggregator_type[i]==0 && !action_activated[action]){ // cannot use action_activated. sometimes although activated, no children
                     results[idx][0].Resize(1); // No infoset child under current action
-                    results[idx][0][0] = graph_node.operation->info[0];
+                    results[idx][0][0] = graph_node.operation->];
                 } else if(aggregator_type[i]==1 && parent.first==0){
                     results[idx][0].Resize(1); // No infoset parent
-                    results[idx][0][0] = graph_node.operation->info[0];
+                    results[idx][0][0] = graph_node.operation->];
                 } else{
                     results[idx][0].Resize(0);
                 }*/

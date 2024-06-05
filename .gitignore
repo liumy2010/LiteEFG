@@ -18,3 +18,6 @@ build/*
 LiteEFG.egg-info/
 dist/
 *.pyc
+*.whl
+*.openspiel
+*.csv

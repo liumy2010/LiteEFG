@@ -5,8 +5,28 @@
 #include "Operations.h"
 #include "GraphNode.h"
 
+#include <pybind11/pybind11.h>
 #include <unordered_map>
 #include <functional>
+#include <map>
+
+class GraphNodeStatus {
+public:
+    int graph_status, color;
+    GraphNodeStatus();
+    GraphNodeStatus* Enter();
+    void Exit(pybind11::args);
+};
+
+class ForwardNodeStatus : public GraphNodeStatus {
+public:
+    ForwardNodeStatus(const bool& is_static=false, const int& color_=0);
+};
+
+class BackwardNodeStatus : public GraphNodeStatus {
+public:
+    BackwardNodeStatus(const bool& is_static=false, const int& color_=0);
+};
 
 class Graph {
 public:
@@ -21,12 +41,10 @@ public:
 
     Graph();
 
-    void ForwardNode(const bool& is_static=false);
-    void BackwardNode(const bool& is_static=false);
-
     void Initialize();
+    int UpdateColorMapping(std::map<int, int>& color_mapping);
     void Execute(std::vector<std::vector<Vector>>& results, const int& opName);
-    void Update(std::vector<std::vector<Vector>>& results, const int& status=GraphNode::NodeStatus::backward_node);
+    void Update(std::vector<std::vector<Vector>>& results, const int& status, const std::vector<bool>& is_color_to_update);
 };
 
 #endif

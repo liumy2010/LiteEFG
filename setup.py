@@ -130,16 +130,18 @@ class CMakeBuild(build_ext):
 
 setup(
     name="LiteEFG",
-    version="0.0.1",
+    version="0.1.0",
     author="Mingyang Liu",
     author_email="liumy0723@gmail.com",
     description="An efficient EFG solver based on computation graph",
     long_description="",
     #packages=find_packages(),
-    ext_modules=[CMakeExtension("LiteEFG")],
+    ext_modules=[CMakeExtension("LiteEFG._LiteEFG")],
     cmdclass={"build_ext": CMakeBuild},
     #package_data={"LiteEFG.baselines": ["LiteEFG/baselines/*.py"], "LiteEFG.games": ["LiteEFG/GameInstances/*.game"]},
     zip_safe=False,
+    packages=find_packages(),
     #extras_require={"test": ["pytest>=6.0"]},
     python_requires=">=3.7",
+    install_requires=["open_spiel >= 1.2", "pandas >= 2.0"],
 )

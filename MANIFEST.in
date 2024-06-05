@@ -1,0 +1,3 @@
+recursive-include pybind11 *
+recursive-include LiteEFG *
+include LICENSE README.md pyproject.toml setup.py CMakeLists.txt 

@@ -8,6 +8,10 @@
 std::default_random_engine Basic::generator;
 std::uniform_real_distribution<double> Basic::uniform(0.0,1.0);
 
+void Basic::SetSeed(const unsigned int& seed){
+    generator.seed(seed);
+}
+
 double Basic::Sqr(const double& x){
     return x*x;
 }

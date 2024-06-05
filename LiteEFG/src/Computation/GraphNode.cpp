@@ -10,16 +10,17 @@
 
 int GraphNode::num_nodes = 5;
 int GraphNode::graph_status = GraphNode::NodeStatus::smallest_status;
+int GraphNode::graph_color = 0;
 std::vector<GraphNode>* GraphNode::graph_nodes = NULL;
 std::vector<std::pair<double, int> > GraphNode::constants_list;
 
-GraphNode::GraphNode() : idx(-1), order(-1), status(GraphNode::NodeStatus::smallest_status), operation(NULL){dependency.clear();}
+GraphNode::GraphNode() : idx(-1), order(-1), status(GraphNode::NodeStatus::smallest_status), operation(NULL), color{GraphNode::graph_color}{dependency.clear();}
 
 GraphNode::GraphNode(const int& idx_, const std::vector<int>& dependency_, std::shared_ptr<Operation> operation_, const int& status_)
-                    : idx(idx_), order(idx_), dependency(dependency_), operation(operation_), status(status_){}
+                    : idx(idx_), order(idx_), dependency(dependency_), operation(operation_), status(status_), color{GraphNode::graph_color}{}
 
 GraphNode::GraphNode(const int& idx_, const std::initializer_list<int>& dependency_, std::shared_ptr<Operation> operation_, const int& status_)
-                    : idx(idx_), order(idx_), dependency(dependency_), operation(operation_), status(status_){}
+                    : idx(idx_), order(idx_), dependency(dependency_), operation(operation_), status(status_), color{GraphNode::graph_color}{}
 
 GraphNode::GraphNode(const double& val){
     constants_list.push_back({val, num_nodes});
@@ -27,6 +28,7 @@ GraphNode::GraphNode(const double& val){
     dependency.clear();
     operation = std::make_shared<StaticConstVector>(StaticConstVector(1, val));
     status = GraphNode::NodeStatus::smallest_status;
+    color = GraphNode::graph_color;
 }
 
 GraphNode::GraphNode(const Vector& val) {
@@ -34,6 +36,7 @@ GraphNode::GraphNode(const Vector& val) {
     dependency.clear();
     operation = std::make_shared<StaticConstVector>(StaticConstVector(val));
     status = GraphNode::NodeStatus::smallest_status;
+    color = GraphNode::graph_color;
 }
 
 GraphNode GraphNode::AddConstScalar(const double& val){
@@ -51,11 +54,6 @@ void GraphNode::Inplace(const GraphNode& node){
     }
     (*graph_nodes)[node.order].idx = idx; // change the address to store
 }
-
-/*template <typename T> GraphNode GraphNode::SingleVariableOperation(const T& operation) const {
-    GraphNode::graph_nodes->push_back(GraphNode(GraphNode::num_nodes++, {idx}, std::make_shared<T>(operation), GraphNode::graph_status));
-    return GraphNode::graph_nodes->back();
-}*/
 
 template <typename T> GraphNode GraphNode::SingleVariableOperation(const GraphNode& node, const T& operation) {
     GraphNode::graph_nodes->push_back(GraphNode(GraphNode::num_nodes++, {node.idx}, std::make_shared<T>(operation), GraphNode::graph_status));
@@ -89,6 +87,9 @@ template <typename T> GraphNode GraphNode::TwoVariableOperation(const ObjectDoub
 GraphNode GraphNode::ConstVector(const Object& size, const Object& val){
     if(std::holds_alternative<int>(size) && std::holds_alternative<double>(val)){
         GraphNode::graph_nodes->push_back(GraphNode(Vector(std::get<int>(size), std::get<double>(val))));
+        return GraphNode::graph_nodes->back();
+    } else if(std::holds_alternative<int>(size) && std::holds_alternative<int>(val)){
+        GraphNode::graph_nodes->push_back(GraphNode(Vector(std::get<int>(size), std::get<int>(val))));
         return GraphNode::graph_nodes->back();
     } else if(std::holds_alternative<int>(size) && std::holds_alternative<GraphNode>(val)){
         return TwoVariableOperation<StaticConstVector>(std::get<int>(size), std::holds_alternative<GraphNode>(val));
@@ -287,7 +288,7 @@ GraphNode GraphNode::Minimum(const GraphNode& lhs, const Object& rhs){
     return lhs.TwoVariableOperation<MinimumOperation>(rhs);
 }
 
-GraphNode GraphNode::Aggregate(const GraphNode& node, const std::string& aggregator_name, const std::string& object_name, const double& padding){
+GraphNode GraphNode::Aggregate(const GraphNode& node, const std::string& aggregator_name, const std::string& object_name, const std::string& player_name, const double& padding){
     std::shared_ptr<Operation> aggregator = NULL;
     if(aggregator_name == "sum") {
         aggregator = std::make_shared<SumOperation>(SumOperation());
@@ -300,7 +301,7 @@ GraphNode GraphNode::Aggregate(const GraphNode& node, const std::string& aggrega
     } else {
         throw std::invalid_argument("Invalid aggregator name");
     }
-    return SingleVariableOperation<AggregateOperation>(node, AggregateOperation(aggregator, object_name, padding));
+    return SingleVariableOperation<AggregateOperation>(node, AggregateOperation(aggregator, object_name, player_name, padding));
 }
 
 GraphNode GraphNode::Project(const std::string& distance_name, const Object& gamma){
