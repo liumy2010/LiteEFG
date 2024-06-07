@@ -115,7 +115,7 @@ Here's an example of computing the Fibonacci sequence.
 - `GraphNode.dot(y) / LiteEFG.dot(x, y)`: Return $\langle \mathbf{x}, \mathbf{y}\rangle$
 - `GraphNode.maximum(y) / LiteEFG.maximum(x, y)`: Return $\mathbf{z}$ with $z_i=\max(x_i,y_i)$. Also supports `GraphNode.maximum(scalar) / LiteEFG.maximum(x, scalar)`
 - `GraphNode.minimum(y) / LiteEFG.minimum(x, y)`: Return $\mathbf{z}$ with $z_i=\min(x_i,y_i)$. Also supports `GraphNode.minimum(scalar) / LiteEFG.minimum(x, scalar)`
-- `LiteEFG.pow(x, y)`: Return $x_i\to x_i^y$
+- `x**y`: `y` should be a scalar and it will return $(x_1^y, x_2^y, ..., x_n^y)$
 
 #### Game Specific Operations
 - `GraphNode.project(distance_name : ["L2", "KL"], gamma=0.0, mu=uniform_distribution)`: Project $\mathbf{x}\in\mathbf{R}^N$ to the perturbed simplex $\Delta_N:=\\{\mathbf{v}\succeq \gamma\mathbf{\mu}\colon \sum_i v_i=1\\}$, with respect to either Euclidean distance or `KL`-Divergence. By default, $\gamma=0.0$ and $\mathbf{\mu}=\frac{1}{N}\mathbf{1}$
