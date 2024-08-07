@@ -1,7 +1,8 @@
 #######################################################
 # Counterfactual Regret Minimization+ (CFR+)
-# Zinkevich, Martin, et al. "Regret minimization in games with incomplete information." 
-#       Advances in neural information processing systems 20 (2007).
+# Zinkevich, Martin, Michael Johanson, Michael Bowling, and Carmelo Piccione.
+# "Regret minimization in games with incomplete information." 
+# Advances in neural information processing systems (2007).
 #######################################################
 
 import LiteEFG

@@ -1,8 +1,8 @@
 #######################################################
 # Magnetic Mirror Descent (MMD)
 # Samuel Sokota, Ryan D'Orazio, J. Zico Kolter, Nicolas Loizou, Marc Lanctot, Ioannis Mitliagkas, Noam Brown, and Christian Kroer.
-#   "A Unified Approach to Reinforcement Learning, Quantal Response Equilibria, and Two-Player Zero-Sum Games."
-#   International Conference on Learning Representations (2023)
+# "A Unified Approach to Reinforcement Learning, Quantal Response Equilibria, and Two-Player Zero-Sum Games."
+# International Conference on Learning Representations (2023).
 #######################################################
 
 import LiteEFG

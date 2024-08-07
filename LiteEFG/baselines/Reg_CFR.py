@@ -1,8 +1,8 @@
 #######################################################
 # Regularized Counterfactual Regret Minimization (Reg-CFR)
-# Mingyang Liu, Asuman Ozdaglar, Tiancheng Yu, and Kaiqing Zhang
-#   "The power of regularization in solving extensive-form games."
-#   International Conference on Learning Representations (2023)
+# Mingyang Liu, Asuman Ozdaglar, Tiancheng Yu, and Kaiqing Zhang.
+# "The power of regularization in solving extensive-form games."
+# International Conference on Learning Representations (2023).
 #######################################################
 
 import LiteEFG

@@ -1,8 +1,8 @@
 #######################################################
 # Regularized Dilated Optimistic Mirror Descent (Reg-DOMD)
-# Mingyang Liu, Asuman Ozdaglar, Tiancheng Yu, and Kaiqing Zhang
+# Mingyang Liu, Asuman Ozdaglar, Tiancheng Yu, and Kaiqing Zhang.
 # "The power of regularization in solving extensive-form games."
-# International Conference on Learning Representations (2023)
+# International Conference on Learning Representations (2023).
 #######################################################
 
 import LiteEFG

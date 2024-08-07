@@ -1,4 +1,5 @@
 #######################################################
+# Balanced Follow the Regularized Leader (Balanced FTRL)
 # Fiegel, Côme, Pierre Ménard, Tadashi Kozuno, Rémi Munos, Vianney Perchet, and Michal Valko. 
 # "Adapting to game trees in zero-sum imperfect information games." 
 # International Conference on Machine Learning (2023).

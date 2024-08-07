@@ -1,8 +1,8 @@
 #######################################################
 # Implicit Exploration Online Mirror Descent (IXOMD)
-# Kozuno, Tadashi, Pierre Ménard, Rémi Munos, and Michal Valko
+# Kozuno, Tadashi, Pierre Ménard, Rémi Munos, and Michal Valko.
 # "Learning in two-player zero-sum partially observable Markov games with perfect recall."
-# Advances in Neural Information Processing Systems (2021)
+# Advances in Neural Information Processing Systems (2021).
 #######################################################
 
 import LiteEFG

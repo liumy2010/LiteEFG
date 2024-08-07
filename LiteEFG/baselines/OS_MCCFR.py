@@ -1,7 +1,8 @@
 #######################################################
 # Outcome Sampling Monte-Carlo Counterfactual Regret Minimization (OS-MCCFR)
-# Lanctot, Marc, et al. "Monte Carlo sampling for regret minimization in extensive games." 
-#       Advances in neural information processing systems 22 (2009).
+# Lanctot, Marc, Kevin Waugh, Martin Zinkevich, and Michael Bowling.
+# "Monte Carlo sampling for regret minimization in extensive games." 
+# Advances in neural information processing systems (2009).
 #######################################################
 
 import LiteEFG
