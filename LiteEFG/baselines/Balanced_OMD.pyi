@@ -1,10 +1,9 @@
 import LiteEFG as LiteEFG
 from __future__ import annotations
-__all__ = ['LiteEFG', 'graph']
+import numpy as np
+__all__ = ['LiteEFG', 'graph', 'np']
 class graph(LiteEFG._LiteEFG.Graph):
-    def __init__(self, eta = 0.1, inner_epoch = 10, regularizer: typing.Literal['Euclidean', 'Entropy'] = 'Entropy', weighted = False):
-        ...
-    def _get_ev(self, gradient, ev, strategy, ref_strategy):
+    def __init__(self, eta = 0.001, gamma = 0.0005):
         ...
     def _update(self, gradient, upd_u, ref_u):
         ...

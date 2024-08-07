@@ -168,4 +168,10 @@ public:
     void Execute(Vector& result, const std::vector<Vector*>& inputs) override;
 };
 
+class ConcatOperation : public Operation {
+public:
+    ConcatOperation(const bool& is_static_=false) : Operation("Concat", is_static_) {}
+    void Execute(Vector& result, const std::vector<Vector*>& inputs) override;
+};
+
 #endif

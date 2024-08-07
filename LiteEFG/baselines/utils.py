@@ -5,9 +5,7 @@ import csv
 
 def train(graph, traverse_type, convergence_type, iter, print_freq, game_env="leduc_poker", output_strategy=False):
     game = pyspiel.load_game(game_env)
-    #game = pyspiel.create_matrix_game([[0,1],[1,0]], [[0,1],[1,0]])
-    env = LiteEFG.OpenSpielEnv(game, traverse_type=traverse_type, regenerate=True)
-    #env = LiteEFG.FileEnv("GameInstances/kuhn_poker.openspiel", traverse_type=args.traverse_type)
+    env = LiteEFG.OpenSpielEnv(game, traverse_type=traverse_type, regenerate=False)
     env.set_graph(graph)
 
     pbar = tqdm(total=iter)
@@ -30,23 +28,21 @@ def train(graph, traverse_type, convergence_type, iter, print_freq, game_env="le
             df.to_csv("strategy_" + str(i) + ".csv", quoting=csv.QUOTE_MINIMAL, quotechar='"')
 
 def test():
-    import CFR
-    import CFRplus
-    import DCFR
-    import DOMD
-    import MMD
-    import OS_MCCFR
-    import QFR
-    import Bil_QFR
-    import CMD
-    alg_list = [CFR.graph(), CFRplus.graph(), DCFR.graph(), DOMD.graph(), MMD.graph(), OS_MCCFR.graph(), QFR.graph(), Bil_QFR.graph(), CMD.graph()]
-    traverse_type_list = ["Enumerate", "Enumerate", "Enumerate", "Enumerate", "Enumerate", "Outcome", "Enumerate", "Enumerate", "Enumerate"]
-    convergence_type_list = ["avg-iterate", "linear-avg-iterate", "last-iterate", "last-iterate", "default", "avg-iterate", "default", "default", "last-iterate"]
-    alg_name_list = ["CFR", "CFR+", "DCFR", "DOMD", "MMD", "OS-MCCFR", "QFR", "Bil-QFR", "CMD"]
+    import sys
+    import os
+    import runpy
 
-    for i, alg in enumerate(alg_list):
-        train(alg, traverse_type_list[i], convergence_type_list[i], 100000, 1000, "kuhn_poker", True)
-        print(alg_name_list[i] + " finished training")
+    package_dir = os.path.dirname(__file__)
+    python_files = [file for file in os.listdir(package_dir) if file.endswith('.py') and file != '__init__.py' and file != 'utils.py']
+
+    original_argv = sys.argv
+    for file in python_files:
+        module_name = f'{file[:-3]}'
+        sys.argv = [module_name, '--iter', '1000', '--print_freq', '100', '--game', 'leduc_poker(suit_isomorphism=True)']
+        runpy.run_module(module_name, run_name='__main__')
+    
+    sys.argv = original_argv
+
     print("Test Success")
 
 if __name__ == "__main__":

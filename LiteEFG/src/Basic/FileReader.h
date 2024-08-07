@@ -22,6 +22,8 @@ public:
     void NextWord();
 
     char GetWord(std::string& word);
+
+    ~FileReader();
 };
 
 #endif

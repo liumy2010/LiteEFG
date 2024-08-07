@@ -35,7 +35,7 @@ class graph(LiteEFG.Graph):
             gradient = LiteEFG.aggregate(ev, "sum") + self.utility
 
             self._update(gradient, self.u, self.bar_u)
-            self.get_ev(gradient, ev, self.u, self.bar_u)
+            self._get_ev(gradient, ev, self.u, self.bar_u)
         
         with LiteEFG.backward(color=1):
             
@@ -45,7 +45,7 @@ class graph(LiteEFG.Graph):
         print("eta: %f, inner epoch: %d, regularizer: %s" % (self.eta, self.inner_epoch, self.regularizer))
         print("=====================================================\n")
     
-    def get_ev(self, gradient, ev, strategy, ref_strategy):
+    def _get_ev(self, gradient, ev, strategy, ref_strategy):
         if self.regularizer == "Euclidean":
             ev.inplace(LiteEFG.dot(gradient, strategy) - LiteEFG.euclidean(strategy - ref_strategy) * self.coef)
         else:

@@ -17,9 +17,9 @@ ProjectionOperation::ProjectionOperation(const std::string &distance_name_, cons
 void SparseMax(Vector& strategy, const double& gamma, const Vector& lowerbound){
     int n = strategy.size;
 
-    double* aux = new double[n];
+    std::vector<double> aux(n);
     for(int i=0;i<n;i++) aux[i] = strategy[i];
-    std::sort(aux, aux + n);
+    std::sort(aux.begin(), aux.end());
 
     double tau = 0.0, C = - aux[0] + (1.0 - gamma) / double(n), cur_sum=0.0;
     for(int i = 0; i < n; ++i)
@@ -39,14 +39,17 @@ void SparseMax(Vector& strategy, const double& gamma, const Vector& lowerbound){
         strategy[i] = std::max(strategy[i]- tau + C, 0.0) + gamma * lowerbound[i],
         cur_sum += strategy[i];
     for(int i=0; i<n; ++i) strategy[i] /= cur_sum; // normalize to avoid numerical issue
+    
+    //delete[] aux;
     return;
 }
 
 void EntropyMax(Vector& strategy, const double& gamma, const Vector& lowerbound){
     int n = strategy.size;
-    std::pair<double, int> p[n];
-    for(int i = 0; i < n; ++i) p[i] = std::make_pair(strategy[i] / lowerbound[i], i);
-    std::sort(p, p + n);
+    std::vector<std::pair<double, int>> aux(n);
+    
+    for(int i = 0; i < n; ++i) aux[i] = std::make_pair(strategy[i] / lowerbound[i], i);
+    std::sort(aux.begin(), aux.end());
 
     double cur_sum = 0.0, lowerbound_sum = 0.0;
     for(int i = 0; i < n; ++i) cur_sum += strategy[i];
@@ -57,7 +60,7 @@ void EntropyMax(Vector& strategy, const double& gamma, const Vector& lowerbound)
     */
 
     for(int i = 0, idx, pre_idx; i < n; ++i) {
-        idx = p[i].second, pre_idx = (i==0) ? 0 : p[i-1].second;
+        idx = aux[i].second, pre_idx = (i==0) ? 0 : aux[i-1].second;
 
         double Z = cur_sum / (1.0 - gamma * lowerbound_sum);
         if((i == 0 || Z * gamma * lowerbound[pre_idx] >= strategy[pre_idx]) && Z * gamma * lowerbound[idx] <= strategy[idx]) {
@@ -78,6 +81,7 @@ void EntropyMax(Vector& strategy, const double& gamma, const Vector& lowerbound)
     }
 
     strategy = lowerbound;
+    return;
 }
 
 void ProjectionOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {

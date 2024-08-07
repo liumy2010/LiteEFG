@@ -42,8 +42,8 @@ public:
 
     void AggregateInformation(Infoset& infoset, const bool& is_parent, const int& node_status);
     void UpdateTraverse(const int& upd_player);
-    void Update(const GraphNode& strategy_node, const int& upd_player=-1, std::vector<int> upd_color={-1});
-    void Update(std::vector<GraphNode> strategy_nodes, const int& upd_player=-1, std::vector<int> upd_color={-1});
+    void Update(const GraphNode& strategy_node, const int& upd_player=-1, std::vector<int> upd_color={-1}, const std::string& traverse_type="default");
+    void Update(std::vector<GraphNode> strategy_nodes, const int& upd_player=-1, std::vector<int> upd_color={-1}, const std::string& traverse_type="default");
     
     void UpdateStrategy(const GraphNode& strategy_node, const bool& update_best=false);
     void UpdateStrategy(const std::vector<GraphNode>& strategy_node, const bool& update_best=false);
@@ -61,6 +61,10 @@ public:
 
     std::vector<std::pair<std::string, std::vector<double>> > GetValue(const int& player, const GraphNode& node);
     std::vector<std::pair<std::string, std::vector<double>> > GetStrategy(const int& player, const GraphNode& strategy_node, const std::string& type_name="default");
+
+    void SetValue(const int& player, const GraphNode& node, const std::vector<std::vector<double>>& values);
+
+    ~Environment();
 };
 
 #endif

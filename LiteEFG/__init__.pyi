@@ -8,6 +8,7 @@ from LiteEFG._LiteEFG import aggregate
 from LiteEFG._LiteEFG import argmax
 from LiteEFG._LiteEFG import argmin
 from LiteEFG._LiteEFG import backward
+from LiteEFG._LiteEFG import cat
 from LiteEFG._LiteEFG import const
 from LiteEFG._LiteEFG import copy
 from LiteEFG._LiteEFG import dot
@@ -30,4 +31,4 @@ from __future__ import annotations
 from . import _LiteEFG
 from . import baselines
 from . import src
-__all__ = ['Environment', 'FileEnv', 'Graph', 'GraphNode', 'GraphNodeStatus', 'OpenSpielEnv', 'Vector', 'aggregate', 'argmax', 'argmin', 'backward', 'baselines', 'const', 'copy', 'dot', 'euclidean', 'exp', 'forward', 'log', 'max', 'maximum', 'mean', 'min', 'minimum', 'negative_entropy', 'normalize', 'project', 'set_seed', 'src', 'sum']
+__all__ = ['Environment', 'FileEnv', 'Graph', 'GraphNode', 'GraphNodeStatus', 'OpenSpielEnv', 'Vector', 'aggregate', 'argmax', 'argmin', 'backward', 'baselines', 'cat', 'const', 'copy', 'dot', 'euclidean', 'exp', 'forward', 'log', 'max', 'maximum', 'mean', 'min', 'minimum', 'negative_entropy', 'normalize', 'project', 'set_seed', 'src', 'sum']

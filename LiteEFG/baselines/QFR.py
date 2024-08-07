@@ -1,8 +1,13 @@
-import LiteEFG
+#######################################################
+# Q-Function based Regret Minimization (QFR)
+# Mingyang Liu, Gabriele Farina, and Asuman Ozdaglar. "A Policy-Gradient Approach to Solving Imperfect-Information Games with Iterate Convergence."
+#######################################################
+
+import  LiteEFG
 from typing import Literal
 
 class graph(LiteEFG.Graph):
-    def __init__(self, eta=0.001, tau=0.001, gamma=0.001, regularizer: Literal["Euclidean", "Entropy"]="Entropy", feedback="Q", weighted=False):
+    def __init__(self, eta=0.001, tau=0.001, gamma=0.001, regularizer: Literal["Euclidean", "Entropy"]="Entropy", feedback="Q", weighted=False, bidilated=True):
         super().__init__()
 
         self.eta = eta
@@ -19,9 +24,8 @@ class graph(LiteEFG.Graph):
                 self.alpha.inplace(LiteEFG.aggregate(self.alpha, "sum"))
                 self.alpha.inplace((self.alpha.max() + 1) * 2)
 
-
             self.ev = LiteEFG.const(1, 0.0)
-            self.coef = self.alpha * self.tau
+            self.coef = self.tau
             self.mu = self.subtree_size.normalize(p_norm=1.0, ignore_negative=True)
             self.eta_coef = self.eta * self.coef
             
@@ -31,15 +35,15 @@ class graph(LiteEFG.Graph):
         with LiteEFG.backward():
 
             if(self.feedback in ["Q", "traj-Q", "counterfactual"]):
-                self.full_information()
+                self._full_information()
             elif self.feedback == "Outcome":
-                self.outcome_sampling()
+                self._outcome_sampling()
 
         print("===============Graph is ready for QFR===============")
         print("eta: %f, tau: %f, gamma: %f, regularizer: %s, feedback: %s" % (self.eta, self.tau, self.gamma, self.regularizer, self.feedback))
         print("====================================================\n")
     
-    def full_information(self):
+    def _full_information(self):
         if self.feedback == "counterfactual":
             self.m_th = 1.0
         elif self.feedback == "traj-Q":
@@ -47,36 +51,38 @@ class graph(LiteEFG.Graph):
         else:
             self.m_th = self.opponent_reach_prob
         
-        self.eta_tau = self.eta_coef / self.m_th + 1 # 1 + eta * tau * alpha / m_th
-        gradient = LiteEFG.aggregate(self.ev, "sum") + self.utility
-        self.ev.inplace(LiteEFG.dot(gradient, self.u))
-
-        if self.regularizer == "Euclidean":
-            reg = LiteEFG.euclidean(self.u)
-        else:
-            reg = LiteEFG.negative_entropy(self.u, shifted=True)
+        self.eta_tau = self.eta_coef / self.m_th * self.opponent_reach_prob + 1 # 1 + eta * tau / m_th * mu_{-p}(s)
         
-        self.ev.inplace(self.ev - reg * self.coef)
+        if self.regularizer == "Euclidean":
+            reg = LiteEFG.euclidean(self.u) * self.coef
+        else:
+            reg = LiteEFG.negative_entropy(self.u, shifted=True) * self.coef
 
-        gradient.inplace(gradient / self.m_th * self.eta)
+        bidilated_reg = reg * self.reach_prob
+        gradient = LiteEFG.aggregate(self.ev, "sum") + self.utility \
+                                                    + LiteEFG.aggregate(bidilated_reg, "sum", player="opponents")
+        
+        self.ev.inplace(LiteEFG.dot(gradient, self.u) - reg * self.opponent_reach_prob)
+
+        gradient.inplace(gradient / self.m_th * self.eta / self.alpha)
 
         self._update(self.bar_u, self.bar_u, gradient)
         self._update(self.u, self.bar_u, gradient)
     
-    def outcome_sampling(self):
-        self.m_th = 1.0 / self.reach_prob
-        self.eta_tau = self.eta_coef / self.m_th + 1 # 1 + eta * tau * alpha / m_th
-        gradient = LiteEFG.aggregate(self.ev, "sum") + self.utility
-        self.ev.inplace(LiteEFG.sum(gradient))
+    def _outcome_sampling(self):
+        #self.m_th = 1.0 / self.reach_prob
+        self.eta_tau = self.eta_coef + 1 # 1 + eta * tau
 
         if self.regularizer == "Euclidean":
-            reg = LiteEFG.euclidean(self.u)
+            reg = LiteEFG.euclidean(self.u) * self.coef
         else:
-            reg = LiteEFG.negative_entropy(self.u, shifted=True)
-        
-        self.ev.inplace(self.ev - reg * self.coef / self.opponent_reach_prob)
+            reg = LiteEFG.negative_entropy(self.u, shifted=True) * self.coef
 
-        gradient.inplace(gradient / self.u * self.eta)
+        gradient = LiteEFG.aggregate(self.ev, "sum") + self.utility \
+                                                    + LiteEFG.aggregate(reg, "sum", player="opponents")
+        self.ev.inplace(LiteEFG.sum(gradient) - reg)
+
+        gradient.inplace(gradient / self.u * self.eta / self.alpha)
 
         self._update(self.bar_u, self.bar_u, gradient)
         self._update(self.u, self.bar_u, gradient)
@@ -101,7 +107,7 @@ if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser()
-    parser.add_argument("--game", type=str, default="leduc_poker")
+    parser.add_argument("--game", type=str, default="leduc_poker(suit_isomorphism=True)")
     parser.add_argument("--iter", type=int, default=100000)
     parser.add_argument("--print_freq", type=int, default=1000)
 
@@ -120,6 +126,5 @@ if __name__ == "__main__":
     train(graph(args.eta, args.tau, args.gamma, args.regularizer, args.feedback, args.weighted), traverse_type, "default", args.iter, args.print_freq, args.game)
     # do not need to update strategy for algorithms only need last-iterate
     # it will be faster since LiteEFG do not need to maintain the sequence-form strategy
-    # update_strategy() will enumerate all infosets. However, when using outcome-sampling, at each iteration,
+    # update_strategy() will enumerate all infosets. When using outcome-sampling, at each iteration,
     # the algorithm will only update a trajectory of length height
-    # Solution: lazy-update, TBD

@@ -130,6 +130,8 @@ public:
     
     static GraphNode Pow(const GraphNode& lhs, const Object& rhs);
     static GraphNode Pow(const ObjectDoubleInt& lhs, const GraphNode& rhs);
+
+    static GraphNode Concat(const std::vector<GraphNode>& nodes);
 };
 
 #endif

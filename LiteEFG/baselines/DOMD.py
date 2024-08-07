@@ -38,14 +38,14 @@ class graph(LiteEFG.Graph):
             self._update(bar_gradient, self.bar_u, self.bar_u)
             self._update(gradient, self.u, self.bar_u)
 
-            self.get_ev(bar_gradient, bar_ev, self.bar_u, self.prev_bar_u)
-            self.get_ev(gradient, ev, self.u, self.bar_u)
+            self._get_ev(bar_gradient, bar_ev, self.bar_u, self.prev_bar_u)
+            self._get_ev(gradient, ev, self.u, self.bar_u)
 
         print("===============Graph is ready for DOMD===============")
         print("eta: %f, regularizer: %s" % (self.eta, self.regularizer))
         print("=====================================================\n")
     
-    def get_ev(self, gradient, ev, strategy, ref_strategy):
+    def _get_ev(self, gradient, ev, strategy, ref_strategy):
         if self.regularizer == "Euclidean":
             ev.inplace(LiteEFG.dot(gradient, strategy) - LiteEFG.euclidean(strategy - ref_strategy) * self.coef)
         else:

@@ -20,7 +20,7 @@
 int main(){
     std::string file_name;
     std::cin>>file_name;
-    static Environment* env = new FileEnvironment("../GameInstances/"+file_name, "Enumerate");
+    static Environment* env = new FileEnvironment("../game_instances/"+file_name, "Enumerate");
 
     auto graph = Graph();
     
@@ -41,7 +41,7 @@ int main(){
     auto u = GraphNode::ConstVector(graph.action_set_size, 1.0 / graph.action_set_size);
     auto bar_u = u.Copy();
 
-    BackwardNodeStatus backward_node(true, 2);
+    BackwardNodeStatus backward_node(false);
     backward_node.Enter();
 
     auto m_th = graph.opponent_reach_prob;
@@ -152,6 +152,7 @@ PYBIND11_MODULE(_LiteEFG, m) {
     m.def("aggregate", py::overload_cast<const GraphNode&, const std::string&, const std::string&, const std::string&, const double&>(GraphNode::Aggregate), py::arg(), py::arg("aggregator"), py::arg("object")="children", py::arg("player")="self", py::arg("padding")=0.0);
     m.def("project", py::overload_cast<const GraphNode&, const std::string&, const GraphNode::Object&>(GraphNode::Project), py::arg(), py::arg("distance"), py::arg("gamma")=0.0);
     m.def("project", py::overload_cast<const GraphNode&, const std::string&, const GraphNode::Object&, const GraphNode&>(GraphNode::Project), py::arg(), py::arg("distance"), py::arg("gamma"), py::arg("mu"));
+    m.def("cat", py::overload_cast<const std::vector<GraphNode>&>(GraphNode::Concat), py::arg("nodes"));
 
     m.def("set_seed", Basic::SetSeed, py::arg("seed"));
 
@@ -176,13 +177,14 @@ PYBIND11_MODULE(_LiteEFG, m) {
 
     py::class_<Environment, std::shared_ptr<Environment>>(m, "Environment")
         .def("set_graph", &Environment::SetGraph, py::arg("graph"))
-        .def("update", py::overload_cast<const GraphNode&, const int&, std::vector<int>>(&Environment::Update), py::arg("strategy"), py::arg("upd_player") = -1, py::arg("upd_color")=std::vector<int>{-1})
-        .def("update", py::overload_cast<std::vector<GraphNode>, const int&, std::vector<int>>(&Environment::Update), py::arg("strategies"), py::arg("upd_player") = -1, py::arg("upd_color")=std::vector<int>{-1})
+        .def("update", py::overload_cast<const GraphNode&, const int&, std::vector<int>, const std::string&>(&Environment::Update), py::arg("strategy"), py::arg("upd_player") = -1, py::arg("upd_color")=std::vector<int>{-1}, py::arg("traverse_type")="default")
+        .def("update", py::overload_cast<std::vector<GraphNode>, const int&, std::vector<int>, const std::string&>(&Environment::Update), py::arg("strategies"), py::arg("upd_player") = -1, py::arg("upd_color")=std::vector<int>{-1}, py::arg("traverse_type")="default")
         .def("update_strategy", py::overload_cast<const GraphNode&, const bool&>(&Environment::UpdateStrategy), py::arg("strategy"), py::arg("update_best") = false)
         .def("exploitability", py::overload_cast<const GraphNode&, const std::string&>(&Environment::Exploitability), py::arg("strategy"), py::arg("type_name") = "default")
         .def("utility", py::overload_cast<const GraphNode&, const std::string&>(&Environment::Utility), py::arg("strategy"), py::arg("type_name") = "default")
         .def("get_value", &Environment::GetValue, py::arg("player"), py::arg("node"))
-        .def("get_strategy", &Environment::GetStrategy, py::arg("player"), py::arg("strategy"), py::arg("type_name") = "default");
+        .def("get_strategy", &Environment::GetStrategy, py::arg("player"), py::arg("strategy"), py::arg("type_name") = "default")
+        .def("set_value", &Environment::SetValue, py::arg("player"), py::arg("node"), py::arg("values"));
     //py::class_<NFG, Environment, std::shared_ptr<NFG>>(m, "NFG")
     //    .def(py::init<const int&, const std::vector<Tensor>&>(), py::arg("num_players"), py::arg("utility_matrix"));
     //py::class_<Leduc, Environment, std::shared_ptr<Leduc>>(m, "Leduc")

@@ -239,13 +239,13 @@ void Environment::UpdateTraverse(const int& upd_player){
     }
 }
 
-void Environment::Update(const GraphNode& strategy_node, const int& upd_player, std::vector<int> upd_color){
+void Environment::Update(const GraphNode& strategy_node, const int& upd_player, std::vector<int> upd_color, const std::string& traverse_type){
     std::vector<GraphNode> strategy_nodes;
     for(int i=1;i<=player_num;i++) strategy_nodes.push_back(strategy_node);
-    Update(strategy_nodes, upd_player, upd_color);
+    Update(strategy_nodes, upd_player, upd_color, traverse_type);
 }
 
-void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_player, std::vector<int> upd_color){
+void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_player, std::vector<int> upd_color, const std::string& traverse_type){
     /*
         strategy_name is the name of the variable in results that contains the strategy_name to traverse the tree
         traverse is the method to traverse the tree
@@ -271,7 +271,15 @@ void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_p
     traverse_order.clear();
     nodes[0] -> reach.Resize(player_num+1); // players include chance player, with chance player idx = 0
     nodes[0] -> reach.Set(1.0);
-    if(traverse == Traverse::Enumerate){
+    
+    int current_traverse = traverse;
+    if(traverse_type != "default"){
+        if(traverse_type == "Enumerate") current_traverse = Traverse::Enumerate;
+        else if(traverse_type == "Outcome") current_traverse = Traverse::Outcome;
+        else if(traverse_type == "External") current_traverse = Traverse::External;
+        else throw std::invalid_argument("Only support [Enumerate, Outcome, External] for traverse");
+    }
+    if(current_traverse == Traverse::Enumerate){
         traverse_order.resize(nodes.size());
         for (int i=0; i<nodes.size(); ++i){
             Node* node = nodes[i];
@@ -281,7 +289,7 @@ void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_p
             traverse_order[i] = node;
         }
         UpdateTraverse(upd_player);
-    } else if (traverse == Traverse::Outcome){
+    } else if (current_traverse == Traverse::Outcome){
         traverse_order.clear();
         traverse_order.push_back(nodes[0]);
         for (int i=0; i<traverse_order.size(); i++){
@@ -295,7 +303,7 @@ void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_p
             traverse_order.push_back(next_node);
         }
         UpdateTraverse(upd_player);
-    } else if (traverse == Traverse::External){
+    } else if (current_traverse == Traverse::External){
         for(int player=1; player<=player_num; player++) if(CheckValidPlayer(player, upd_player)){
             traverse_order.clear();
             traverse_order.push_back(nodes[0]); // same as above
@@ -429,6 +437,9 @@ std::vector<double> Environment::GetSequenceFormStrategy(const int& player, cons
 }
 
 std::vector<std::pair<std::string, std::vector<double>> > Environment::GetValue(const int& player, const GraphNode& node){
+    if(player < 1 || player > player_num){
+        throw std::invalid_argument("player out of range {1, ..., "+std::to_string(player_num)+"}");
+    }
     std::vector<std::pair<std::string, std::vector<double>> > ret;
     for(int i=1; i<infosets[player].size(); ++i){
         Infoset& infoset = infosets[player][i];
@@ -442,6 +453,9 @@ std::vector<std::pair<std::string, std::vector<double>> > Environment::GetValue(
 }
 
 std::vector<std::pair<std::string, std::vector<double>> > Environment::GetStrategy(const int& player, const GraphNode& strategy_node, const std::string& type_name){
+    if(player < 1 || player > player_num){
+        throw std::invalid_argument("player out of range {1, ..., "+std::to_string(player_num)+"}");
+    }
     std::vector<std::pair<std::string, std::vector<double>> > ret;
     sequence_form_strategies[player].GetSequenceFormStrategy(strategy_node.idx, type_name);
     for(int i=1, start_idx, end_idx; i<infosets[player].size(); ++i){
@@ -460,4 +474,27 @@ std::vector<std::pair<std::string, std::vector<double>> > Environment::GetStrate
         ret.push_back({infoset_names[player][i-1], values});
     }
     return ret;
+}
+
+void Environment::SetValue(const int& player, const GraphNode& node, const std::vector<std::vector<double>>& values){
+    if(player < 1 || player > player_num){
+        throw std::invalid_argument("player out of range {1, ..., "+std::to_string(player_num)+"}");
+    }
+    if(values.size() != infosets[player].size()-1){
+        throw std::invalid_argument("values size does not match number of infosets");
+    }
+
+    std::vector<std::pair<std::string, std::vector<double>> > ret;
+    for(int i=1; i<infosets[player].size(); ++i){
+        Infoset& infoset = infosets[player][i];
+        if(values[i-1].size() != infoset.results[node.idx][0].size){
+            throw std::invalid_argument("the size of value in infoset " + infoset_names[player][i-1] + " does not match the variable in the computation graph");
+        }
+        for(int j=0; j<infoset.results[node.idx][0].size; ++j)
+            infoset.results[node.idx][0][j] = values[i-1][j];
+    }
+}
+
+Environment::~Environment(){
+    delete nodes[0]; // only the root node is defined by new and needs to be deleted
 }
