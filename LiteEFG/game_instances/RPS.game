@@ -1,0 +1,21 @@
+# Rock Paper and Scissor instance:
+#
+# Opt {
+#     num_players: 2,
+# }
+#
+node / player 1 actions rock scissor paper
+node /P1:rock player 2 actions rock scissor paper
+node /P1:scissor player 2 actions rock scissor paper
+node /P1:paper player 2 actions rock scissor paper
+node /P1:rock/P2:scissor leaf payoffs 1=1 2=-1
+node /P1:rock/P2:rock leaf payoffs 1=0 2=0
+node /P1:rock/P2:paper leaf payoffs 1=-1 2=1
+node /P1:scissor/P2:scissor leaf payoffs 1=0 2=0
+node /P1:scissor/P2:rock leaf payoffs 1=-1 2=1
+node /P1:scissor/P2:paper leaf payoffs 1=1 2=-1
+node /P1:paper/P2:scissor leaf payoffs 1=-1 2=1
+node /P1:paper/P2:rock leaf payoffs 1=1 2=-1
+node /P1:paper/P2:paper leaf payoffs 1=0 2=0
+infoset start nodes /
+infoset start nodes /P1:rock /P1:scissor /P1:paper
