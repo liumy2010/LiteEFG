@@ -116,7 +116,7 @@ class OpenSpielEnv(LiteEFG.FileEnv):
         super().__init__(file_name, traverse_type=traverse_type)
     
     def get_value(self, player: int, node: LiteEFG.GraphNode) -> typing.List[typing.Tuple[str, float]]:
-        values = super().get_value(player+1, node)
+        values = super().get_value(player, node)
         policy = TabularPolicy(self.game)
         ret = []
         for k, _ in values:
@@ -149,6 +149,9 @@ class OpenSpielEnv(LiteEFG.FileEnv):
         #expl = exploitability.exploitability(self.game, policy)
         #print("Exploitability: %f"%expl)
         return policy, df_list
+
+    def set_value(self, player: int, node: LiteEFG.GraphNode, values: typing.List[typing.List]) -> None:
+        super().set_value(player, node, values)
 
     def interact(self, policy: TabularPolicy, controlled_player=0, reveal_private=True, epochs=1000) -> None:
 
@@ -196,7 +199,7 @@ class OpenSpielEnv(LiteEFG.FileEnv):
             print("Average Payoff of Each Player: ", accumulated_payoff / (epoch+1))
 
 if __name__ == "__main__":
-    env = OpenSpielEnv(pyspiel.load_game("leduc_poker(suit_isomorphism=True)"))
+    env = OpenSpielEnv(pyspiel.load_game("liars_dice(dice_sides=6)"))
     import LiteEFG.baselines.CFR as CFR
     import LiteEFG.baselines.CFRplus as CFRplus
 

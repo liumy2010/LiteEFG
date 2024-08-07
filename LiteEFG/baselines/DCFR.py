@@ -64,9 +64,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--game", type=str, default="leduc_poker")
     parser.add_argument("--traverse_type", type=str, choices=["Enumerate", "External"], default="Enumerate")
-    parser.add_argument("--alpha", type=int, default=1.5)
-    parser.add_argument("--beta", type=int, default=0)
-    parser.add_argument("--gamma", type=int, default=2)
+    parser.add_argument("--alpha", type=float, default=1.5)
+    parser.add_argument("--beta", type=float, default=0)
+    parser.add_argument("--gamma", type=float, default=2)
     parser.add_argument("--iter", type=int, default=100000)
     parser.add_argument("--print_freq", type=int, default=1000)
 

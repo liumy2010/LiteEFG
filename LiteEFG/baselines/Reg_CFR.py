@@ -31,7 +31,7 @@ class graph(LiteEFG.Graph):
 
             self.sqr_lambda = LiteEFG.const(1, kappa)
             self.tau = LiteEFG.const(1, tau)
-            self.coef = self.alpha * self.tau
+            self.coef = self.tau
             self.u = LiteEFG.const(self.action_set_size, 1.0 / self.action_set_size)
             self.bar_u = self.u.copy()
             prev_gradient = LiteEFG.const(size=self.action_set_size, val=0.0)
@@ -56,17 +56,17 @@ class graph(LiteEFG.Graph):
             self._update(gradient, self.bar_u, self.bar_u, True)
             self._update(gradient, self.u, self.bar_u, False)
 
-            self.get_ev(gradient, ev, self.u, self.bar_u)
+            self._get_ev(gradient, ev, self.u, self.bar_u)
         
         with LiteEFG.backward(color=1):
             self.tau.inplace(self.tau * 0.5)
-            self.coef.inplace(self.alpha * self.tau)
+            self.coef.inplace(self.tau)
 
         print("===============Graph is ready for Reg-DOMD===============")
         print("kappa: %f, tau: %f, regularizer: %s" % (kappa, tau, self.regularizer))
         print("=====================================================\n")
     
-    def get_ev(self, gradient, ev, strategy, ref_strategy):
+    def _get_ev(self, gradient, ev, strategy, ref_strategy):
         if self.regularizer == "Euclidean":
             ev.inplace(LiteEFG.dot(gradient, strategy) - LiteEFG.euclidean(strategy) * self.coef)
         else:
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     parser.add_argument("--print_freq", type=int, default=1000)
 
     parser.add_argument("--kappa", help="initial reciprocal of learning rate", type=float, default=1.0)
-    parser.add_argument("--tau", help="regularization coefficient", type=float, default=0.1)
+    parser.add_argument("--tau", help="regularization coefficient", type=float, default=0.001)
     parser.add_argument("--shrink-iter", help="shrink tau by half every shrink-iter iterations", type=int, default=100000)
     parser.add_argument("--regularizer", type=str, choices=["Euclidean", "Entropy"], default="Euclidean")
     parser.add_argument("--weighted", help="weighted dilated regularizer or not", action="store_true")

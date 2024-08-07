@@ -116,6 +116,7 @@ Here's an example of computing the Fibonacci sequence.
 - `GraphNode.maximum(y) / LiteEFG.maximum(x, y)`: Return $\mathbf{z}$ with $z_i=\max(x_i,y_i)$. Also supports `GraphNode.maximum(scalar) / LiteEFG.maximum(x, scalar)`
 - `GraphNode.minimum(y) / LiteEFG.minimum(x, y)`: Return $\mathbf{z}$ with $z_i=\min(x_i,y_i)$. Also supports `GraphNode.minimum(scalar) / LiteEFG.minimum(x, scalar)`
 - `x**y`: `y` should be a scalar and it will return $(x_1^y, x_2^y, ..., x_n^y)$
+- `LiteEFG.cat(nodes_list: list)`: Concatenate all nodes in the nodes_list
 
 #### Game Specific Operations
 - `GraphNode.project(distance_name : ["L2", "KL"], gamma=0.0, mu=uniform_distribution)`: Project $\mathbf{x}\in\mathbf{R}^N$ to the perturbed simplex $\Delta_N:=\\{\mathbf{v}\succeq \gamma\mathbf{\mu}\colon \sum_i v_i=1\\}$, with respect to either Euclidean distance or `KL`-Divergence. By default, $\gamma=0.0$ and $\mathbf{\mu}=\frac{1}{N}\mathbf{1}$
@@ -123,12 +124,12 @@ Here's an example of computing the Fibonacci sequence.
 - `LiteEFG.aggregate(x, aggregator_name : ["sum", "mean", "max", "min"], object_name : ["children", "parent"]="children", player : ["self", "opponents"]="self", padding=0.0)`: Aggregate variables from either `object_name` infoset. By default, `object_name="children"`
   - `object_name="children"`: For each action `a` of infoset `I`, the vector stored in `GraphNode` `x` of subsequent infosets under `(I,a)` will be concatenated into one vector. Then, the vector will be aggregated via `aggregator_name`. At last, the resulted scalars of each `(I,a)` pair will be concatenated again and returned. Therefore, the returned `GraphNode` stores a vector of size `action_set_size`. If there's no subsequent infoset under an `(I,a)` pair, use `padding` as the scalar for `(I,a)`
   - `object_name="parent"`: Assume `I` is a children of infoset-action pair `(I',a')`. If the vector stored at `GraphNode` `x` is of size `action_set_size` of infoset `I'`, then its $(a')^{th}$ component will be returned. Otherwise, if `x` is simply a scalar, `x` will be returned. If no parent exists, return `padding`
-  - `player` indicates whether to aggregate infosets belong to the player herself or aggregate infosets belong to opponents. An example can be found in `LiteEFG/baselines/Bil_QFR.py`
+  - `player` indicates whether to aggregate infosets belong to the player herself or aggregate infosets belong to opponents. An example can be found in `LiteEFG/baselines/QFR.py`
 
 ### Environments
 
-- `Environment.update(strategies, upd_player=-1, upd_color=[-1])`: Update the computation graph stored in the environment. `strategies` is a list of length `num_players` which specify the strategy used to traverse the game for each player. `upd_player=-1` means that the graph of all players will be updated. Otherwise, only update the graph of `upd_player`. `upd_color=[-1]` means that all nodes will be updated. Otherwise, only node with the color in `upd_color` will be updated. An example can be found in `LiteEFG/baselines/CMD.py`
-- `Environment.update(strategy, upd_player=-1, upd_color=[-1])`: Same as `Environment.update([strategy, strategy, ..., strategy], upd_player, upd_color)`, *i.e.* all players use `strategy` to traverse the game
+- `Environment.update(strategies, upd_player=-1, upd_color=[-1], traverse_type="default")`: Update the computation graph stored in the environment. `strategies` is a list of length `num_players` which specify the strategy used to traverse the game for each player. `upd_player=-1` means that the graph of all players will be updated. Otherwise, only update the graph of `upd_player`. `upd_color=[-1]` means that all nodes will be updated. Otherwise, only node with the color in `upd_color` will be updated. An example can be found in `LiteEFG/baselines/CMD.py`. When `traverse_type` is "default", the environment will be traversed by the traverse_type specified when defining the environment. Otherwise, user can also input a specific traverse type among ["Enumerate", "External", "Outcome"]
+- `Environment.update(strategy, upd_player=-1, upd_color=[-1], traverse_type="default")`: Same as `Environment.update([strategy, strategy, ..., strategy], upd_player, upd_color)`, *i.e.* all players use `strategy` to traverse the game
 - `Environment.update_strategy(strategy, update_best=False)`: Store the sequence-form strategy corresponding to the behavior-form strategy stored in `strategy`
   - Last-iterate: $\mathbf{x}_T$
   - Average-iterate: $\frac{1}{T} \sum\limits_{t=1}^{T} \mathbf{x}_t$
@@ -143,6 +144,7 @@ Here's an example of computing the Fibonacci sequence.
 - `Environment.utility(strategy, type_name="default")`: Similar to `Environment.exploitability` above, but returns the utility of each player when all players use `strategy`
 - `Environment.get_value(player, node)`: Return a list of `(infoset, vector)` pairs, where vector is the value of `node` in the infoset
 - `Environment.get_strategy(player, strategy, type_name="default")`: Return a list of `(infoset, vector)` pairs, where vector is the value of `strategy` in the infoset. `type_name` is the same meaning as that in `Environment.exploitability`
+- `Environment.set_value(player, node, values: list(list(float)))`: Set the variables at `node` to `values`
 
 #### OpenSpiel Environment
 
@@ -242,8 +244,26 @@ In `LiteEFG`, the baselines are stored in `LiteEFG/LiteEFG/baselines`. Currently
 - Discounted Counterfactual Regret Minimization (DCFR) [[10]](#10)
 - Predictive Counterfactual Regret Minimization (PCFR) [[11]](#11)
 - Q-Function based Regret Minimization (QFR)
-- Regularized Dilated Optimistic Mirror Descent (Reg-DOMD)
-- Regularized Counterfactual Regret Minimization (Reg-CFR)
+- Regularized Dilated Optimistic Mirror Descent (Reg-DOMD) [[12]](#12)
+- Regularized Counterfactual Regret Minimization (Reg-CFR) [[12]](#12)
+- Implicit Exploration Online Mirror Descent (IXOMD) [[13]](#13)
+- Balanced Online Mirror Descent (Balanced OMD) [[14]](#14)
+
+## Citing LiteEFG
+
+If you use LiteEFG in your research, please cite the paper with the following BibTeX:
+
+```bibtex
+@article{liu2024liteefgefficientpythonlibrary,
+      title={{LiteEFG}: An Efficient Python Library for Solving Extensive-form Games}, 
+      author={Mingyang Liu and Gabriele Farina and Asuman Ozdaglar},
+      year={2024},
+      eprint={2407.20351},
+      archivePrefix={arXiv},
+      primaryClass={cs.GT},
+      url={https://arxiv.org/abs/2407.20351}, 
+}
+```
 
 ## References
 <a id="1">[1]</a> 
@@ -257,15 +277,13 @@ Harold W Kuhn. A simplified two-person poker. Contributions to the Theory of Gam
 97–103, 1950.
 
 <a id="4">[4]</a> 
-Finnegan Southey, Michael Bowling, Bryce Larson, Carmelo Piccione, Neil Burch, Darse Billings,
-and Chris Rayner. Bayes’ bluff: opponent modelling in poker. In Proceedings of the Twenty-First
-Conference on Uncertainty in Artificial Intelligence, pages 550–558, 2005.
+Finnegan Southey, Michael Bowling, Bryce Larson, Carmelo Piccione, Neil Burch, Darse Billings, and Chris Rayner. Bayes’ bluff: opponent modelling in poker. Conference on Uncertainty in Artificial Intelligence (2005).
 
 <a id="5">[5]</a> 
 Tammelin, Oskari. "Solving large imperfect information games using CFR+." arXiv preprint arXiv:1407.5042 (2014).
 
 <a id="6">[6]</a> 
-Lee, Chung-Wei, Christian Kroer, and Haipeng Luo. "Last-iterate convergence in extensive-form games. Advances in Neural Information Processing Systems 34 (2021): 14293-14305.
+Lee, Chung-Wei, Christian Kroer, and Haipeng Luo. "Last-iterate convergence in extensive-form games. Advances in Neural Information Processing Systems (2021).
 
 <a id="7">[7]</a> 
 Samuel Sokota, Ryan D'Orazio, J. Zico Kolter, Nicolas Loizou, Marc Lanctot, Ioannis Mitliagkas, Noam Brown, and Christian Kroer. "A Unified Approach to Reinforcement Learning, Quantal Response Equilibria, and Two-Player Zero-Sum Games." International Conference on Learning Representations (2023)
@@ -274,10 +292,19 @@ Samuel Sokota, Ryan D'Orazio, J. Zico Kolter, Nicolas Loizou, Marc Lanctot, Ioan
 Lanctot, Marc, et al. "OpenSpiel: A framework for reinforcement learning in games." arXiv preprint arXiv:1908.09453 (2019).
 
 <a id="9">[9]</a> 
-Piliouras, Georgios, Ryann Sim, and Stratis Skoulakis. "Beyond time-average convergence: Near-optimal uncoupled online learning via clairvoyant multiplicative weights update." Advances in Neural Information Processing Systems 35 (2022): 22258-22269.
+Piliouras, Georgios, Ryann Sim, and Stratis Skoulakis. "Beyond time-average convergence: Near-optimal uncoupled online learning via clairvoyant multiplicative weights update." Advances in Neural Information Processing Systems (2022).
 
 <a id="10">[10]</a> 
 Brown, Noam, and Tuomas Sandholm. "Solving imperfect-information games via discounted regret minimization." Proceedings of the AAAI Conference on Artificial Intelligence. 2019.
 
 <a id="11">[11]</a> 
 Farina, Gabriele, Christian Kroer, and Tuomas Sandholm. "Faster game solving via predictive blackwell approachability: Connecting regret matching and mirror descent." Proceedings of the AAAI Conference on Artificial Intelligence. 2021.
+
+<a id="12">[12]</a> 
+Liu, Mingyang, Asuman Ozdaglar, Tiancheng Yu, and Kaiqing Zhang. "The power of regularization in solving extensive-form games." International Conference on Learning Representations (2023)
+
+<a id="13">[13]</a> 
+Kozuno, Tadashi, Pierre Ménard, Rémi Munos, and Michal Valko. "Learning in two-player zero-sum partially observable Markov games with perfect recall." Advances in Neural Information Processing Systems (2021)
+
+<a id="14">[14]</a> 
+Bai, Yu, Chi Jin, Song Mei, and Tiancheng Yu. "Near-optimal learning of extensive-form games with imperfect information." International Conference on Machine Learning (2022)

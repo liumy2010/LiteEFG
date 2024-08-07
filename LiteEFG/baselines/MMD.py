@@ -27,7 +27,7 @@ class graph(LiteEFG.Graph):
                 self.alpha.inplace((self.alpha.max() + 1) * 2)
 
             self.ev = LiteEFG.const(1, 0.0)
-            self.coef = self.alpha * self.tau
+            self.coef = self.tau
             self.mu = self.subtree_size.normalize(p_norm=1.0, ignore_negative=True)
             self.eta_coef = self.eta * self.coef
             
@@ -61,7 +61,7 @@ class graph(LiteEFG.Graph):
     
     def outcome_sampling(self):
         self.m_th = 1.0 / self.reach_prob
-        self.eta_tau = self.eta_coef + 1 # 1 + eta * tau * alpha / m_th
+        self.eta_tau = self.eta_coef + 1 # 1 + eta * tau / m_th
         gradient = LiteEFG.aggregate(self.ev, "sum") + self.utility
 
         self.ev.inplace(gradient.sum())
@@ -109,4 +109,4 @@ if __name__ == "__main__":
     # it will be faster since LiteEFG do not need to maintain the sequence-form strategy
     # update_strategy() will enumerate all infosets. However, when using outcome-sampling, at each iteration,
     # the algorithm will only update a trajectory of length height
-    # Solution: lazy-update, TBD
+    # Solution: lazy-update

@@ -1,8 +1,8 @@
 #######################################################
 # Regularized Dilated Optimistic Mirror Descent (Reg-DOMD)
 # Mingyang Liu, Asuman Ozdaglar, Tiancheng Yu, and Kaiqing Zhang
-#   "The power of regularization in solving extensive-form games."
-#   International Conference on Learning Representations (2023)
+# "The power of regularization in solving extensive-form games."
+# International Conference on Learning Representations (2023)
 #######################################################
 
 import LiteEFG
@@ -32,7 +32,7 @@ class graph(LiteEFG.Graph):
 
             self.tau = LiteEFG.const(1, tau)
             self.eta_coef = self.alpha / eta
-            self.coef = self.alpha * self.tau
+            self.coef = self.tau
             self.u = LiteEFG.const(self.action_set_size, 1.0 / self.action_set_size)
             self.bar_u = self.u.copy()
 
@@ -45,43 +45,43 @@ class graph(LiteEFG.Graph):
             self._update(bar_gradient, self.bar_u, self.bar_u)
             self._update(gradient, self.u, self.bar_u)
 
-            self.get_ev(bar_gradient, bar_ev, self.bar_u, self.prev_bar_u)
-            self.get_ev(gradient, ev, self.u, self.bar_u)
+            self._get_ev(bar_gradient, bar_ev, self.bar_u, self.prev_bar_u)
+            self._get_ev(gradient, ev, self.u, self.bar_u)
         
         with LiteEFG.backward(color=1):
             self.tau.inplace(self.tau * 0.5)
-            self.coef.inplace(self.alpha * self.tau)
+            self.coef.inplace(self.tau)
 
         print("===============Graph is ready for Reg-DOMD===============")
         print("eta: %f, tau: %f, regularizer: %s" % (self.eta, tau, self.regularizer))
-        print("=====================================================\n")
+        print("=========================================================\n")
     
-    def get_ev(self, gradient, ev, strategy, ref_strategy):
+    def _get_ev(self, gradient, ev, strategy, ref_strategy):
         if not self.out_reg:
             if self.regularizer == "Euclidean":
                 ev.inplace(LiteEFG.dot(gradient, strategy) - LiteEFG.euclidean(strategy - ref_strategy) * self.eta_coef
-                                                            + LiteEFG.euclidean(ref_strategy) * self.coef)
+                                                            - (LiteEFG.dot(ref_strategy, strategy)) * self.tau * self.alpha)
             else:
                 kl = LiteEFG.dot((strategy / ref_strategy).log(), strategy) * self.eta_coef
-                ev.inplace(LiteEFG.dot(gradient, strategy) - kl + self.coef)
+                ev.inplace(LiteEFG.dot(gradient, strategy) - kl - (LiteEFG.dot(ref_strategy.log(), strategy)) * self.tau * self.alpha)
         else:
             if self.regularizer == "Euclidean":
                 ev.inplace(LiteEFG.dot(gradient, strategy) - LiteEFG.euclidean(strategy - ref_strategy) * self.eta_coef
-                                                            - LiteEFG.euclidean(strategy) * self.coef)
+                                                            - LiteEFG.euclidean(strategy) * self.tau * self.alpha)
             else:
                 kl = LiteEFG.dot((strategy / ref_strategy).log(), strategy) * self.eta_coef
-                ev.inplace(LiteEFG.dot(gradient, strategy) - kl - LiteEFG.negative_entropy(strategy) * self.coef)
+                ev.inplace(LiteEFG.dot(gradient, strategy) - kl - LiteEFG.negative_entropy(strategy) * self.tau * self.alpha)
 
     def _update(self, gradient, upd_u, ref_u):
         if not self.out_reg:
             if self.regularizer == "Euclidean":
-                gradient.inplace(gradient - ref_u * self.coef)
+                gradient.inplace(gradient - ref_u * self.alpha * self.tau)
                 gradient_div = gradient / self.eta_coef
                 upd_u.inplace(ref_u + gradient_div)
                 upd_u.inplace(upd_u.project(distance="L2"))
 
             else:
-                gradient.inplace(gradient - (ref_u.log() + 1) * self.coef)
+                gradient.inplace(gradient - (ref_u.log() + 1) * self.alpha * self.tau)
                 gradient_div = gradient / self.eta_coef
                 upd_u.inplace(ref_u.log() + gradient_div)
                 upd_u.inplace(upd_u - upd_u.max())
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     parser.add_argument("--print_freq", type=int, default=1000)
 
     parser.add_argument("--eta", help="learning rate", type=float, default=0.1)
-    parser.add_argument("--tau", help="regularization coefficient", type=float, default=0.1)
+    parser.add_argument("--tau", help="regularization coefficient", type=float, default=0.001)
     parser.add_argument("--shrink-iter", help="shrink tau by half every shrink-iter iterations", type=int, default=100000)
     parser.add_argument("--regularizer", type=str, choices=["Euclidean", "Entropy"], default="Euclidean")
     parser.add_argument("--weighted", help="weighted dilated regularizer or not", action="store_true")

@@ -374,3 +374,22 @@ void PowOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
         result[i] = pow(result[i], power);
     }
 }
+
+void ConcatOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    if (inputs.size() == 0) {
+        throw std::invalid_argument("Concat requires at least 1 input");
+    }
+
+    int size = 0;
+    for(int i=0; i<inputs.size(); ++i) {
+        size += inputs[i]->size;
+    }
+
+    result.Resize(size);
+    for(int i=0, offset=0; i < inputs.size(); ++i) {
+        for(int j = 0; j < inputs[i]->size; ++j) {
+            result[j + offset] = (*inputs[i])[j];
+        }
+        offset += inputs[i]->size;
+    }
+}

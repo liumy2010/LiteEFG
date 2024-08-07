@@ -67,3 +67,7 @@ char FileReader::GetWord(std::string& word){
     }
     return c;
 }
+
+FileReader::~FileReader(){
+    fclose(file);
+}

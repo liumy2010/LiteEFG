@@ -331,3 +331,12 @@ GraphNode GraphNode::Pow(const GraphNode& lhs, const Object& rhs){
 GraphNode GraphNode::Pow(const ObjectDoubleInt& lhs, const GraphNode& rhs){
     return TwoVariableOperation<PowOperation>(lhs, rhs);
 }
+
+GraphNode GraphNode::Concat(const std::vector<GraphNode>& nodes){
+    std::vector<int> dependency;
+    for(const auto& node : nodes){
+        dependency.push_back(node.idx);
+    }
+    graph_nodes->push_back(GraphNode(num_nodes++, dependency, std::make_shared<ConcatOperation>(ConcatOperation()), graph_status));
+    return graph_nodes->back();
+}

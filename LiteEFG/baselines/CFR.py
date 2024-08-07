@@ -1,10 +1,10 @@
 #######################################################
 # Counterfactual Regret Minimization (CFR)
-# Zinkevich, Martin, et al. "Regret minimization in games with incomplete information." 
+# Zinkevich, Martin, Michael Johanson, Michael Bowling, and Carmelo Piccione. "Regret minimization in games with incomplete information." 
 #       Advances in neural information processing systems 20 (2007).
 #######################################################
 # External Sampling Monte-Carlo Counterfactual Regret Minimization (ES-MCCFR)
-# Lanctot, Marc, et al. "Monte Carlo sampling for regret minimization in extensive games." 
+# Lanctot, Marc, Kevin Waugh, Martin Zinkevich, and Michael Bowling. "Monte Carlo sampling for regret minimization in extensive games." 
 #       Advances in neural information processing systems 22 (2009).
 #######################################################
 

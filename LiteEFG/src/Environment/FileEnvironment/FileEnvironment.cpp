@@ -8,10 +8,33 @@
 FileNode::FileNode(const int& player_, const int& infoset_, const int& player_num_) : Node(player_, infoset_, player_num_) {
     utility = std::vector<double>(player_num_+1, 0.0);
     actions.clear();
+    is_root = true;
 }
 
 double FileNode::GetUtility(const int& player){
     return utility[player];
+}
+
+void FileEnvironment::GetNextNode(const bool& is_openspiel){
+    std::string name;
+    if(!is_openspiel){
+        for(auto& node : file_nodes){
+            node.next_node.clear();
+            for(int i=0; i<node.actions.size(); ++i){
+                name = (node.name.back() == '/') ? node.name : node.name + '/';
+                name = (node.player == 0) ? name + "C:" : name + 'P' + std::to_string(node.player) + ':';
+                name += node.actions[i];
+                node.next_node.push_back(node_map[name]);
+            }
+        }
+    } else{
+        for(auto& node : file_nodes){
+            node.next_node.clear();
+            for(int i=0; i<node.actions.size(); ++i){
+                node.next_node.push_back(node_map[node.actions[i]]);
+            }
+        }
+    }
 }
 
 FileEnvironment::FileEnvironment(const std::string& file_name_, const std::string& traverse_)
@@ -22,6 +45,7 @@ FileEnvironment::FileEnvironment(const std::string& file_name_, const std::strin
 
     file_nodes.clear();
     node_map.clear();
+    infoset_map.clear();
     
     std::string name, player_name, temp_name;
     char c;
@@ -47,6 +71,7 @@ FileEnvironment::FileEnvironment(const std::string& file_name_, const std::strin
 
     if(player_num == -1) throw std::runtime_error("Please specify the number of players at the beginning of the file");
     infoset_names.resize(player_num+1);
+    infoset_names_backup.resize(player_num+1);
     infoset_num = std::vector<int>(player_num+1, 0);
     
     while(true){
@@ -131,36 +156,54 @@ FileEnvironment::FileEnvironment(const std::string& file_name_, const std::strin
                 if(it == node_map.end()) throw std::runtime_error("Please specify all nodes before defining infosets: Infoset: " + temp_name + " Node: " + name);
                 player = file_nodes[it -> second].player;
                 file_nodes[it -> second].infoset = infoset_num[player] + 1;
-                if(ccc == '\n') {++infoset_num[player]; break;}
+                if(ccc == '\n' || ccc == EOF) {++infoset_num[player]; break;}
             }
-            infoset_names[player].push_back(temp_name);
+            infoset_names_backup[player].push_back(temp_name);
         }
         else break;
         c = file_reader.Read();
     }
 
     for(auto& node : file_nodes){
-        if(node.player !=0 && node.infoset == 0) node.infoset = ++infoset_num[node.player];
+        if(node.player !=0 && node.infoset == 0) {
+            node.infoset = ++infoset_num[node.player];
+            infoset_names_backup[node.player].push_back("pl"+std::to_string(node.player)+"_"+std::to_string(infoset_num[node.player])+"__singleton");
+        }
         // sometimes singleton infosets are not mentioned in the file, so we need to add them manually
     }
+    GetNextNode(is_openspiel);
 
-    if(!is_openspiel){
-        for(auto& node : file_nodes){
-            for(int i=0; i<node.actions.size(); ++i){
-                name = (node.name.back() == '/') ? node.name : node.name + '/';
-                name = (node.player == 0) ? name + "C:" : name + 'P' + std::to_string(node.player) + ':';
-                name += node.actions[i];
-                node.next_node.push_back(node_map[name]);
-            }
-        }
-    } else{
-        for(auto& node : file_nodes){
-            for(int i=0; i<node.actions.size(); ++i){
-                node.next_node.push_back(node_map[node.actions[i]]);
-            }
+    for(auto& node : file_nodes){
+        for(int i=0; i<node.next_node.size(); ++i){
+            file_nodes[node.next_node[i]].is_root = false;
         }
     }
-    for(auto& node : file_nodes){
-        nodes.push_back(&node);
+    int root=0;
+    for(root=0; root<file_nodes.size(); ++root){
+        if(file_nodes[root].is_root) break;
+    }
+    if(root == file_nodes.size()) throw std::runtime_error("No root node found");
+    
+    nodes.push_back(&file_nodes[root]);
+    node_map[file_nodes[root].name] = 0;
+    for(int i=0; i<nodes.size(); ++i){
+        for(int j=0; j<nodes[i]->next_node.size(); ++j){
+            nodes.push_back(&file_nodes[nodes[i]->next_node[j]]);
+            node_map[file_nodes[nodes[i]->next_node[j]].name] = nodes.size()-1;
+        }
+    }
+    if(nodes.size() != node_num)
+        throw std::runtime_error("Some nodes are not connected to the tree");
+
+    GetNextNode(is_openspiel);
+    for(int i=0; i<=player_num; ++i) infoset_num[i] = 0;
+    for(int i=0; i<nodes.size(); ++i) if(nodes[i]->player != 0){
+        auto it = infoset_map.find(std::make_pair(nodes[i]->player, nodes[i]->infoset));
+        if(it == infoset_map.end()){
+            infoset_map[std::make_pair(nodes[i]->player, nodes[i]->infoset)] = ++infoset_num[nodes[i]->player];
+            it = infoset_map.find(std::make_pair(nodes[i]->player, nodes[i]->infoset));
+            infoset_names[nodes[i]->player].push_back(infoset_names_backup[nodes[i]->player][nodes[i]->infoset-1]);
+        }
+        nodes[i]->infoset = it -> second;
     }
 }
