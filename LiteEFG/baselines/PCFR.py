@@ -1,3 +1,10 @@
+#######################################################
+# Predictive Counterfactual Regret Minimization+ (PCFR+)
+# Farina, Gabriele, Christian Kroer, and Tuomas Sandholm.
+# "Faster game solving via predictive blackwell approachability: Connecting regret matching and mirror descent." 
+# Proceedings of the AAAI Conference on Artificial Intelligence (2021).
+#######################################################
+
 import LiteEFG
 
 class graph(LiteEFG.Graph):
@@ -19,7 +26,7 @@ class graph(LiteEFG.Graph):
         
         print("===============Graph is ready for PCFR+===============")
         print()
-        print("====================================================\n")
+        print("======================================================\n")
 
     def update_graph(self, env : LiteEFG.Environment) -> None:
         env.update(self.strategy, upd_player=1)

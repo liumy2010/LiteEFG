@@ -130,7 +130,7 @@ class CMakeBuild(build_ext):
 
 setup(
     name="LiteEFG",
-    version="0.1.1",
+    version="0.1.2",
     author="Mingyang Liu",
     author_email="liumy0723@gmail.com",
     description="An efficient EFG solver based on computation graph",

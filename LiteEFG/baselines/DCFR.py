@@ -1,7 +1,8 @@
 #######################################################
 # Discounted Counterfactual Regret Minimization (DCFR)
-# Brown, Noam, and Tuomas Sandholm. "Solving imperfect-information games via discounted regret minimization." 
-# AAAI 2019.
+# Brown, Noam, and Tuomas Sandholm.
+# "Solving imperfect-information games via discounted regret minimization." 
+# Proceedings of the AAAI Conference on Artificial Intelligence (2019).
 #######################################################
 
 import LiteEFG
@@ -49,6 +50,10 @@ class graph(LiteEFG.Graph):
                 self.pos_coeff.inplace((self.timestep ** self.alpha) / (self.timestep ** self.alpha + 1))
             if abs(self.beta) < self.threshold:
                 self.neg_coeff.inplace((self.timestep ** self.beta) / (self.timestep ** self.beta + 1))
+            
+        print("===============Graph is ready for DCFR===============")
+        print("alpha: %f, beta: %f, gamma: %f" % (self.alpha, self.beta, self.gamma))
+        print("====================================================\n")
 
     def update_graph(self, env : LiteEFG.Environment) -> None:
         env.update(self.strategy, upd_player=1)

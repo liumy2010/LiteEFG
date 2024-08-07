@@ -1,8 +1,8 @@
 #######################################################
 # Balanced Online Mirror Descent (Balanced-OMD)
-# Bai, Yu, Chi Jin, Song Mei, and Tiancheng Yu
+# Bai, Yu, Chi Jin, Song Mei, and Tiancheng Yu.
 # "Near-optimal learning of extensive-form games with imperfect information."
-# International Conference on Machine Learning (2022)
+# International Conference on Machine Learning (2022).
 #######################################################
 
 import LiteEFG

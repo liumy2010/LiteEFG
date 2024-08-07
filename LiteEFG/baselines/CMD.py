@@ -1,7 +1,8 @@
 #######################################################
 # Clairvoyant Mirror Descent (CMD)
-# Piliouras, Georgios, Ryann Sim, and Stratis Skoulakis. "Beyond time-average convergence: Near-optimal uncoupled online learning via clairvoyant multiplicative weights update." 
-#      Advances in Neural Information Processing Systems 35 (2022): 22258-22269.
+# Piliouras, Georgios, Ryann Sim, and Stratis Skoulakis.
+# "Beyond time-average convergence: Near-optimal uncoupled online learning via clairvoyant multiplicative weights update." 
+# Advances in Neural Information Processing Systems (2022).
 #######################################################
 
 import LiteEFG

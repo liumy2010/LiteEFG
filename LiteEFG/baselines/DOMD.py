@@ -1,7 +1,8 @@
 #######################################################
 # Dilated Optimistic Mirror Descent (DOMD)
-# Lee, Chung-Wei, Christian Kroer, and Haipeng Luo. "Last-iterate convergence in extensive-form games." 
-#      Advances in Neural Information Processing Systems 34 (2021): 14293-14305.
+# Lee, Chung-Wei, Christian Kroer, and Haipeng Luo.
+# "Last-iterate convergence in extensive-form games." 
+# Advances in Neural Information Processing Systems (2021).
 #######################################################
 
 import LiteEFG
