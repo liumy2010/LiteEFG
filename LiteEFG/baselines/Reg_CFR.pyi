@@ -3,7 +3,7 @@ from __future__ import annotations
 import math as math
 __all__ = ['LiteEFG', 'graph', 'math']
 class graph(LiteEFG._LiteEFG.Graph):
-    def __init__(self, kappa = 1.0, tau = 0.1, regularizer: typing.Literal['Euclidean', 'Entropy'] = 'Entropy', weighted = False, shrink_iter = 100000, out_reg = False):
+    def __init__(self, kappa = 1.0, tau = 0.1, gamma = 0.001, regularizer: typing.Literal['Euclidean', 'Entropy'] = 'Entropy', weighted = False, shrink_iter = 100000, out_reg = False):
         ...
     def _get_ev(self, gradient, ev, strategy, ref_strategy):
         ...

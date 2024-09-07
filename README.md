@@ -141,7 +141,9 @@ Here's an example of computing the Fibonacci sequence.
   - `type_name="avg-iterate"`: Need to call `Environment.update_strategy(strategy)` first. Then, compute the exploitability corresponding to the average-iterate of the stored sequence-form strategy
   - `type_name="linear-avg-iterate"`: Need to call `Environment.update_strategy(strategy)` first. Then, compute the exploitability corresponding to the linear average-iterate of the stored sequence-form strategy
   `type_name="last-iterate"`: Need to call `Environment.update_strategy(strategy, update_best=True)` first. Then, compute the exploitability corresponding to the best-iterate of the stored sequence-form strategy
+- `Environment.exploitability(strategy_list, type_name="default")`: Return the exploitability of each player when player `i` uses `strategy_list[i-1]`
 - `Environment.utility(strategy, type_name="default")`: Similar to `Environment.exploitability` above, but returns the utility of each player when all players use `strategy`
+- `Environment.utility(strategy_list, type_name="default")`: Similar to `Environment.exploitability` above, but returns the utility of each player when player `i` uses `strategy_list[i-1]`
 - `Environment.get_value(player, node)`: Return a list of `(infoset, vector)` pairs, where vector is the value of `node` in the infoset
 - `Environment.get_strategy(player, strategy, type_name="default")`: Return a list of `(infoset, vector)` pairs, where vector is the value of `strategy` in the infoset. `type_name` is the same meaning as that in `Environment.exploitability`
 - `Environment.set_value(player, node, values: list(list(float)))`: Set the variables at `node` to `values`
