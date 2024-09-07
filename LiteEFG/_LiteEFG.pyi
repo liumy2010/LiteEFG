@@ -2,7 +2,11 @@ from __future__ import annotations
 import typing
 __all__ = ['Environment', 'FileEnv', 'Graph', 'GraphNode', 'GraphNodeStatus', 'Vector', 'aggregate', 'argmax', 'argmin', 'backward', 'cat', 'const', 'copy', 'dot', 'euclidean', 'exp', 'forward', 'log', 'max', 'maximum', 'mean', 'min', 'minimum', 'negative_entropy', 'normalize', 'project', 'set_seed', 'sum']
 class Environment:
+    @typing.overload
     def exploitability(self, strategy: GraphNode, type_name: str = 'default') -> list[float]:
+        ...
+    @typing.overload
+    def exploitability(self, strategy: list[GraphNode], type_name: str = 'default') -> list[float]:
         ...
     def get_strategy(self, player: int, strategy: GraphNode, type_name: str = 'default') -> list[tuple[str, list[float]]]:
         ...
@@ -20,7 +24,11 @@ class Environment:
         ...
     def update_strategy(self, strategy: GraphNode, update_best: bool = False) -> None:
         ...
+    @typing.overload
     def utility(self, strategy: GraphNode, type_name: str = 'default') -> list[float]:
+        ...
+    @typing.overload
+    def utility(self, strategy: list[GraphNode], type_name: str = 'default') -> list[float]:
         ...
 class FileEnv(Environment):
     def __init__(self, file_name: str, traverse_type: str = 'Enumerate') -> None:

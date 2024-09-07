@@ -181,7 +181,9 @@ PYBIND11_MODULE(_LiteEFG, m) {
         .def("update", py::overload_cast<std::vector<GraphNode>, const int&, std::vector<int>, const std::string&>(&Environment::Update), py::arg("strategies"), py::arg("upd_player") = -1, py::arg("upd_color")=std::vector<int>{-1}, py::arg("traverse_type")="default")
         .def("update_strategy", py::overload_cast<const GraphNode&, const bool&>(&Environment::UpdateStrategy), py::arg("strategy"), py::arg("update_best") = false)
         .def("exploitability", py::overload_cast<const GraphNode&, const std::string&>(&Environment::Exploitability), py::arg("strategy"), py::arg("type_name") = "default")
+        .def("exploitability", py::overload_cast<const std::vector<GraphNode>&, const std::string&>(&Environment::Exploitability), py::arg("strategy"), py::arg("type_name") = "default")
         .def("utility", py::overload_cast<const GraphNode&, const std::string&>(&Environment::Utility), py::arg("strategy"), py::arg("type_name") = "default")
+        .def("utility", py::overload_cast<const std::vector<GraphNode>&, const std::string&>(&Environment::Utility), py::arg("strategy"), py::arg("type_name") = "default")
         .def("get_value", &Environment::GetValue, py::arg("player"), py::arg("node"))
         .def("get_strategy", &Environment::GetStrategy, py::arg("player"), py::arg("strategy"), py::arg("type_name") = "default")
         .def("set_value", &Environment::SetValue, py::arg("player"), py::arg("node"), py::arg("values"));

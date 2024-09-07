@@ -10,13 +10,14 @@ from typing import Literal
 import math
 
 class graph(LiteEFG.Graph):
-    def __init__(self, kappa=1.0, tau=0.1, regularizer: Literal["Euclidean", "Entropy"]="Entropy", 
+    def __init__(self, kappa=1.0, tau=0.1, gamma=0.001, regularizer: Literal["Euclidean", "Entropy"]="Entropy", 
                         weighted=False, shrink_iter=100000, out_reg=False):
         super().__init__()
         self.regularizer = regularizer
         self.timestep = 0
         self.shrink_iter = shrink_iter
         self.out_reg = out_reg
+        self.gamma = gamma
 
         # Create a new graph for CFR
         with LiteEFG.backward(is_static=True):
@@ -63,7 +64,7 @@ class graph(LiteEFG.Graph):
             self.coef.inplace(self.tau)
 
         print("===============Graph is ready for Reg-DOMD===============")
-        print("kappa: %f, tau: %f, regularizer: %s" % (kappa, tau, self.regularizer))
+        print("kappa: %f, tau: %f, gamma: %f, regularizer: %s" % (kappa, tau, gamma, self.regularizer))
         print("=====================================================\n")
     
     def _get_ev(self, gradient, ev, strategy, ref_strategy):
@@ -78,22 +79,22 @@ class graph(LiteEFG.Graph):
             if self.regularizer == "Euclidean":
                 gradient_div = (gradient - ref_u * self.coef) / self.eta_coef
                 upd_u.inplace((ref_u * mix_coef + self.init_strategy * (1.0 - mix_coef)) + gradient_div)
-                upd_u.inplace(upd_u.project(distance="L2"))
+                upd_u.inplace(upd_u.project(distance="L2", gamma=self.gamma))
 
             else:
                 gradient_div = (gradient - (ref_u.log() + 1) * self.coef) / self.eta_coef
                 upd_u.inplace((ref_u.log() * mix_coef + self.init_strategy.log() * (1.0 - mix_coef)) + gradient_div)
-                upd_u.inplace((upd_u - upd_u.max()).exp().project(distance="KL"))
+                upd_u.inplace((upd_u - upd_u.max()).exp().project(distance="KL", gamma=self.gamma))
         else:
             if self.regularizer == "Euclidean":
                 gradient_div = gradient / self.eta_coef
                 upd_u.inplace(((ref_u * mix_coef + self.init_strategy * (1.0 - mix_coef)) + gradient_div) / (1.0 + self.coef * self.eta))
-                upd_u.inplace(upd_u.project(distance="L2"))
+                upd_u.inplace(upd_u.project(distance="L2", gamma=self.gamma))
 
             else:
                 gradient_div = gradient / self.eta_coef
                 upd_u.inplace(((ref_u.log() * mix_coef + self.init_strategy.log() * (1.0 - mix_coef)) + gradient_div) / (1.0 + self.coef * self.eta))
-                upd_u.inplace((upd_u - upd_u.max()).exp().project(distance="KL"))
+                upd_u.inplace((upd_u - upd_u.max()).exp().project(distance="KL", gamma=self.gamma))
     
     def update_graph(self, env : LiteEFG.Environment) -> None:
         self.timestep += 1
@@ -124,6 +125,7 @@ if __name__ == "__main__":
 
     parser.add_argument("--kappa", help="initial reciprocal of learning rate", type=float, default=1.0)
     parser.add_argument("--tau", help="regularization coefficient", type=float, default=0.001)
+    parser.add_argument("--gamma", help="perturbation coefficient", type=float, default=0.001)
     parser.add_argument("--shrink-iter", help="shrink tau by half every shrink-iter iterations", type=int, default=100000)
     parser.add_argument("--regularizer", type=str, choices=["Euclidean", "Entropy"], default="Euclidean")
     parser.add_argument("--weighted", help="weighted dilated regularizer or not", action="store_true")
@@ -132,4 +134,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     from utils import train
-    train(graph(args.kappa, args.tau, args.regularizer, args.weighted, args.shrink_iter, args.out_reg), args.traverse_type, "last-iterate", args.iter, args.print_freq, args.game)
+    train(graph(args.kappa, args.tau, args.gamma, args.regularizer, args.weighted, args.shrink_iter, args.out_reg), args.traverse_type, "last-iterate", args.iter, args.print_freq, args.game)

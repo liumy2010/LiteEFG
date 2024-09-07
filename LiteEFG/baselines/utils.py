@@ -16,9 +16,8 @@ def train(graph, traverse_type, convergence_type, iter, print_freq, game_env="le
         env.update_strategy(graph.current_strategy(), update_best=(convergence_type == "best-iterate"))
             
         if i % print_freq == 0:
-            exploitability = sum(env.exploitability(graph.current_strategy(), convergence_type))
-            best_exp = min(best_exp, exploitability)
-            pbar.set_description(f'Exploitability: {exploitability:.8f}, Best: {best_exp:.8f}')
+            exploitability = env.exploitability(graph.current_strategy(), convergence_type)
+            pbar.set_description(f'Exploitability: {exploitability[0]:.8f}, Best: {exploitability[1]:.8f}')
             pbar.update(print_freq)
 
     if output_strategy:
