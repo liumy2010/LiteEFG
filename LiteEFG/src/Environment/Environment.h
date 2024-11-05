@@ -63,6 +63,7 @@ public:
     std::vector<std::pair<std::string, std::vector<double>> > GetStrategy(const int& player, const GraphNode& strategy_node, const std::string& type_name="default");
 
     void SetValue(const int& player, const GraphNode& node, const std::vector<std::vector<double>>& values);
+    void SetValue(const int& player, const GraphNode& node, const std::vector<double>& values);
 
     ~Environment();
 };

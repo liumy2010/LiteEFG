@@ -186,7 +186,8 @@ PYBIND11_MODULE(_LiteEFG, m) {
         .def("utility", py::overload_cast<const std::vector<GraphNode>&, const std::string&>(&Environment::Utility), py::arg("strategy"), py::arg("type_name") = "default")
         .def("get_value", &Environment::GetValue, py::arg("player"), py::arg("node"))
         .def("get_strategy", &Environment::GetStrategy, py::arg("player"), py::arg("strategy"), py::arg("type_name") = "default")
-        .def("set_value", &Environment::SetValue, py::arg("player"), py::arg("node"), py::arg("values"));
+        .def("set_value", py::overload_cast<const int&, const GraphNode&, const std::vector<std::vector<double>>&>(&Environment::SetValue), py::arg("player"), py::arg("node"), py::arg("values"))
+        .def("set_value", py::overload_cast<const int&, const GraphNode&, const std::vector<double>&>(&Environment::SetValue), py::arg("player"), py::arg("node"), py::arg("values"));
     //py::class_<NFG, Environment, std::shared_ptr<NFG>>(m, "NFG")
     //    .def(py::init<const int&, const std::vector<Tensor>&>(), py::arg("num_players"), py::arg("utility_matrix"));
     //py::class_<Leduc, Environment, std::shared_ptr<Leduc>>(m, "Leduc")

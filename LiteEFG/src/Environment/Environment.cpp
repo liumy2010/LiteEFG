@@ -484,14 +484,33 @@ void Environment::SetValue(const int& player, const GraphNode& node, const std::
         throw std::invalid_argument("values size does not match number of infosets");
     }
 
-    std::vector<std::pair<std::string, std::vector<double>> > ret;
     for(int i=1; i<infosets[player].size(); ++i){
         Infoset& infoset = infosets[player][i];
         if(values[i-1].size() != infoset.results[node.idx][0].size){
-            throw std::invalid_argument("the size of value in infoset " + infoset_names[player][i-1] + " does not match the variable in the computation graph");
+            throw std::length_error("the size of value in infoset " + infoset_names[player][i-1] + " does not match the variable in the computation graph");
         }
         for(int j=0; j<infoset.results[node.idx][0].size; ++j)
             infoset.results[node.idx][0][j] = values[i-1][j];
+    }
+}
+
+void Environment::SetValue(const int& player, const GraphNode& node, const std::vector<double>& values){
+    if(player < 1 || player > player_num){
+        throw std::invalid_argument("player out of range {1, ..., "+std::to_string(player_num)+"}");
+    }
+
+    int total_size = 0;
+    for(int i=1; i<infosets[player].size(); ++i)
+        total_size += infosets[player][i].results[node.idx][0].size;
+    if(values.size() != total_size){
+        throw std::length_error("values size does not match number of variables in the computation graph");
+    }
+
+    for(int i=1, start=0; i<infosets[player].size(); ++i){
+        Infoset& infoset = infosets[player][i];
+        for(int j=0; j<infoset.results[node.idx][0].size; ++j)
+            infoset.results[node.idx][0][j] = values[start+j];
+        start += infoset.results[node.idx][0].size;
     }
 }
 

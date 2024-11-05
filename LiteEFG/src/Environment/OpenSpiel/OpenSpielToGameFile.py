@@ -17,7 +17,7 @@ def InfosetName(node, idx):
     return infoset.replace(" ", "_")
 
 class OpenSpielEnv(LiteEFG.FileEnv):
-    def __init__(self, game: pyspiel.Game, traverse_type="Enumerate", regenerate=False):
+    def __init__(self, game: pyspiel.Game, traverse_type="Enumerate", regenerate=False, **kwargs):
         if not isinstance(game, pyspiel.Game):
             raise ValueError("game must be an instance of pyspiel.Game")
         
@@ -38,6 +38,7 @@ class OpenSpielEnv(LiteEFG.FileEnv):
 
         game_name = game.get_type().short_name
         infosets = {}
+        observation_tensors = {}
         num_infosets = [0 for _ in range(game.num_players())]
         queue = [game.new_initial_state()]
 
@@ -49,7 +50,10 @@ class OpenSpielEnv(LiteEFG.FileEnv):
         #for i in range(3):
         #    current_directory = os.path.dirname(current_directory)
         os.makedirs(os.path.join(current_directory, "game_instances"), exist_ok=True)
-        file_name = os.path.join(current_directory, "game_instances", game_full_name + ".openspiel")
+        if kwargs.get("is_gym", False):
+            file_name = os.path.join(current_directory, "game_instances", game_full_name + ".openspiel_gym")
+        else:
+            file_name = os.path.join(current_directory, "game_instances", game_full_name + ".openspiel")
 
         if os.path.exists(file_name) and not regenerate:
             super().__init__(file_name, traverse_type=traverse_type)
@@ -102,12 +106,16 @@ class OpenSpielEnv(LiteEFG.FileEnv):
                     raise ValueError("The game %s does not have information state implemented by OpenSpiel \
                                         (typically such games are also too large to run tabular algorithms)"%game_name)
                 if infoset not in infosets:
+                    observation_tensors[infoset] = node.observation_tensor()
                     infosets[infoset] = [InfosetName(node, num_infosets[node.current_player()])]
                     num_infosets[node.current_player()] += 1
                 infosets[infoset].append(node.serialize())
 
         for infoset in infosets:
-            print("infoset %s nodes"%infosets[infoset][0], end='', file=file)
+            if kwargs.get("is_gym", False):
+                print("infoset %s nodes"%(f"{','.join(map(str, observation_tensors[infoset]))}"), end='', file=file)
+            else:
+                print("infoset %s nodes"%infosets[infoset][0], end='', file=file)
             for node in infosets[infoset][1:]:
                 print(" %s"%NodeName(node), end='', file=file)
             print(file=file)
@@ -199,7 +207,7 @@ class OpenSpielEnv(LiteEFG.FileEnv):
             print("Average Payoff of Each Player: ", accumulated_payoff / (epoch+1))
 
 if __name__ == "__main__":
-    env = OpenSpielEnv(pyspiel.load_game("liars_dice(dice_sides=6)"))
+    env = OpenSpielEnv(pyspiel.load_game("kuhn_poker"))
     import LiteEFG.baselines.CFR as CFR
     import LiteEFG.baselines.CFRplus as CFRplus
 
