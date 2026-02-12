@@ -1,6 +1,6 @@
 # Baselines
 
-In `LiteEFG`, the baselines are stored in `LiteEFG/LiteEFG/baselines`. Currently, the following algorithms are implemented.
+Currently, the following algorithms are implemented.
 
 - Counterfactual Regret Minimization (CFR) [[1]](#1)
 - Monte-Carlo Counterfactual Regret Minimization (MCCFR) [[2]](#2)
