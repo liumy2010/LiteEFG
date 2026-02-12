@@ -2,6 +2,7 @@
 # Q-Function based Regret Minimization (QFR)
 # Mingyang Liu, Gabriele Farina, and Asuman Ozdaglar.
 # "A Policy-Gradient Approach to Solving Imperfect-Information Games with Iterate Convergence."
+# International Conference on Learning Representations (2025)
 #######################################################
 
 import LiteEFG

@@ -153,7 +153,7 @@ Here's an example of computing the Fibonacci sequence.
 
 #### OpenSpiel Environment
 
-`LiteEFG` is compatible with `OpenSpiel`[[8]](#8). To use the environment implemented in OpenSpiel, one can call `LiteEFG.OpenSpielEnv(game: pyspiel.game, traverse_type="Enumerate", regenerate=False)`. The game should be an `pyspiel.game` instance, *e.g.* `pyspiel.load_game("kuhn_poker")`. The traverse type specifies whether the environment will be explored via enumerating all nodes at each iteration, external-sampling, or outcome sampling [[2]](#2). `regenerate` denotes whether generating the game file again regardless of its existence
+`LiteEFG` is compatible with `OpenSpiel`[[3]](#3). To use the environment implemented in OpenSpiel, one can call `LiteEFG.OpenSpielEnv(game: pyspiel.game, traverse_type="Enumerate", regenerate=False)`. The game should be an `pyspiel.game` instance, *e.g.* `pyspiel.load_game("kuhn_poker")`. The traverse type specifies whether the environment will be explored via enumerating all nodes at each iteration, external-sampling, or outcome sampling [[2]](#2). `regenerate` denotes whether generating the game file again regardless of its existence
 
 - `OpenSpielEnv.get_strategy(strategy, type_name="default")`: Return `(open_spiel.python.policy.TabularPolicy, [pandas.DataFrame])`. The function wrap up the strategy given by `Environment.get_strategy` to the `open_spiel.python.policy.TabularPolicy`. Also, for each player, her strategy is stored in a `pandas.DataFrame`, and the strategy of each player will be concatenated into a list of `pandas.DataFrame`
 - `OpenSpiel.interact(policy: TabularPolicy, controlled_player=0, reveal_private=True, epochs=1000)`: Interact with the policy stored in `policy`. `controlled_player` indicate which player the user want to control, and the rest of the players will apply their policy stored in `policy`. `reveal_private` indicates whether to reveal the private information of all players at the end of each round, such as revealing the private cards of all players in poker games. `epochs` indicates how many rounds the user want to play
@@ -238,21 +238,8 @@ To be more flexible, `LiteEFG` also supports writing new environments by `c++`. 
 
 ## Baselines
 
-In `LiteEFG`, the baselines are stored in `LiteEFG/LiteEFG/baselines`. Currently, the following algorithms are implemented.
-
-- Counterfactual Regret Minimization (CFR) [[1]](#1)
-- Monte-Carlo Counterfactual Regret Minimization (MCCFR) [[2]](#2)
-- Counterfactual Regret Minimization+ (CFR+) [[5]](#5)
-- Dilated Optimistic Mirror Descent (DOMD) [[6]](#6)
-- Magnetic Mirror Descent (MMD) [[7]](#7)
-- Clairvoyant Mirror Descent (CMD) [[9]](#9)
-- Discounted Counterfactual Regret Minimization (DCFR) [[10]](#10)
-- Predictive Counterfactual Regret Minimization (PCFR) [[11]](#11)
-- Q-Function based Regret Minimization (QFR)
-- Regularized Dilated Optimistic Mirror Descent (Reg-DOMD) [[12]](#12)
-- Regularized Counterfactual Regret Minimization (Reg-CFR) [[12]](#12)
-- Implicit Exploration Online Mirror Descent (IXOMD) [[13]](#13)
-- Balanced Online Mirror Descent (Balanced OMD) [[14]](#14)
+The baseline list can be found in `LiteEFG/baselines/README.md`:
+[`LiteEFG/baselines/README.md`](LiteEFG/baselines/README.md)
 
 ## Citing LiteEFG
 
@@ -278,38 +265,4 @@ Zinkevich, Martin, et al. "Regret minimization in games with incomplete informat
 Lanctot, Marc, et al. "Monte Carlo sampling for regret minimization in extensive games." Advances in neural information processing systems 22 (2009).
 
 <a id="3">[3]</a> 
-Harold W Kuhn. A simplified two-person poker. Contributions to the Theory of Games, 1(417):
-97–103, 1950.
-
-<a id="4">[4]</a> 
-Finnegan Southey, Michael Bowling, Bryce Larson, Carmelo Piccione, Neil Burch, Darse Billings, and Chris Rayner. Bayes’ bluff: opponent modelling in poker. Conference on Uncertainty in Artificial Intelligence (2005).
-
-<a id="5">[5]</a> 
-Tammelin, Oskari. "Solving large imperfect information games using CFR+." arXiv preprint arXiv:1407.5042 (2014).
-
-<a id="6">[6]</a> 
-Lee, Chung-Wei, Christian Kroer, and Haipeng Luo. "Last-iterate convergence in extensive-form games. Advances in Neural Information Processing Systems (2021).
-
-<a id="7">[7]</a> 
-Samuel Sokota, Ryan D'Orazio, J. Zico Kolter, Nicolas Loizou, Marc Lanctot, Ioannis Mitliagkas, Noam Brown, and Christian Kroer. "A Unified Approach to Reinforcement Learning, Quantal Response Equilibria, and Two-Player Zero-Sum Games." International Conference on Learning Representations (2023)
-
-<a id="8">[8]</a> 
 Lanctot, Marc, et al. "OpenSpiel: A framework for reinforcement learning in games." arXiv preprint arXiv:1908.09453 (2019).
-
-<a id="9">[9]</a> 
-Piliouras, Georgios, Ryann Sim, and Stratis Skoulakis. "Beyond time-average convergence: Near-optimal uncoupled online learning via clairvoyant multiplicative weights update." Advances in Neural Information Processing Systems (2022).
-
-<a id="10">[10]</a> 
-Brown, Noam, and Tuomas Sandholm. "Solving imperfect-information games via discounted regret minimization." Proceedings of the AAAI Conference on Artificial Intelligence. 2019.
-
-<a id="11">[11]</a> 
-Farina, Gabriele, Christian Kroer, and Tuomas Sandholm. "Faster game solving via predictive blackwell approachability: Connecting regret matching and mirror descent." Proceedings of the AAAI Conference on Artificial Intelligence. 2021.
-
-<a id="12">[12]</a> 
-Liu, Mingyang, Asuman Ozdaglar, Tiancheng Yu, and Kaiqing Zhang. "The power of regularization in solving extensive-form games." International Conference on Learning Representations (2023)
-
-<a id="13">[13]</a> 
-Kozuno, Tadashi, Pierre Ménard, Rémi Munos, and Michal Valko. "Learning in two-player zero-sum partially observable Markov games with perfect recall." Advances in Neural Information Processing Systems (2021)
-
-<a id="14">[14]</a> 
-Bai, Yu, Chi Jin, Song Mei, and Tiancheng Yu. "Near-optimal learning of extensive-form games with imperfect information." International Conference on Machine Learning (2022)

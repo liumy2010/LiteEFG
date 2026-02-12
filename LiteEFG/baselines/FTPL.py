@@ -1,5 +1,8 @@
 #######################################################
 # Follow the Perturbed Leader (FTPL)
+# Hazan, Elad. 
+# "Introduction to online convex optimization."
+# Foundations and Trends® in Optimization 2.3-4 (2016): 157-325.
 #######################################################
 
 import LiteEFG
