@@ -99,6 +99,9 @@ Here's an example of computing the Fibonacci sequence.
 
 #### Basic Operations
 - `LiteEFG.set_seed`: Set the seed for the pseudo-random number generator
+- `LiteEFG.random.uniform(x, lower=0.0, upper=1.0)`: Return a node with the same shape as `x` whose elements are sampled from uniform distribution in `[lower, upper)`
+- `LiteEFG.random.normal(x, mean=0.0, stddev=1.0)`: Return a node with the same shape as `x` whose elements are sampled from normal distribution
+- `LiteEFG.random.exponential(x, lambda_=1.0)`: Return a node with the same shape as `x` whose elements are sampled from exponential distribution with rate `lambda_`
 - `GraphNode.inplace(expression)`: The value of the expression will be stored to the original address of GraphNode
 - `GraphNode.sum() / LiteEFG.sum(x)`: Return sum of all elements of `GraphNode`
 - `GraphNode.mean() / LiteEFG.mean(x)`: Return mean of all elements of `GraphNode`

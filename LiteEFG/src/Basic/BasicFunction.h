@@ -11,6 +11,8 @@ namespace Basic{
 
 extern std::default_random_engine generator;
 extern std::uniform_real_distribution<double> uniform;
+extern std::normal_distribution<double> normal;
+extern std::exponential_distribution<double> exponential;
 
 void SetSeed(const unsigned int& seed);
 

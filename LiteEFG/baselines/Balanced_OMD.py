@@ -59,7 +59,7 @@ class graph(LiteEFG.Graph):
                 
                 visit_prob = [[0] for _ in range(len(depth))]
                 for j in range(len(depth)):
-                    visit_prob[j][0] = 1.0# / depth_infoset_count[np.round(depth[j][1][0]).astype(int)]
+                    visit_prob[j][0] = 1.0
                 env.set_value(i, self.visit_prob, visit_prob)
             
         env.update(self.strategy)

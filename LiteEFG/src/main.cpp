@@ -16,69 +16,10 @@
 #include "Basic/BasicFunction.h"
 
 #include <iostream>
-/*
-int main(){
-    std::string file_name;
-    std::cin>>file_name;
-    static Environment* env = new FileEnvironment("../game_instances/"+file_name, "Enumerate");
 
-    auto graph = Graph();
-    
-    auto eta = 0.1;
-    auto gamma = 0.0;
-    auto tau = 0.0;
-
-    BackwardNodeStatus backward_node_static(true, 2);
-    backward_node_static.Enter();
-
-    auto alpha = 1.0;
-
-    auto ev = GraphNode::ConstVector(1, 0.0);
-    auto coef = alpha * tau;
-    auto mu = graph.subtree_size.Normalize(1.0, true);
-    auto eta_coef = eta * coef;
-    
-    auto u = GraphNode::ConstVector(graph.action_set_size, 1.0 / graph.action_set_size);
-    auto bar_u = u.Copy();
-
-    BackwardNodeStatus backward_node(false);
-    backward_node.Enter();
-
-    auto m_th = graph.opponent_reach_prob;
-    
-    auto eta_tau = eta_coef / m_th + 1;
-    auto gradient = GraphNode::Aggregate(ev, "sum", "children", "opponents") + graph.utility;
-    ev.Inplace(GraphNode::Dot(gradient, u));
-
-    GraphNode::Aggregate(u, "sum", "parent", "opponents");
-
-    ev.Inplace(ev - GraphNode::Euclidean(u) * coef);
-
-    gradient.Inplace(gradient / m_th * eta);
-
-    u.Inplace((bar_u + gradient) / eta_tau);
-    u.Inplace(u.Project("L2", gamma, mu));
-
-    env->SetGraph(graph);
-
-    for(int i=0;i<1000;i++){
-        env -> UpdateStrategy(u, true);
-        env -> Update(u, -1);
-        if(i % 1000 == 0){
-            auto exploitability = env -> Exploitability(u, "best-iterate");
-            auto utility = env -> Exploitability(u, "avg-iterate");
-            printf("%d %.12lf %.12lf %.12lf %.12lf\n", i, exploitability[0], exploitability[1], utility[0], utility[1]);
-        }
-    }
-    env->GetValue(1, u);
-
-    return 0;
-}
-*/
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/operators.h>
-//#include <pybind11/memory.h>
 
 namespace py = pybind11;
 
@@ -155,6 +96,10 @@ PYBIND11_MODULE(_LiteEFG, m) {
     m.def("cat", py::overload_cast<const std::vector<GraphNode>&>(GraphNode::Concat), py::arg("nodes"));
 
     m.def("set_seed", Basic::SetSeed, py::arg("seed"));
+    m.def("_uniform", GraphNode::RandomUniform, py::arg("node"), py::arg("lower") = 0.0, py::arg("upper") = 1.0);
+    m.def("_normal", GraphNode::RandomNormal, py::arg("node"), py::arg("mean") = 0.0, py::arg("stddev") = 1.0);
+    m.def("_exponential", GraphNode::RandomExponential, py::arg("node"), py::arg("lambda_") = 1.0);
+    
 
     py::class_<Graph>(m, "Graph")
         .def(py::init<>())
@@ -188,10 +133,7 @@ PYBIND11_MODULE(_LiteEFG, m) {
         .def("get_strategy", &Environment::GetStrategy, py::arg("player"), py::arg("strategy"), py::arg("type_name") = "default")
         .def("set_value", py::overload_cast<const int&, const GraphNode&, const std::vector<std::vector<double>>&>(&Environment::SetValue), py::arg("player"), py::arg("node"), py::arg("values"))
         .def("set_value", py::overload_cast<const int&, const GraphNode&, const std::vector<double>&>(&Environment::SetValue), py::arg("player"), py::arg("node"), py::arg("values"));
-    //py::class_<NFG, Environment, std::shared_ptr<NFG>>(m, "NFG")
-    //    .def(py::init<const int&, const std::vector<Tensor>&>(), py::arg("num_players"), py::arg("utility_matrix"));
-    //py::class_<Leduc, Environment, std::shared_ptr<Leduc>>(m, "Leduc")
-    //    .def(py::init<const int&, const int&, const int&, const std::string&>(), py::arg("num_players") = 2, py::arg("num_cards") = 3, py::arg("num_suits") = 2, py::arg("traverse_type") = "Enumerate");
+
     py::class_<FileEnvironment, Environment, std::shared_ptr<FileEnvironment>>(m, "FileEnv")
         .def(py::init<const std::string&, const std::string&>(), py::arg("file_name"), py::arg("traverse_type") = "Enumerate");
 }

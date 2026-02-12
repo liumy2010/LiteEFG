@@ -158,7 +158,7 @@ void ArgmaxOperation::Execute(Vector& result, const std::vector<Vector*>& inputs
     }
 
     int argmax = 0, maximum = -Constants::INF;
-    for(int i = 1; i < inputs[0]->size; ++i) {
+    for(int i = 0; i < inputs[0]->size; ++i) {
         if((*inputs[0])[i] > maximum){
             argmax = i;
             maximum = (*inputs[0])[i];
@@ -175,7 +175,7 @@ void ArgminOperation::Execute(Vector& result, const std::vector<Vector*>& inputs
     }
 
     int argmin = 0, minimum = Constants::INF;
-    for(int i = 1; i < inputs[0]->size; ++i) {
+    for(int i = 0; i < inputs[0]->size; ++i) {
         if((*inputs[0])[i] < minimum){
             argmin = i;
             minimum = (*inputs[0])[i];
@@ -391,5 +391,47 @@ void ConcatOperation::Execute(Vector& result, const std::vector<Vector*>& inputs
             result[j + offset] = (*inputs[i])[j];
         }
         offset += inputs[i]->size;
+    }
+}
+
+void RandomUniformOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    if (inputs.size() != 1) {
+        throw std::invalid_argument("RandomUniform requires only one input");
+    }
+    if (inputs[0]->size != 1) {
+        throw std::invalid_argument("RandomUniform requires the input to be a scalar, which denotes the dimension of the random variable");
+    }
+
+    result.Resize(round((*inputs[0])[0]));
+    for(int i = 0; i < result.size; ++i) {
+        result[i] = Basic::uniform(Basic::generator) * (upper - lower) + lower;
+    }
+}
+
+void RandomNormalOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    if (inputs.size() != 1) {
+        throw std::invalid_argument("RandomNormal requires only one input");
+    }
+    if (inputs[0]->size != 1) {
+        throw std::invalid_argument("RandomNormal requires the input to be a scalar, which denotes the dimension of the random variable");
+    }
+
+    result.Resize(round((*inputs[0])[0]));
+    for(int i = 0; i < result.size; ++i) {
+        result[i] = Basic::normal(Basic::generator) * stddev + mean;
+    }
+}
+
+void RandomExponentialOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    if (inputs.size() != 1) {
+        throw std::invalid_argument("RandomExponential requires only one input");
+    }
+    if (inputs[0]->size != 1) {
+        throw std::invalid_argument("RandomExponential requires the input to be a scalar, which denotes the dimension of the random variable");
+    }
+
+    result.Resize(round((*inputs[0])[0]));
+    for(int i = 0; i < result.size; ++i) {
+        result[i] = Basic::exponential(Basic::generator) / lambda;
     }
 }

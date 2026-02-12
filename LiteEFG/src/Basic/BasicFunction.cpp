@@ -7,6 +7,8 @@
 
 std::default_random_engine Basic::generator;
 std::uniform_real_distribution<double> Basic::uniform(0.0,1.0);
+std::normal_distribution<double> Basic::normal(0.0,1.0);
+std::exponential_distribution<double> Basic::exponential(1.0);
 
 void Basic::SetSeed(const unsigned int& seed){
     generator.seed(seed);

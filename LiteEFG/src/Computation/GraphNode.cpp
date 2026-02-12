@@ -340,3 +340,18 @@ GraphNode GraphNode::Concat(const std::vector<GraphNode>& nodes){
     graph_nodes->push_back(GraphNode(num_nodes++, dependency, std::make_shared<ConcatOperation>(ConcatOperation()), graph_status));
     return graph_nodes->back();
 }
+
+GraphNode GraphNode::RandomUniform(const GraphNode& node, const double& lower, const double& upper){
+    graph_nodes->push_back(GraphNode(num_nodes++, {node.idx}, std::make_shared<RandomUniformOperation>(RandomUniformOperation(lower, upper)), graph_status));
+    return graph_nodes->back();
+}
+
+GraphNode GraphNode::RandomNormal(const GraphNode& node, const double& mean, const double& stddev){
+    graph_nodes->push_back(GraphNode(num_nodes++, {node.idx}, std::make_shared<RandomNormalOperation>(RandomNormalOperation(mean, stddev)), graph_status));
+    return graph_nodes->back();
+}
+
+GraphNode GraphNode::RandomExponential(const GraphNode& node, const double& lambda){
+    graph_nodes->push_back(GraphNode(num_nodes++, {node.idx}, std::make_shared<RandomExponentialOperation>(RandomExponentialOperation(lambda)), graph_status));
+    return graph_nodes->back();
+}

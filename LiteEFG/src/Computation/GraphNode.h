@@ -132,6 +132,10 @@ public:
     static GraphNode Pow(const ObjectDoubleInt& lhs, const GraphNode& rhs);
 
     static GraphNode Concat(const std::vector<GraphNode>& nodes);
+
+    static GraphNode RandomUniform(const GraphNode& node, const double& lower=0.0, const double& upper=1.0);
+    static GraphNode RandomNormal(const GraphNode& node, const double& mean=0.0, const double& stddev=1.0);
+    static GraphNode RandomExponential(const GraphNode& node, const double& lambda=1.0);
 };
 
 #endif

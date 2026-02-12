@@ -174,4 +174,25 @@ public:
     void Execute(Vector& result, const std::vector<Vector*>& inputs) override;
 };
 
+class RandomUniformOperation : public Operation {
+    double lower, upper;
+public:
+    RandomUniformOperation(const double& lower_, const double& upper_, const bool& is_static_=false) : Operation("RandomUniform", is_static_), lower{lower_}, upper{upper_} {}
+    void Execute(Vector& result, const std::vector<Vector*>& inputs) override;
+};
+
+class RandomNormalOperation : public Operation {
+    double mean, stddev;
+public:
+    RandomNormalOperation(const double& mean_, const double& stddev_, const bool& is_static_=false) : Operation("RandomNormal", is_static_), mean{mean_}, stddev{stddev_} {}
+    void Execute(Vector& result, const std::vector<Vector*>& inputs) override;
+};
+
+class RandomExponentialOperation : public Operation {
+    double lambda;
+public:
+    RandomExponentialOperation(const double& lambda_, const bool& is_static_=false) : Operation("RandomExponential", is_static_), lambda{lambda_} {}
+    void Execute(Vector& result, const std::vector<Vector*>& inputs) override;
+};
+
 #endif

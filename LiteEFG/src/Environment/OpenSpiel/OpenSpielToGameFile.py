@@ -46,9 +46,7 @@ class OpenSpielEnv(LiteEFG.FileEnv):
         for k in game.get_parameters():
             game_full_name += "_%s=%s"%(k, game.get_parameters()[k])
 
-        current_directory = os.path.expanduser('~')#os.path.dirname(os.path.abspath(__file__))
-        #for i in range(3):
-        #    current_directory = os.path.dirname(current_directory)
+        current_directory = os.path.expanduser('~')
         os.makedirs(os.path.join(current_directory, "game_instances"), exist_ok=True)
         if kwargs.get("is_gym", False):
             file_name = os.path.join(current_directory, "game_instances", game_full_name + ".openspiel_gym")
