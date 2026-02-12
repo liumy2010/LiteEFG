@@ -238,8 +238,7 @@ To be more flexible, `LiteEFG` also supports writing new environments by `c++`. 
 
 ## Baselines
 
-The baseline list can be found in `LiteEFG/baselines/README.md`:
-[`LiteEFG/baselines/README.md`](LiteEFG/baselines/README.md)
+The baseline list can be found in [`LiteEFG/baselines/README.md`](LiteEFG/baselines/README.md)
 
 ## Citing LiteEFG
 
