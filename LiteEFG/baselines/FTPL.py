@@ -3,8 +3,9 @@
 #######################################################
 
 import LiteEFG
+from LiteEFG.baselines.baseline import _baseline
 
-class graph(LiteEFG.Graph):
+class graph(_baseline):
     def __init__(self, eta=0.01, noise_type="exponential"):
         super().__init__()
 
@@ -35,13 +36,13 @@ class graph(LiteEFG.Graph):
         print("===============Graph is ready for FTPL===============")
         print("eta: %f, noise: %s" % (self.eta, self.noise_type))
         print("====================================================\n")
-    
+
     def update_graph(self, env : LiteEFG.Environment) -> None:
         env.update(self.strategy)
 
     def current_strategy(self) -> LiteEFG.GraphNode:
         return self.strategy
-    
+
 if __name__ == "__main__":
     import argparse
 

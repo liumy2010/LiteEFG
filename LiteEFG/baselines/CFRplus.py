@@ -6,8 +6,9 @@
 #######################################################
 
 import LiteEFG
+from LiteEFG.baselines.baseline import _baseline
 
-class graph(LiteEFG.Graph):
+class graph(_baseline):
     def __init__(self):
         super().__init__()
         
@@ -32,7 +33,7 @@ class graph(LiteEFG.Graph):
     def update_graph(self, env : LiteEFG.Environment) -> None:
         env.update(self.strategy, upd_player=1)
         env.update(self.strategy, upd_player=2)
-    
+
     def current_strategy(self) -> LiteEFG.GraphNode:
         return self.strategy
     

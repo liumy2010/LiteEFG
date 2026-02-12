@@ -6,8 +6,9 @@
 #######################################################
 
 import LiteEFG
+from LiteEFG.baselines.baseline import _baseline
 
-class graph(LiteEFG.Graph):
+class graph(_baseline):
     def __init__(self, eta=0.001, gamma=0.0005):
         super().__init__()
 
@@ -38,7 +39,7 @@ class graph(LiteEFG.Graph):
         upd_u.inplace(upd_u - upd_u.max())
         upd_u.inplace(upd_u.exp())
         upd_u.inplace(upd_u.project(distance="KL"))
-    
+
     def update_graph(self, env : LiteEFG.Environment) -> None:
         env.update(self.strategy)
 

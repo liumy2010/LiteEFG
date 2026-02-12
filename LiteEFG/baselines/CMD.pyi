@@ -1,7 +1,8 @@
 import LiteEFG as LiteEFG
+from LiteEFG.baselines.baseline import _baseline
 from __future__ import annotations
 __all__ = ['LiteEFG', 'graph']
-class graph(LiteEFG._LiteEFG.Graph):
+class graph(LiteEFG.baselines.baseline._baseline):
     def __init__(self, eta = 0.1, inner_epoch = 10, regularizer: typing.Literal['Euclidean', 'Entropy'] = 'Entropy', weighted = False):
         ...
     def _get_ev(self, gradient, ev, strategy, ref_strategy):

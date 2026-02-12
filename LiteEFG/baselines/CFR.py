@@ -11,8 +11,9 @@
 #######################################################
 
 import LiteEFG
+from LiteEFG.baselines.baseline import _baseline
 
-class graph(LiteEFG.Graph):
+class graph(_baseline):
     def __init__(self):
         super().__init__()
         

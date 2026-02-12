@@ -6,9 +6,10 @@
 #######################################################
 
 import LiteEFG
+from LiteEFG.baselines.baseline import _baseline
 from typing import Literal
 
-class graph(LiteEFG.Graph):
+class graph(_baseline):
     def __init__(self, eta=0.1, inner_epoch=10, regularizer: Literal["Euclidean", "Entropy"]="Entropy", weighted=False):
         super().__init__()
         self.eta = eta

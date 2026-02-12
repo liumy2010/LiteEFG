@@ -6,9 +6,10 @@
 #######################################################
 
 import LiteEFG
+from LiteEFG.baselines.baseline import _baseline
 from typing import Literal
 
-class graph(LiteEFG.Graph):
+class graph(_baseline):
     def __init__(self, eta=0.1, regularizer: Literal["Euclidean", "Entropy"]="Entropy", weighted=False):
         super().__init__()
         self.eta = eta
@@ -65,13 +66,13 @@ class graph(LiteEFG.Graph):
             upd_u.inplace(upd_u - upd_u.max())
             upd_u.inplace(upd_u.exp())
             upd_u.inplace(upd_u.project(distance="KL"))
-    
+
     def update_graph(self, env : LiteEFG.Environment) -> None:
         env.update(self.u)
-    
+
     def current_strategy(self) -> LiteEFG.GraphNode:
         return self.u
-    
+
 if __name__ == "__main__":
     import argparse
 

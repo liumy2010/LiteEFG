@@ -6,8 +6,9 @@
 #######################################################
 
 import LiteEFG
+from LiteEFG.baselines.baseline import _baseline
 
-class graph(LiteEFG.Graph):
+class graph(_baseline):
     def __init__(self, eta=0.001, gamma=0.0005):
         super().__init__()
 

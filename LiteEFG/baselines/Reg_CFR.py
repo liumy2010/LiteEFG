@@ -6,10 +6,11 @@
 #######################################################
 
 import LiteEFG
+from LiteEFG.baselines.baseline import _baseline
 from typing import Literal
 import math
 
-class graph(LiteEFG.Graph):
+class graph(_baseline):
     def __init__(self, kappa=1.0, tau=0.1, gamma=0.001, regularizer: Literal["Euclidean", "Entropy"]="Entropy", 
                         weighted=False, shrink_iter=100000, out_reg=False):
         super().__init__()
@@ -19,7 +20,6 @@ class graph(LiteEFG.Graph):
         self.out_reg = out_reg
         self.gamma = gamma
 
-        # Create a new graph for CFR
         with LiteEFG.backward(is_static=True):
         
             self.alpha = 1.0
@@ -102,18 +102,10 @@ class graph(LiteEFG.Graph):
             env.update(self.u, upd_color=[0])
             return
         env.update(self.u, upd_color=[0, 1, 2]) if self.timestep % self.shrink_iter == 0 else env.update(self.u, upd_color=[0, 2])
-        
-        '''
-        lambda_dict = env.get_value(0, self.sqr_lambda)
-        lambda_sum = 0
-        for k in lambda_dict:
-            lambda_sum += sum(k[1])
-        print(lambda_sum / len(lambda_dict))
-        '''
-    
+
     def current_strategy(self) -> LiteEFG.GraphNode:
         return self.u
-    
+
 if __name__ == "__main__":
     import argparse
 

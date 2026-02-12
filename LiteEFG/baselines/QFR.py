@@ -4,10 +4,11 @@
 # "A Policy-Gradient Approach to Solving Imperfect-Information Games with Iterate Convergence."
 #######################################################
 
-import  LiteEFG
+import LiteEFG
+from LiteEFG.baselines.baseline import _baseline
 from typing import Literal
 
-class graph(LiteEFG.Graph):
+class graph(_baseline):
     def __init__(self, eta=0.001, tau=0.001, gamma=0.001, regularizer: Literal["Euclidean", "Entropy"]="Entropy", feedback="Q", weighted=False, bidilated=True):
         super().__init__()
 
@@ -97,10 +98,10 @@ class graph(LiteEFG.Graph):
             upd_u.inplace(upd_u - upd_u.max())
             upd_u.inplace(upd_u.exp())
             upd_u.inplace(upd_u.project(distance="KL", gamma=self.gamma, mu=self.mu))
-    
+
     def update_graph(self, env : LiteEFG.Environment) -> None:
         env.update(self.u)
-    
+
     def current_strategy(self) -> LiteEFG.GraphNode:
         return self.u
 

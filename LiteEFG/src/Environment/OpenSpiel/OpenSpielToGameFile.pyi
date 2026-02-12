@@ -9,7 +9,7 @@ import pyspiel as pyspiel
 import typing as typing
 __all__ = ['InfosetName', 'LiteEFG', 'NodeName', 'OpenSpielEnv', 'TabularPolicy', 'np', 'os', 'pd', 'pyspiel', 'typing']
 class OpenSpielEnv(LiteEFG._LiteEFG.FileEnv):
-    def __init__(self, game: pyspiel.Game, traverse_type = 'Enumerate', regenerate = False):
+    def __init__(self, game: pyspiel.Game, traverse_type = 'Enumerate', regenerate = False, **kwargs):
         ...
     def get_strategy(self, strategy_node: LiteEFG._LiteEFG.GraphNode, type_name = 'default') -> typing.Tuple[open_spiel.python.policy.TabularPolicy, typing.List[pandas.core.frame.DataFrame]]:
         ...

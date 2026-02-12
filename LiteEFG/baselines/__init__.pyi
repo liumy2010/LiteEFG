@@ -6,6 +6,7 @@ from . import CFRplus
 from . import CMD
 from . import DCFR
 from . import DOMD
+from . import FTPL
 from . import IXOMD
 from . import MMD
 from . import OS_MCCFR
@@ -13,6 +14,7 @@ from . import PCFR
 from . import QFR
 from . import Reg_CFR
 from . import Reg_DOMD
-__all__ = ['Balanced_FTRL', 'Balanced_OMD', 'CFR', 'CFRplus', 'CMD', 'DCFR', 'DOMD', 'IXOMD', 'MMD', 'OS_MCCFR', 'PCFR', 'QFR', 'Reg_CFR', 'Reg_DOMD']
+from . import baseline
+__all__ = ['Balanced_FTRL', 'Balanced_OMD', 'CFR', 'CFRplus', 'CMD', 'DCFR', 'DOMD', 'FTPL', 'IXOMD', 'MMD', 'OS_MCCFR', 'PCFR', 'QFR', 'Reg_CFR', 'Reg_DOMD', 'baseline']
 def _import_all_modules():
     ...
