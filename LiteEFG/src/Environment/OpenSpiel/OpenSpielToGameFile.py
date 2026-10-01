@@ -1,23 +1,31 @@
 import pyspiel
 import os
-import LiteEFG
+import LiteEFG as leg
 import numpy as np
 import pandas as pd
 from open_spiel.python.policy import TabularPolicy
 import typing
+import tempfile
+import hashlib
+from urllib.parse import quote
+
+
+_CACHE_HEADER = "# LiteEFG OpenSpiel cache format 2\n"
+
 
 def NodeName(node):
-    if isinstance(node, str):
-        return node.replace("\n", "/")
-    return node.serialize().replace("\n", "/").replace(" ", "_")
+    text = node if isinstance(node, str) else node.serialize()
+    # Prefix even empty serializations, and escape delimiters without merging
+    # distinct strings such as "a b" and "a_b" or "a\nb" and "a/b".
+    return "node_" + quote(text, safe="")
 
 def InfosetName(node, idx):
-    infoset = "pl%d_%d__"%(0, idx) + node.replace("\n", "/") if isinstance(node, str) \
-                    else "pl%d_%d__"%(node.current_player()+1, idx) + node.information_state_string().replace("\n", "/")
-    return infoset.replace(" ", "_")
+    player = 0 if isinstance(node, str) else node.current_player() + 1
+    text = node if isinstance(node, str) else node.information_state_string()
+    return "pl%d_%d__%s" % (player, idx, quote(text, safe=""))
 
-class OpenSpielEnv(LiteEFG.FileEnv):
-    def __init__(self, game: pyspiel.Game, traverse_type="Enumerate", regenerate=False, **kwargs):
+class OpenSpielEnv(leg.FileEnv):
+    def __init__(self, game: pyspiel.Game, traverse_type="Enumerate", regenerate=False):
         if not isinstance(game, pyspiel.Game):
             raise ValueError("game must be an instance of pyspiel.Game")
         
@@ -29,37 +37,61 @@ class OpenSpielEnv(LiteEFG.FileEnv):
         else:
             raise ValueError("The game must be either sequential or simultaneous")
 
+        if not game.get_type().provides_information_state_string:
+            raise ValueError("The game must provide information-state strings for tabular conversion")
         policy = TabularPolicy(game)
-        self.state_lookup = {}
-        for k in policy.state_lookup.keys():
-            infoset = InfosetName(k, 0)
-            infoset = infoset[infoset.find('__')+2:]
-            self.state_lookup[infoset] = policy.state_lookup[k]
+        self.state_lookup = {quote(key, safe=""): index
+                             for key, index in policy.state_lookup.items()}
+        self._information_states = list(policy.state_lookup)
 
-        game_name = game.get_type().short_name
-        infosets = {}
-        observation_tensors = {}
-        num_infosets = [0 for _ in range(game.num_players())]
-        queue = [game.new_initial_state()]
-
-        game_full_name = game_name
+        game_full_name = game.get_type().short_name
         for k in game.get_parameters():
             game_full_name += "_%s=%s"%(k, game.get_parameters()[k])
 
         current_directory = os.path.expanduser('~')
         os.makedirs(os.path.join(current_directory, "game_instances"), exist_ok=True)
-        if kwargs.get("is_gym", False):
-            file_name = os.path.join(current_directory, "game_instances", game_full_name + ".openspiel_gym")
-        else:
-            file_name = os.path.join(current_directory, "game_instances", game_full_name + ".openspiel")
+        cache_name = quote(game_full_name, safe="=_-")
+        if len(cache_name) > 200:
+            # Nested simultaneous-game parameters can exceed a filesystem's
+            # filename limit after escaping. Keep their identity in the digest.
+            digest = hashlib.sha256(game_full_name.encode("utf-8")).hexdigest()[:32]
+            prefix = quote(game.get_type().short_name, safe="_-")[:48]
+            cache_name = prefix + "_" + digest
+        file_name = os.path.join(current_directory, "game_instances",
+                                 cache_name + ".openspiel")
 
         if os.path.exists(file_name) and not regenerate:
-            super().__init__(file_name, traverse_type=traverse_type)
-            return
+            with open(file_name, encoding="utf-8") as cached:
+                compatible_cache = cached.readline() == _CACHE_HEADER
+            if compatible_cache:
+                super().__init__(file_name, traverse_type=traverse_type)
+                return
         
         print("Generating %s.openspiel instance from OpenSpiel"%(game_full_name))
-        file = open(file_name, "w")
+        temporary_path = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                    mode="w", encoding="utf-8", newline="\n",
+                    dir=os.path.dirname(file_name), prefix=".openspiel-",
+                    suffix=".tmp", delete=False) as file:
+                temporary_path = file.name
+                self._write_game(file)
+                file.flush()
+                os.fsync(file.fileno())
+            os.replace(temporary_path, file_name)
+        finally:
+            if temporary_path is not None and os.path.exists(temporary_path):
+                os.unlink(temporary_path)
+        super().__init__(file_name, traverse_type=traverse_type)
 
+    def _write_game(self, file):
+        game = self.game
+        game_name = game.get_type().short_name
+        infosets = {}
+        num_infosets = [0 for _ in range(game.num_players())]
+        queue = [game.new_initial_state()]
+
+        file.write(_CACHE_HEADER)
         print("# %s instance with parameters:"%game_name, file=file)
         print("#", file=file)
         print("# Opt {", file=file)
@@ -77,7 +109,7 @@ class OpenSpielEnv(LiteEFG.FileEnv):
             if node.is_terminal():
                 print("node %s leaf payoffs"%NodeName(node), end='', file=file)
                 for player, reward in enumerate(node.returns()):
-                    print(" %d=%f"%(player+1, reward), end='', file=file)
+                    print(" %d=%.17g"%(player+1, reward), end='', file=file)
                 print(file=file)
                 continue
 
@@ -87,7 +119,7 @@ class OpenSpielEnv(LiteEFG.FileEnv):
                     child = node.clone()
                     child.apply_action(action)
                     queue.append(child)
-                    print(" %s=%.8f"%(NodeName(child.serialize()), prob), end='', file=file)
+                    print(" %s=%.17g"%(NodeName(child), prob), end='', file=file)
                 print(file=file)
             else:
                 print("node %s player %d actions"%(NodeName(node), node.current_player()+1), end='', file=file)
@@ -95,68 +127,51 @@ class OpenSpielEnv(LiteEFG.FileEnv):
                     child = node.clone()
                     child.apply_action(action)
                     queue.append(child)
-                    print(" %s"%NodeName(child.serialize()), end='', file=file)
+                    print(" %s"%NodeName(child), end='', file=file)
                 print(file=file)
 
                 try:
-                    infoset = node.information_state_string()
-                except:
+                    infoset = (node.current_player(), node.information_state_string())
+                except RuntimeError as error:
                     raise ValueError("The game %s does not have information state implemented by OpenSpiel \
-                                        (typically such games are also too large to run tabular algorithms)"%game_name)
+                                        (typically such games are also too large to run tabular algorithms)"%game_name) from error
                 if infoset not in infosets:
-                    observation_tensors[infoset] = node.observation_tensor()
                     infosets[infoset] = [InfosetName(node, num_infosets[node.current_player()])]
                     num_infosets[node.current_player()] += 1
                 infosets[infoset].append(node.serialize())
 
         for infoset in infosets:
-            if kwargs.get("is_gym", False):
-                print("infoset %s nodes"%(f"{','.join(map(str, observation_tensors[infoset]))}"), end='', file=file)
-            else:
-                print("infoset %s nodes"%infosets[infoset][0], end='', file=file)
+            print("infoset %s nodes"%infosets[infoset][0], end='', file=file)
             for node in infosets[infoset][1:]:
                 print(" %s"%NodeName(node), end='', file=file)
             print(file=file)
         
-        file.close()
-        super().__init__(file_name, traverse_type=traverse_type)
-    
-    def get_value(self, player: int, node: LiteEFG.GraphNode) -> typing.List[typing.Tuple[str, float]]:
+    def get_value(self, player: int, node: leg.GraphNode) -> typing.List[typing.Tuple[str, typing.List[float]]]:
         values = super().get_value(player, node)
-        policy = TabularPolicy(self.game)
         ret = []
-        for k, _ in values:
+        for k, vector in values:
             idx = self.state_lookup[k[k.find('__')+2:]]
-            infoset = list(policy.state_lookup.keys())[idx]
-            ret.append((infoset, _))
+            ret.append((self._information_states[idx], vector))
         return ret
 
-    def get_strategy(self, strategy_node: LiteEFG.GraphNode, type_name="default") -> typing.Tuple[TabularPolicy, typing.List[pd.DataFrame]]:
+    def get_strategy(self, strategy_node: leg.GraphNode, type_name="default") -> typing.Tuple[TabularPolicy, typing.List[pd.DataFrame]]:
         df_list = []
         policy = TabularPolicy(self.game)
 
         for player in range(self.game.num_players()):
-            #print("Player %d strategy"%player)
-            df = pd.DataFrame(columns=["Infoset"] + [self.game.action_to_string(player, _) for _ in range(self.game.num_distinct_actions())])
+            columns = ["Infoset"] + [self.game.action_to_string(player, action)
+                                      for action in range(self.game.num_distinct_actions())]
             strategy = super().get_strategy(player+1, strategy_node, type_name)
             data_list = []
             for infoset, probs in strategy:
                 idx = self.state_lookup[infoset[infoset.find('__')+2:]]
                 policy.action_probability_array[idx][policy.legal_actions_mask[idx]>0.5] = probs
-                new_row = pd.DataFrame([[list(policy.state_lookup.keys())[idx]] + list(policy.action_probability_array[idx])], columns=df.columns)
-                data_list.append(new_row)
-            import warnings
-            with warnings.catch_warnings():
-                warnings.simplefilter(action='ignore', category=FutureWarning)
-                df = pd.concat([df]+data_list, ignore_index=True)
-            df_list.append(df)
-        
-        #from open_spiel.python.algorithms import exploitability
-        #expl = exploitability.exploitability(self.game, policy)
-        #print("Exploitability: %f"%expl)
+                data_list.append([self._information_states[idx]] +
+                                 list(policy.action_probability_array[idx]))
+            df_list.append(pd.DataFrame(data_list, columns=columns))
         return policy, df_list
 
-    def set_value(self, player: int, node: LiteEFG.GraphNode, values: typing.List[typing.List]) -> None:
+    def set_value(self, player: int, node: leg.GraphNode, values: typing.List[typing.List]) -> None:
         super().set_value(player, node, values)
 
     def interact(self, policy: TabularPolicy, controlled_player=0, reveal_private=True, epochs=1000) -> None:

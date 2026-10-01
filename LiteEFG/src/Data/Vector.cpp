@@ -223,7 +223,8 @@ Vector operator/(const double& scalar, const Vector& rhs) {
     return result;
 }
 
-void Vector::Resize(const int& n, const double& val) {
+void Vector::Resize(const int& n, const double val) {
+    // Take the fill value by value: it may refer to an element we reallocate.
     if(n < 0) {
         throw std::invalid_argument("Invalid size");
     }

@@ -1,0 +1,99 @@
+:root {
+  --vp-c-brand-1: #087f71;
+  --vp-c-brand-2: #0b9382;
+  --vp-c-brand-3: #087f71;
+  --vp-c-brand-soft: rgba(8, 127, 113, 0.10);
+  --vp-home-hero-name-color: var(--vp-c-brand-1);
+  --vp-font-family-base: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.dark {
+  --vp-c-brand-1: #5bd6bd;
+  --vp-c-brand-2: #8ae6d2;
+  --vp-c-brand-3: #087f71;
+  --vp-c-brand-soft: rgba(91, 214, 189, 0.12);
+  --vp-c-bg: #14191e;
+  --vp-c-bg-alt: #10151a;
+  --vp-c-bg-soft: #1b2229;
+}
+
+.VPNavBarTitle .logo {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 7px;
+}
+
+.VPHero .name { letter-spacing: -0.045em; }
+.VPHero .text { letter-spacing: -0.04em; }
+.VPHero .tagline { max-width: 590px; }
+.VPHero .image-src { max-width: 430px; max-height: 350px; }
+.VPFeature { border: 1px solid var(--vp-c-divider); }
+.VPFeature .title { letter-spacing: -0.015em; }
+
+.home-content {
+  max-width: 1152px;
+  margin: 64px auto 80px;
+  padding: 0 24px;
+}
+
+.home-content h2 { border-top: none; margin-top: 0; }
+.home-content .section-label {
+  color: var(--vp-c-brand-1);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 48px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.home-grid > div { min-width: 0; }
+
+.home-note {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+}
+
+.vp-doc h1 { letter-spacing: -0.035em; }
+.vp-doc h2 { letter-spacing: -0.025em; }
+.vp-doc th { white-space: nowrap; }
+.vp-doc a { text-underline-offset: 3px; }
+.vp-doc :not(pre) > code { overflow-wrap: anywhere; }
+.vp-doc td:first-child > code { overflow-wrap: normal; white-space: nowrap; }
+.VPDocAsideOutline .outline-link { white-space: normal; line-height: 1.5; padding: 5px 0; }
+
+.mermaid-diagram {
+  margin: 24px 0;
+  padding: 20px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+}
+
+.mermaid-canvas { overflow-x: auto; text-align: center; }
+.mermaid-canvas svg { margin: 0 auto; height: auto; }
+/* Match Mermaid's measured label height instead of VitePress's prose line height. */
+.mermaid-canvas .nodeLabel p { margin: 0; line-height: inherit; }
+.mermaid-hint { display: none; }
+.mermaid-diagram details { margin-top: 14px; font-size: 12px; color: var(--vp-c-text-2); }
+.mermaid-diagram summary { cursor: pointer; }
+.mermaid-diagram pre { overflow-x: auto; font-size: 12px; line-height: 1.7; }
+
+@media (max-width: 767px) {
+  .home-content { margin-top: 40px; }
+  .home-grid { grid-template-columns: 1fr; gap: 12px; }
+  .VPHero .image-src { max-width: 280px; max-height: 220px; }
+  .mermaid-diagram { padding: 12px; }
+  .mermaid-canvas svg { min-width: 600px; }
+  .mermaid-hint { display: block; margin-top: 12px; color: var(--vp-c-text-2); font-size: 12px; }
+}

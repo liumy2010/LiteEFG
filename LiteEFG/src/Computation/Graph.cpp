@@ -13,14 +13,17 @@ bool GraphNode_cmp(const GraphNode& a, const GraphNode& b) {
 GraphNodeStatus::GraphNodeStatus(){}
 
 GraphNodeStatus* GraphNodeStatus::Enter() {
+    previous = GraphNode::CaptureContext();
     GraphNode::graph_status = graph_status;
     GraphNode::graph_color = color;
     return this;
 }
 
 void GraphNodeStatus::Exit(pybind11::args) {
-    GraphNode::graph_status = GraphNode::NodeStatus::smallest_status;
-    GraphNode::graph_color = 0;
+    // A status block changes the update phase, not the selected graph. A
+    // procedural Graph() created inside it remains the active builder.
+    GraphNode::graph_status = previous.status;
+    GraphNode::graph_color = previous.color;
 }
 
 ForwardNodeStatus::ForwardNodeStatus(const bool& is_static, const int& color_) : GraphNodeStatus() {
@@ -34,19 +37,96 @@ BackwardNodeStatus::BackwardNodeStatus(const bool& is_static, const int& color_)
 }
 
 Graph::Graph() {
-    GraphNode::num_nodes = GraphNode::NodeIdx::start;
-    GraphNode::graph_status = GraphNode::NodeStatus::smallest_status;
-    graph_nodes.clear();
-
-    for(int i=0; i<GraphNode::num_nodes; ++i)
+    builder = std::make_shared<GraphBuilder>();
+    for(int i=0; i<GraphNode::NodeIdx::start; ++i) {
         graph_nodes.push_back(GraphNode(i, {}, NULL, GraphNode::NodeStatus::smallest_status)); // placeholder for some predefined variables
+        graph_nodes.back().color = 0;
+    }
     utility = graph_nodes[GraphNode::NodeIdx::utility];
     opponent_reach_prob = graph_nodes[GraphNode::NodeIdx::opponent_reach_prob];
     reach_prob = graph_nodes[GraphNode::NodeIdx::reach_prob];
     action_set_size = graph_nodes[GraphNode::NodeIdx::action_set_size];
     subtree_size = graph_nodes[GraphNode::NodeIdx::subtree_size];
 
-    GraphNode::graph_nodes = &graph_nodes;
+    BindOwnership();
+}
+
+Graph::Graph(const Graph& other)
+    : builder(std::make_shared<GraphBuilder>()), order(other.order),
+      utility(other.utility), opponent_reach_prob(other.opponent_reach_prob),
+      reach_prob(other.reach_prob), action_set_size(other.action_set_size),
+      subtree_size(other.subtree_size), graph_nodes(other.graph_nodes),
+      prepared_random(other.prepared_random), timestep(other.timestep) {
+    std::copy(std::begin(other.start_idx), std::end(other.start_idx), start_idx);
+    BindOwnership();
+}
+
+Graph::Graph(Graph&& other) noexcept
+    : builder(std::move(other.builder)), order(std::move(other.order)),
+      utility(std::move(other.utility)), opponent_reach_prob(std::move(other.opponent_reach_prob)),
+      reach_prob(std::move(other.reach_prob)), action_set_size(std::move(other.action_set_size)),
+      subtree_size(std::move(other.subtree_size)), graph_nodes(std::move(other.graph_nodes)),
+      prepared_random(std::move(other.prepared_random)), timestep(other.timestep) {
+    std::copy(std::begin(other.start_idx), std::end(other.start_idx), start_idx);
+    if(builder) {
+        builder->nodes = &graph_nodes;
+        if(GraphNode::active_builder == builder) GraphNode::graph_nodes = &graph_nodes;
+    }
+}
+
+Graph& Graph::operator=(const Graph& other) {
+    if(this != &other) {
+        Graph copy(other);
+        *this = std::move(copy);
+    }
+    return *this;
+}
+
+Graph& Graph::operator=(Graph&& other) noexcept {
+    if(this == &other) return *this;
+    if(builder) {
+        if(GraphNode::active_builder == builder) GraphNode::ClearContext();
+        builder->nodes = nullptr;
+    }
+    builder = std::move(other.builder);
+    order = std::move(other.order);
+    inputs.clear();
+    utility = std::move(other.utility);
+    opponent_reach_prob = std::move(other.opponent_reach_prob);
+    reach_prob = std::move(other.reach_prob);
+    action_set_size = std::move(other.action_set_size);
+    subtree_size = std::move(other.subtree_size);
+    graph_nodes = std::move(other.graph_nodes);
+    prepared_random = std::move(other.prepared_random);
+    timestep = other.timestep;
+    std::copy(std::begin(other.start_idx), std::end(other.start_idx), start_idx);
+    if(builder) {
+        builder->nodes = &graph_nodes;
+        if(GraphNode::active_builder == builder) GraphNode::graph_nodes = &graph_nodes;
+    }
+    return *this;
+}
+
+Graph::~Graph() {
+    if(builder && builder->nodes == &graph_nodes) {
+        if(GraphNode::active_builder == builder) GraphNode::ClearContext();
+        builder->nodes = nullptr;
+    }
+}
+
+void Graph::BindOwnership() {
+    builder->nodes = &graph_nodes;
+    builder->num_nodes = graph_nodes.size();
+    for(auto& node : graph_nodes) node.owner = builder;
+    utility.owner = builder;
+    opponent_reach_prob.owner = builder;
+    reach_prob.owner = builder;
+    action_set_size.owner = builder;
+    subtree_size.owner = builder;
+}
+
+void Graph::Activate() {
+    GraphNode::Activate(builder);
 }
 
 void Graph::Initialize() {
@@ -84,6 +164,13 @@ int Graph::UpdateColorMapping(std::map<int, int>& color_mapping) {
 
 void Graph::Execute(std::vector<std::vector<Vector>>& results, const int& opIndex) {
     if(graph_nodes[opIndex].operation == NULL) return;
+    auto prepared = prepared_random.find(opIndex);
+    if(prepared != prepared_random.end()) {
+        const int idx = graph_nodes[opIndex].idx;
+        if(results[idx].empty()) results[idx].push_back(Vector());
+        results[idx][0] = prepared->second;
+        return;
+    }
     inputs.resize(graph_nodes[opIndex].dependency.size());
 
     for(int i=0; i<inputs.size(); ++i) {

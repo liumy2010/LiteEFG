@@ -11,6 +11,22 @@
 
 using ObjectDoubleInt = std::variant<double, int>;
 
+class GraphNode;
+
+// One live builder owns each node. Nodes keep weak references so a retained
+// Python node cannot keep a destroyed graph's storage alive accidentally.
+struct GraphBuilder {
+    std::vector<GraphNode>* nodes = nullptr;
+    int num_nodes = 5;
+    std::vector<std::pair<double, int>> constants;
+};
+
+struct GraphBuilderContext {
+    std::shared_ptr<GraphBuilder> owner;
+    int status = 0;
+    int color = 0;
+};
+
 class GraphNode {
 public:
     enum NodeIdx{
@@ -36,6 +52,17 @@ public:
     static int graph_status, graph_color;
     static std::vector<GraphNode>* graph_nodes;
     static std::vector<std::pair<double, int> > constants_list;
+    static std::shared_ptr<GraphBuilder> active_builder;
+
+    std::weak_ptr<GraphBuilder> owner;
+    static GraphBuilderContext CaptureContext();
+    static void RestoreContext(const GraphBuilderContext& context);
+    static void Activate(const std::shared_ptr<GraphBuilder>& builder);
+    static void ClearContext();
+    static void SyncBuilder();
+    static std::shared_ptr<GraphBuilder> RequireBuilder();
+    std::shared_ptr<GraphBuilder> RequireOwner() const;
+    void CheckOwner(const GraphNode& other) const;
 
     int idx, order; // idx: address of node, order: the order of node to be executed
     int status, color; //status and color of a node
@@ -136,6 +163,13 @@ public:
     static GraphNode RandomUniform(const GraphNode& node, const double& lower=0.0, const double& upper=1.0);
     static GraphNode RandomNormal(const GraphNode& node, const double& mean=0.0, const double& stddev=1.0);
     static GraphNode RandomExponential(const GraphNode& node, const double& lambda=1.0);
+};
+
+class GraphBuilderScope {
+    GraphBuilderContext previous;
+public:
+    explicit GraphBuilderScope(const GraphNode& node);
+    ~GraphBuilderScope();
 };
 
 #endif

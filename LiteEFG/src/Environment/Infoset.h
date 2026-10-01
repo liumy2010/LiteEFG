@@ -11,7 +11,7 @@
 
 class Node{
 public:
-    int player, infoset, idx, player_num;
+    int player, infoset, idx = 0, player_num;
     std::vector<int> next_node; // Next nodes in the game tree given the action
     // During construction of game environment, only need to specify player, infoset, next_node, and utility
     // Other variables will be handled by Environment
@@ -21,7 +21,7 @@ public:
 
     Vector reach; // Reach probability of each player
     Vector chance; // Chance probability if this is a chance node
-    bool is_terminal;
+    bool is_terminal = false;
 
     Node(const int& player_, const int& infoset_, const int& player_num_);
     
@@ -38,8 +38,10 @@ public:
     std::vector<std::vector<int>> children; // children infoset of each sequence (infoset, action)
     std::pair<int, int> parent; // parent sequence (infoset, action) of each infoset
     std::vector<std::vector<std::pair<int, int>>> parent_sequences; // parent sequence of each player
-    int first_visited, player, size;
-    double reach;
+    int first_visited = 0, player = 0, size = 0;
+    // Transient scheduling metadata; reconstructed after loading a checkpoint.
+    int parallel_idx = -1, update_order = -1;
+    double reach = 0.0;
 
     std::vector<std::vector<Vector> > results; // results of computation graph
     std::vector<int> aggregator_dependency; // dependency of the aggregator

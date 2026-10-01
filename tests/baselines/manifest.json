@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "iterations": 50,
+  "checkpoints": [1, 10, 25, 50],
+  "seed": 0,
+  "tolerances": {"absolute": 1e-10, "relative": 1e-8},
+  "strategy_types": ["last-iterate", "avg-iterate", "linear-avg-iterate"],
+  "games": [
+    {"id": "kuhn", "spec": "kuhn_poker(players=2)"},
+    {"id": "leduc", "spec": "leduc_poker(players=2,suit_isomorphism=True)"},
+    {"id": "goofspiel", "spec": "goofspiel(num_cards=3,players=2,imp_info=True,points_order=descending)"}
+  ],
+  "baselines": [
+    {"id": "Balanced_FTRL", "module": "Balanced_FTRL", "traversal": "Outcome", "kwargs": {}},
+    {"id": "Balanced_OMD", "module": "Balanced_OMD", "traversal": "Outcome", "kwargs": {}},
+    {"id": "CFR", "module": "CFR", "traversal": "Enumerate", "kwargs": {}},
+    {"id": "CFR_external", "module": "CFR", "traversal": "External", "kwargs": {}},
+    {"id": "CFRplus", "module": "CFRplus", "traversal": "Enumerate", "kwargs": {}},
+    {"id": "CMD", "module": "CMD", "traversal": "Enumerate", "kwargs": {}},
+    {"id": "DCFR", "module": "DCFR", "traversal": "Enumerate", "kwargs": {}},
+    {"id": "DOMD", "module": "DOMD", "traversal": "Enumerate", "kwargs": {}},
+    {"id": "FTPL", "module": "FTPL", "traversal": "Enumerate", "kwargs": {}},
+    {"id": "IXOMD", "module": "IXOMD", "traversal": "Outcome", "kwargs": {}},
+    {"id": "MMD", "module": "MMD", "traversal": "Enumerate", "kwargs": {}},
+    {"id": "OS_MCCFR", "module": "OS_MCCFR", "traversal": "Outcome", "kwargs": {}},
+    {"id": "PCFR", "module": "PCFR", "traversal": "Enumerate", "kwargs": {}},
+    {"id": "QFR", "module": "QFR", "traversal": "Enumerate", "kwargs": {}},
+    {"id": "Reg_CFR", "module": "Reg_CFR", "traversal": "Enumerate", "kwargs": {}},
+    {"id": "Reg_DOMD", "module": "Reg_DOMD", "traversal": "Enumerate", "kwargs": {}}
+  ]
+}

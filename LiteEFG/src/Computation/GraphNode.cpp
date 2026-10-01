@@ -13,16 +13,92 @@ int GraphNode::graph_status = GraphNode::NodeStatus::smallest_status;
 int GraphNode::graph_color = 0;
 std::vector<GraphNode>* GraphNode::graph_nodes = NULL;
 std::vector<std::pair<double, int> > GraphNode::constants_list;
+std::shared_ptr<GraphBuilder> GraphNode::active_builder;
+
+void GraphNode::SyncBuilder() {
+    if(active_builder && active_builder->nodes) {
+        active_builder->num_nodes = num_nodes;
+        active_builder->constants = constants_list;
+    }
+}
+
+GraphBuilderContext GraphNode::CaptureContext() {
+    SyncBuilder();
+    return {active_builder, graph_status, graph_color};
+}
+
+void GraphNode::Activate(const std::shared_ptr<GraphBuilder>& builder) {
+    if(!builder || !builder->nodes)
+        throw std::invalid_argument("Cannot activate a destroyed native graph");
+    SyncBuilder();
+    active_builder = builder;
+    graph_nodes = builder->nodes;
+    num_nodes = builder->num_nodes;
+    constants_list = builder->constants;
+    graph_status = NodeStatus::smallest_status;
+    graph_color = 0;
+}
+
+void GraphNode::ClearContext() {
+    SyncBuilder();
+    active_builder.reset();
+    graph_nodes = nullptr;
+    num_nodes = NodeIdx::start;
+    constants_list.clear();
+    graph_status = NodeStatus::smallest_status;
+    graph_color = 0;
+}
+
+void GraphNode::RestoreContext(const GraphBuilderContext& context) {
+    if(context.owner && context.owner->nodes) Activate(context.owner);
+    else ClearContext();
+    graph_status = context.status;
+    graph_color = context.color;
+}
+
+std::shared_ptr<GraphBuilder> GraphNode::RequireBuilder() {
+    if(!active_builder || !active_builder->nodes || graph_nodes != active_builder->nodes)
+        throw std::invalid_argument("No active native graph; create a LiteEFG.Graph before creating nodes");
+    return active_builder;
+}
+
+std::shared_ptr<GraphBuilder> GraphNode::RequireOwner() const {
+    const auto builder = owner.lock();
+    if(!builder || !builder->nodes)
+        throw std::invalid_argument("GraphNode has no live owning graph");
+    if(idx < 0 || order < 0)
+        throw std::invalid_argument("Cannot use an uninitialized GraphNode");
+    return builder;
+}
+
+void GraphNode::CheckOwner(const GraphNode& other) const {
+    if(RequireOwner() != other.RequireOwner())
+        throw std::invalid_argument("Cannot combine GraphNodes from different graphs");
+}
+
+GraphBuilderScope::GraphBuilderScope(const GraphNode& node)
+    : previous(GraphNode::CaptureContext()) {
+    GraphNode::Activate(node.RequireOwner());
+    // The dynamic forward/backward block applies to operations on existing
+    // nodes, even when their owner is not the most recently created graph.
+    GraphNode::graph_status = previous.status;
+    GraphNode::graph_color = previous.color;
+}
+
+GraphBuilderScope::~GraphBuilderScope() {
+    GraphNode::RestoreContext(previous);
+}
 
 GraphNode::GraphNode() : idx(-1), order(-1), status(GraphNode::NodeStatus::smallest_status), operation(NULL), color{GraphNode::graph_color}{dependency.clear();}
 
 GraphNode::GraphNode(const int& idx_, const std::vector<int>& dependency_, std::shared_ptr<Operation> operation_, const int& status_)
-                    : idx(idx_), order(idx_), dependency(dependency_), operation(operation_), status(status_), color{GraphNode::graph_color}{}
+                    : owner(active_builder), idx(idx_), order(idx_), dependency(dependency_), operation(operation_), status(status_), color{GraphNode::graph_color}{}
 
 GraphNode::GraphNode(const int& idx_, const std::initializer_list<int>& dependency_, std::shared_ptr<Operation> operation_, const int& status_)
-                    : idx(idx_), order(idx_), dependency(dependency_), operation(operation_), status(status_), color{GraphNode::graph_color}{}
+                    : owner(active_builder), idx(idx_), order(idx_), dependency(dependency_), operation(operation_), status(status_), color{GraphNode::graph_color}{}
 
 GraphNode::GraphNode(const double& val){
+    owner = RequireBuilder();
     constants_list.push_back({val, num_nodes});
     idx = order = num_nodes++;
     dependency.clear();
@@ -32,6 +108,7 @@ GraphNode::GraphNode(const double& val){
 }
 
 GraphNode::GraphNode(const Vector& val) {
+    owner = RequireBuilder();
     idx = order = num_nodes++;
     dependency.clear();
     operation = std::make_shared<StaticConstVector>(StaticConstVector(val));
@@ -40,6 +117,7 @@ GraphNode::GraphNode(const Vector& val) {
 }
 
 GraphNode GraphNode::AddConstScalar(const double& val){
+    RequireBuilder();
     for(auto& elem : constants_list){
         if(fabs(elem.first - val) < Constants::EPS){
             return (*graph_nodes)[elem.second];
@@ -49,6 +127,10 @@ GraphNode GraphNode::AddConstScalar(const double& val){
 }
 
 void GraphNode::Inplace(const GraphNode& node){
+    CheckOwner(node);
+    GraphBuilderScope scope(*this);
+    if(node.order >= graph_nodes->size())
+        throw std::invalid_argument("Invalid inplace node order");
     if((*graph_nodes)[node.order].order != node.order){
         throw std::invalid_argument("Unexpected error");
     }
@@ -56,11 +138,14 @@ void GraphNode::Inplace(const GraphNode& node){
 }
 
 template <typename T> GraphNode GraphNode::SingleVariableOperation(const GraphNode& node, const T& operation) {
+    GraphBuilderScope scope(node);
     GraphNode::graph_nodes->push_back(GraphNode(GraphNode::num_nodes++, {node.idx}, std::make_shared<T>(operation), GraphNode::graph_status));
     return GraphNode::graph_nodes->back();
 }
 
 template <typename T> GraphNode GraphNode::TwoVariableOperation(const Object& rhs, const T& operation) const {
+    if(std::holds_alternative<GraphNode>(rhs)) CheckOwner(std::get<GraphNode>(rhs));
+    GraphBuilderScope scope(*this);
     if(std::holds_alternative<double>(rhs)){
         graph_nodes->push_back(GraphNode(std::get<double>(rhs)));
         graph_nodes->push_back(GraphNode(num_nodes++, {idx, graph_nodes->back().idx}, std::make_shared<T>(operation), graph_status));
@@ -74,6 +159,7 @@ template <typename T> GraphNode GraphNode::TwoVariableOperation(const Object& rh
 }
 
 template <typename T> GraphNode GraphNode::TwoVariableOperation(const ObjectDoubleInt& lhs, const GraphNode& rhs, const T& operation) {
+    GraphBuilderScope scope(rhs);
     if(std::holds_alternative<double>(lhs)){
         GraphNode::graph_nodes->push_back(GraphNode(std::get<double>(lhs)));
         GraphNode::graph_nodes->push_back(GraphNode(GraphNode::num_nodes++, {GraphNode::graph_nodes->back().idx, rhs.idx}, std::make_shared<T>(operation), GraphNode::graph_status));
@@ -85,6 +171,10 @@ template <typename T> GraphNode GraphNode::TwoVariableOperation(const ObjectDoub
 }
 
 GraphNode GraphNode::ConstVector(const Object& size, const Object& val){
+    if(std::holds_alternative<double>(size) ||
+       (std::holds_alternative<int>(size) && std::get<int>(size) < 0))
+        throw std::invalid_argument("Invalid const size: expected a nonnegative int or GraphNode");
+    if(!std::holds_alternative<GraphNode>(size) && !std::holds_alternative<GraphNode>(val)) RequireBuilder();
     if(std::holds_alternative<int>(size) && std::holds_alternative<double>(val)){
         GraphNode::graph_nodes->push_back(GraphNode(Vector(std::get<int>(size), std::get<double>(val))));
         return GraphNode::graph_nodes->back();
@@ -92,7 +182,7 @@ GraphNode GraphNode::ConstVector(const Object& size, const Object& val){
         GraphNode::graph_nodes->push_back(GraphNode(Vector(std::get<int>(size), std::get<int>(val))));
         return GraphNode::graph_nodes->back();
     } else if(std::holds_alternative<int>(size) && std::holds_alternative<GraphNode>(val)){
-        return TwoVariableOperation<StaticConstVector>(std::get<int>(size), std::holds_alternative<GraphNode>(val));
+        return TwoVariableOperation<StaticConstVector>(std::get<int>(size), std::get<GraphNode>(val));
     } else if(std::holds_alternative<GraphNode>(size)){
         return std::get<GraphNode>(size).TwoVariableOperation<StaticConstVector>(val);
     } else {
@@ -313,12 +403,16 @@ GraphNode GraphNode::Project(const GraphNode& node, const std::string& distance_
 }
 
 GraphNode GraphNode::Project(const std::string& distance_name, const Object& gamma, const GraphNode& mu){
+    CheckOwner(mu);
+    GraphBuilderScope scope(*this);
     TwoVariableOperation<ProjectionOperation>(gamma, ProjectionOperation(distance_name));
     graph_nodes->back().dependency.push_back(mu.idx);
     return graph_nodes->back();
 }
 
 GraphNode GraphNode::Project(const GraphNode& node, const std::string& distance_name, const Object& gamma, const GraphNode& mu){
+    node.CheckOwner(mu);
+    GraphBuilderScope scope(node);
     node.TwoVariableOperation<ProjectionOperation>(gamma, ProjectionOperation(distance_name));
     graph_nodes->back().dependency.push_back(mu.idx);
     return graph_nodes->back();
@@ -333,6 +427,9 @@ GraphNode GraphNode::Pow(const ObjectDoubleInt& lhs, const GraphNode& rhs){
 }
 
 GraphNode GraphNode::Concat(const std::vector<GraphNode>& nodes){
+    if(nodes.empty()) throw std::invalid_argument("cat requires at least one GraphNode");
+    for(const auto& node : nodes) nodes.front().CheckOwner(node);
+    GraphBuilderScope scope(nodes.front());
     std::vector<int> dependency;
     for(const auto& node : nodes){
         dependency.push_back(node.idx);
@@ -342,16 +439,13 @@ GraphNode GraphNode::Concat(const std::vector<GraphNode>& nodes){
 }
 
 GraphNode GraphNode::RandomUniform(const GraphNode& node, const double& lower, const double& upper){
-    graph_nodes->push_back(GraphNode(num_nodes++, {node.idx}, std::make_shared<RandomUniformOperation>(RandomUniformOperation(lower, upper)), graph_status));
-    return graph_nodes->back();
+    return SingleVariableOperation<RandomUniformOperation>(node, RandomUniformOperation(lower, upper));
 }
 
 GraphNode GraphNode::RandomNormal(const GraphNode& node, const double& mean, const double& stddev){
-    graph_nodes->push_back(GraphNode(num_nodes++, {node.idx}, std::make_shared<RandomNormalOperation>(RandomNormalOperation(mean, stddev)), graph_status));
-    return graph_nodes->back();
+    return SingleVariableOperation<RandomNormalOperation>(node, RandomNormalOperation(mean, stddev));
 }
 
 GraphNode GraphNode::RandomExponential(const GraphNode& node, const double& lambda){
-    graph_nodes->push_back(GraphNode(num_nodes++, {node.idx}, std::make_shared<RandomExponentialOperation>(RandomExponentialOperation(lambda)), graph_status));
-    return graph_nodes->back();
+    return SingleVariableOperation<RandomExponentialOperation>(node, RandomExponentialOperation(lambda));
 }

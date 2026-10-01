@@ -1,9 +1,10 @@
 # Modified from https://github.com/pybind/cmake_example.git
+# License: cmake_example-LICENSE.txt
 
 [build-system]
 requires = [
-    "setuptools>=42",
-    "wheel",
+    "setuptools>=57",
+    "wheel>=0.38.4",
     "ninja",
     "cmake>=3.12",
 ]

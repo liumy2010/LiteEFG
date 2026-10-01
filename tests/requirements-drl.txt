@@ -1,0 +1,8 @@
+# Add to requirements.txt for the JAX backend tests (Python 3.10+).
+# For NVIDIA GPU execution install jax[cuda12]==0.6.2 instead of jax.
+jax==0.6.2
+optax==0.2.5
+flax==0.10.7
+
+# Independent movement and observation oracle for the dark chess environment.
+chess==1.11.2

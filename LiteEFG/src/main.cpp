@@ -2,6 +2,8 @@
 #include "Data/Tensor.h"
 
 #include "Computation/Graph.h"
+#include "Computation/Checkpoint.h"
+#include "Environment/Checkpoint.h"
 
 #include "Computation/Operations.h"
 #include "Computation/Static.h"
@@ -14,16 +16,82 @@
 #include "Environment/FileEnvironment/FileEnvironment.h"
 
 #include "Basic/BasicFunction.h"
+#include "Basic/Parallel.h"
 
 #include <iostream>
+#include <unordered_set>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/operators.h>
 
 namespace py = pybind11;
+void BindCppEnvironment(py::module_& m);
+
+namespace {
+void BindGraphAttributes(Graph& graph, py::handle value,
+                         std::unordered_set<PyObject*>& visited) {
+    if(!visited.insert(value.ptr()).second) return;
+    if(py::isinstance<Graph>(value) || py::isinstance<Environment>(value)) return;
+    if(py::isinstance<GraphNode>(value)) {
+        value.cast<GraphNode&>().owner = graph.builder;
+    } else if(py::isinstance<py::dict>(value)) {
+        for(auto entry : value.cast<py::dict>()) {
+            BindGraphAttributes(graph, entry.first, visited);
+            BindGraphAttributes(graph, entry.second, visited);
+        }
+    } else if(py::isinstance<py::list>(value) || py::isinstance<py::tuple>(value) ||
+              py::isinstance<py::set>(value)) {
+        for(auto item : value.cast<py::iterable>()) BindGraphAttributes(graph, item, visited);
+    } else {
+        // Inspect stored instance data without evaluating user properties or
+        // following references into module/function globals and class objects.
+        if(PyType_Check(value.ptr()) || PyModule_Check(value.ptr()) ||
+           PyFunction_Check(value.ptr()) || PyCFunction_Check(value.ptr()) ||
+           PyMethod_Check(value.ptr())) return;
+        PyObject* dictionary = PyObject_GenericGetDict(value.ptr(), nullptr);
+        if(dictionary) {
+            auto attributes = py::reinterpret_steal<py::object>(dictionary);
+            BindGraphAttributes(graph, attributes, visited);
+        } else if(PyErr_ExceptionMatches(PyExc_AttributeError)) {
+            PyErr_Clear();
+        } else {
+            throw py::error_already_set();
+        }
+        const auto type = py::type::of(value);
+        for(auto base : type.attr("__mro__").cast<py::tuple>()) {
+            for(auto entry : py::dict(base.attr("__dict__"))) {
+                const auto descriptor = entry.second;
+                if(Py_TYPE(descriptor.ptr()) != &PyMemberDescr_Type) continue;
+                PyObject* item = Py_TYPE(descriptor.ptr())->tp_descr_get(
+                    descriptor.ptr(), value.ptr(), type.ptr());
+                if(item) {
+                    auto member = py::reinterpret_steal<py::object>(item);
+                    BindGraphAttributes(graph, member, visited);
+                } else if(PyErr_ExceptionMatches(PyExc_AttributeError)) {
+                    // Unassigned slots need no rebinding.
+                    PyErr_Clear();
+                } else {
+                    throw py::error_already_set();
+                }
+            }
+        }
+    }
+}
+
+void BindGraphAttributes(Graph& graph, py::handle attributes) {
+    std::unordered_set<PyObject*> visited;
+    BindGraphAttributes(graph, attributes, visited);
+}
+}
 
 PYBIND11_MODULE(_LiteEFG, m) {
+    py::class_<GraphBuilderContext>(m, "_GraphBuilderContext");
+    m.def("_graph_capture_context", &GraphNode::CaptureContext);
+    m.def("_graph_restore_context", &GraphNode::RestoreContext);
+    m.def("_graph_clear_context", &GraphNode::ClearContext);
+    m.def("_graph_activate", &Graph::Activate);
+    m.def("_graph_bind_attributes", py::overload_cast<Graph&, py::handle>(&BindGraphAttributes));
     py::class_<Vector>(m, "Vector")
         .def(py::init<>()) 
         .def("print", &Vector::Print)
@@ -36,13 +104,14 @@ PYBIND11_MODULE(_LiteEFG, m) {
     //    .def(py::init<>());
     py::class_<GraphNode>(m, "GraphNode")
         .def(py::init<>())
+        .def(py::pickle(&Checkpoint::SaveNode, &Checkpoint::LoadNode))
         .def("inplace", &GraphNode::Inplace)
         .def("__add__", [](const GraphNode& a, const GraphNode::Object& b) { return a + b; })
         .def("__sub__", [](const GraphNode& a, const GraphNode::Object& b) { return a - b; })
         .def("__mul__", [](const GraphNode& a, const GraphNode::Object& b) { return a * b; })
         .def("__truediv__", [](const GraphNode& a, const GraphNode::Object& b) { return a / b; })
         .def("__pow__", [](const GraphNode& a, const GraphNode::Object& b) { return GraphNode::Pow(a, b); })
-        .def("__rpow__", [](const ObjectDoubleInt& a, const GraphNode& b) { return GraphNode::Pow(a, b); })
+        .def("__rpow__", [](const GraphNode& exponent, const ObjectDoubleInt& base) { return GraphNode::Pow(base, exponent); })
         .def(ObjectDoubleInt() + py::self)
         .def(ObjectDoubleInt() - py::self)
         .def(ObjectDoubleInt() * py::self)
@@ -96,13 +165,30 @@ PYBIND11_MODULE(_LiteEFG, m) {
     m.def("cat", py::overload_cast<const std::vector<GraphNode>&>(GraphNode::Concat), py::arg("nodes"));
 
     m.def("set_seed", Basic::SetSeed, py::arg("seed"));
+    m.def("set_threads", Parallel::SetThreads, py::arg("threads"),
+          "Set the process-wide number of native computation threads (default: 1).");
+    m.def("get_threads", Parallel::GetThreads,
+          "Return the configured number of native computation threads.");
     m.def("_uniform", GraphNode::RandomUniform, py::arg("node"), py::arg("lower") = 0.0, py::arg("upper") = 1.0);
     m.def("_normal", GraphNode::RandomNormal, py::arg("node"), py::arg("mean") = 0.0, py::arg("stddev") = 1.0);
     m.def("_exponential", GraphNode::RandomExponential, py::arg("node"), py::arg("lambda_") = 1.0);
     
 
-    py::class_<Graph>(m, "Graph")
+    py::class_<Graph>(m, "Graph", py::dynamic_attr())
         .def(py::init<>())
+        .def(py::pickle(
+            [](const py::object& self) {
+                auto attributes = py::dict(self.attr("__dict__").attr("copy")());
+                attributes.attr("pop")("_checkpoint_environment", py::none());
+                return py::make_tuple(Checkpoint::SaveGraph(self.cast<const Graph&>()), attributes);
+            },
+            [](const py::tuple& state) {
+                if (state.size() != 2) throw std::invalid_argument("Invalid checkpoint graph state");
+                auto graph = Checkpoint::LoadGraph(state[0].cast<py::dict>());
+                auto attributes = state[1].cast<py::dict>();
+                BindGraphAttributes(graph, attributes);
+                return std::make_pair(std::move(graph), attributes);
+            }))
         .def_readonly("utility", &Graph::utility)
         .def_readonly("opponent_reach_prob", &Graph::opponent_reach_prob)
         .def_readonly("reach_prob", &Graph::reach_prob)
@@ -121,7 +207,10 @@ PYBIND11_MODULE(_LiteEFG, m) {
         .def(py::init<const bool&, const int&>(), py::arg("is_static") = false, py::arg("color") = 0);
 
     py::class_<Environment, std::shared_ptr<Environment>>(m, "Environment")
-        .def("set_graph", &Environment::SetGraph, py::arg("graph"))
+        .def("set_graph", [](py::object self, py::object graph) {
+            self.cast<Environment&>().SetGraph(graph.cast<const Graph&>());
+            graph.attr("_checkpoint_environment") = self;
+        }, py::arg("graph"))
         .def("update", py::overload_cast<const GraphNode&, const int&, std::vector<int>, const std::string&>(&Environment::Update), py::arg("strategy"), py::arg("upd_player") = -1, py::arg("upd_color")=std::vector<int>{-1}, py::arg("traverse_type")="default")
         .def("update", py::overload_cast<std::vector<GraphNode>, const int&, std::vector<int>, const std::string&>(&Environment::Update), py::arg("strategies"), py::arg("upd_player") = -1, py::arg("upd_color")=std::vector<int>{-1}, py::arg("traverse_type")="default")
         .def("update_strategy", py::overload_cast<const GraphNode&, const bool&>(&Environment::UpdateStrategy), py::arg("strategy"), py::arg("update_best") = false)
@@ -136,4 +225,12 @@ PYBIND11_MODULE(_LiteEFG, m) {
 
     py::class_<FileEnvironment, Environment, std::shared_ptr<FileEnvironment>>(m, "FileEnv")
         .def(py::init<const std::string&, const std::string&>(), py::arg("file_name"), py::arg("traverse_type") = "Enumerate");
+
+    m.def("_checkpoint_save_environment", &Checkpoint::SaveEnvironment);
+    m.def("_checkpoint_load_environment", &Checkpoint::LoadEnvironment);
+    m.def("_checkpoint_restore", &Checkpoint::Restore);
+    m.def("_checkpoint_get_random_state", &Checkpoint::SaveRandomState);
+    m.def("_checkpoint_set_random_state", &Checkpoint::LoadRandomState);
+    m.def("_checkpoint_activate_graph", &Graph::Activate);
+    BindCppEnvironment(m);
 }

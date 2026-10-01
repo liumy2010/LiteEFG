@@ -1,2 +1,10 @@
+* text=auto eol=lf
+
 GameInstances/*.game filter=lfs diff=lfs merge=lfs -text
 GameInstances/*.openspiel filter=lfs diff=lfs merge=lfs -text
+
+# Frozen source checksums refer to the original LF bytes on every platform.
+tests/baselines/public/*.py text eol=lf
+
+# The native game-file reader consumes Unix line separators under WSL/Linux.
+LiteEFG/game_instances/*.game text eol=lf

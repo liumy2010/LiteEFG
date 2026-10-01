@@ -5,7 +5,7 @@
 # Proceedings of the AAAI Conference on Artificial Intelligence (2019).
 #######################################################
 
-import LiteEFG
+import LiteEFG as leg
 from LiteEFG.baselines.baseline import _baseline
 
 class graph(_baseline):
@@ -15,27 +15,28 @@ class graph(_baseline):
         self.alpha = alpha
         self.beta = beta
         self.gamma = gamma
+        # Exponents outside [-10, 10] retain the +/- infinity approximation.
         self.threshold = 10
 
-        with LiteEFG.backward(is_static=True):
+        with leg.backward(is_static=True):
 
-            self.timestep = LiteEFG.const(size=1, val=0.0)
-            expectation = LiteEFG.const(size=1, val=0.0)
-            self.strategy = LiteEFG.const(self.action_set_size, 1.0 / self.action_set_size)
-            self.avg_seq_strategy = LiteEFG.const(self.action_set_size, 0.0)
-            self.regret_buffer = LiteEFG.const(self.action_set_size, 0.0)
+            self.timestep = leg.const(size=1, val=0.0)
+            expectation = leg.const(size=1, val=0.0)
+            self.strategy = leg.const(self.action_set_size, 1.0 / self.action_set_size)
+            self.avg_seq_strategy = leg.const(self.action_set_size, 0.0)
+            self.regret_buffer = leg.const(self.action_set_size, 0.0)
             self.avg_strategy = self.strategy.copy()
 
-            self.pos_coeff = LiteEFG.const(1, 1.0) if self.alpha>self.threshold else LiteEFG.const(1, 0.0)
-            self.neg_coeff = LiteEFG.const(1, 1.0) if self.beta>self.threshold else LiteEFG.const(1, 0.0)
+            self.pos_coeff = leg.const(1, 1.0) if self.alpha>self.threshold else leg.const(1, 0.0)
+            self.neg_coeff = leg.const(1, 1.0) if self.beta>self.threshold else leg.const(1, 0.0)
 
-        with LiteEFG.backward():
+        with leg.backward():
 
             self.strategy_coef = (self.timestep / (self.timestep + 1)) ** self.gamma
             self.timestep.inplace(self.timestep + 1)
             
-            counterfactual_value = LiteEFG.aggregate(expectation, aggregator="sum") + self.utility
-            expectation.inplace(LiteEFG.dot(counterfactual_value, self.strategy))
+            counterfactual_value = leg.aggregate(expectation, aggregator="sum") + self.utility
+            expectation.inplace(leg.dot(counterfactual_value, self.strategy))
 
             self.neg_regret = self.regret_buffer < 0
             self.pos_regret = self.regret_buffer >= 0
@@ -45,24 +46,25 @@ class graph(_baseline):
             self.regret_buffer.inplace(self.regret_buffer + counterfactual_value - expectation)
             self.avg_seq_strategy.inplace(self.avg_seq_strategy * self.strategy_coef + self.strategy * self.reach_prob)
             self.avg_strategy.inplace(self.avg_seq_strategy.normalize(p_norm=1.0, ignore_negative=True))
-            self.strategy.inplace(LiteEFG.normalize(self.regret_buffer, p_norm=1.0, ignore_negative=True))
+            self.strategy.inplace(leg.normalize(self.regret_buffer, p_norm=1.0, ignore_negative=True))
 
-            if abs(self.alpha) < self.threshold:
+            if abs(self.alpha) <= self.threshold:
                 self.pos_coeff.inplace((self.timestep ** self.alpha) / (self.timestep ** self.alpha + 1))
-            if abs(self.beta) < self.threshold:
+            if abs(self.beta) <= self.threshold:
                 self.neg_coeff.inplace((self.timestep ** self.beta) / (self.timestep ** self.beta + 1))
             
         print("===============Graph is ready for DCFR===============")
         print("alpha: %f, beta: %f, gamma: %f" % (self.alpha, self.beta, self.gamma))
         print("====================================================\n")
 
-    def update_graph(self, env : LiteEFG.Environment) -> None:
+    def update_graph(self, env : leg.Environment) -> None:
         env.update(self.strategy, upd_player=1)
         env.update(self.strategy, upd_player=2)
     
-    def current_strategy(self, type_name="last-iterate"):
+    def current_strategy(self, type_name="last-iterate") -> leg.GraphNode:
+        """Return the current policy or DCFR's internally discounted average."""
         assert(type_name in ["last-iterate", "average-iterate"])
-        return self.strategy if type_name == "average-iterate" else self.avg_strategy
+        return self.strategy if type_name == "last-iterate" else self.avg_strategy
 
 if __name__ == "__main__":
     import argparse
@@ -78,4 +80,5 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     from utils import train
-    train(graph(args.alpha, args.beta, args.gamma), args.traverse_type, "last-iterate", args.iter, args.print_freq, args.game)
+    train(graph(args.alpha, args.beta, args.gamma), args.traverse_type, "last-iterate", args.iter, args.print_freq, args.game,
+          strategy_type="average-iterate")

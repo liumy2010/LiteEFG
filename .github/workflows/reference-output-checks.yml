@@ -1,0 +1,52 @@
+name: Reference output checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reference-output-checks:
+    # References target Linux/libstdc++; random distributions differ by runtime.
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - name: Check out the repository and pybind11
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          submodules: recursive
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            tests/requirements.txt
+            tests/requirements-drl.txt
+      - name: Select tests affected by this change
+        run: python tests/select_ci_tests.py
+      - name: Install test dependencies
+        run: python -m pip install -r tests/requirements.txt -r tests/requirements-drl.txt
+      - name: Build the current LiteEFG extension
+        run: python setup.py build_ext --inplace
+      - name: Report available CPUs for native parallel tests
+        run: nproc
+      - name: Compare baseline outputs and test the pipeline
+        env:
+          # Poison freed allocations so native use-after-free bugs fail reliably.
+          MALLOC_PERTURB_: '165'
+        run: python tests/select_ci_tests.py --run-plan artifacts/ci-selection/plan.json
+      - name: Upload reference output check results
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: reference-output-checks-${{ runner.os }}-${{ runner.arch }}
+          path: |
+            artifacts/reference-output-checks/
+            artifacts/ci-selection/
+          if-no-files-found: warn

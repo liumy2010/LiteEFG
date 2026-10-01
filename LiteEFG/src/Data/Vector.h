@@ -47,7 +47,8 @@ public:
     void Concat(const double& rhs);
     void Concat(const Vector& rhs);
     void push_back(const double& val);
-    void Resize(const int& n, const double& val=0.0);
+    // Copy the fill value before growth: callers may pass an existing element.
+    void Resize(const int& n, const double val=0.0);
     void Set(const double& val);
 
     void Print() const;

@@ -5,7 +5,7 @@
 # Foundations and Trends® in Optimization 2.3-4 (2016): 157-325.
 #######################################################
 
-import LiteEFG
+import LiteEFG as leg
 from LiteEFG.baselines.baseline import _baseline
 
 class graph(_baseline):
@@ -15,35 +15,35 @@ class graph(_baseline):
         self.eta = eta
         self.noise_type = noise_type
         
-        with LiteEFG.backward(is_static=True):
+        with leg.backward(is_static=True):
 
-            expectation = LiteEFG.const(size=1, val=0.0)
-            self.strategy = LiteEFG.const(self.action_set_size, 1.0 / self.action_set_size)
-            self.cumulative_utility = LiteEFG.const(self.action_set_size, 0.0)
+            expectation = leg.const(size=1, val=0.0)
+            self.strategy = leg.const(self.action_set_size, 1.0 / self.action_set_size)
+            self.cumulative_utility = leg.const(self.action_set_size, 0.0)
 
-        with LiteEFG.backward():
+        with leg.backward():
 
             if self.noise_type == "uniform":
-                noise = LiteEFG.random.uniform(self.action_set_size, 0.0, 1.0 / self.eta)
+                noise = leg.random.uniform(self.action_set_size, 0.0, 1.0 / self.eta)
             elif self.noise_type == "normal":
-                noise = LiteEFG.random.normal(self.action_set_size, 0.0, 1.0 / self.eta)
+                noise = leg.random.normal(self.action_set_size, 0.0, 1.0 / self.eta)
             else:
-                noise = LiteEFG.random.exponential(self.action_set_size, self.eta)
+                noise = leg.random.exponential(self.action_set_size, self.eta)
 
-            counterfactual_value = LiteEFG.aggregate(expectation, aggregator="sum") + self.utility
-            expectation.inplace(LiteEFG.dot(counterfactual_value, self.strategy))
+            counterfactual_value = leg.aggregate(expectation, aggregator="sum") + self.utility
+            expectation.inplace(leg.dot(counterfactual_value, self.strategy))
             self.cumulative_utility.inplace(self.cumulative_utility + counterfactual_value)
 
-            self.strategy.inplace(LiteEFG.argmax(self.cumulative_utility + noise))
+            self.strategy.inplace(leg.argmax(self.cumulative_utility + noise))
 
         print("===============Graph is ready for FTPL===============")
         print("eta: %f, noise: %s" % (self.eta, self.noise_type))
         print("====================================================\n")
 
-    def update_graph(self, env : LiteEFG.Environment) -> None:
+    def update_graph(self, env : leg.Environment) -> None:
         env.update(self.strategy)
 
-    def current_strategy(self) -> LiteEFG.GraphNode:
+    def current_strategy(self) -> leg.GraphNode:
         return self.strategy
 
 if __name__ == "__main__":

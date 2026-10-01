@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="350" viewBox="0 0 440 350" fill="none">
+  <title>One local computation graph, evaluated across the game</title>
+  <desc>A Python update rule connects to several information sets, whose values are updated by the C++ engine.</desc>
+  <rect x="1" y="1" width="438" height="348" rx="20" fill="#15232b" stroke="#31504f"/>
+  <g font-family="ui-monospace, SFMono-Regular, Consolas, monospace">
+    <text x="28" y="36" fill="#91b2b1" font-size="11" letter-spacing="1.5">DEFINE ONCE. EVALUATE AT EACH INFOSET.</text>
+    <rect x="28" y="58" width="384" height="88" rx="10" fill="#1e343b" stroke="#41615f"/>
+    <text x="220" y="106" fill="#71debd" font-size="11" text-anchor="middle">PYTHON · LOCAL UPDATE</text>
+    <path d="M220 146v28M88 196v-22h264v22M220 174v22" stroke="#71debd" stroke-width="1.5"/>
+    <g fill="#1e343b" stroke="#547a73">
+      <rect x="36" y="196" width="104" height="48" rx="8"/>
+      <rect x="168" y="196" width="104" height="48" rx="8"/>
+      <rect x="300" y="196" width="104" height="48" rx="8"/>
+    </g>
+    <g fill="#e1edec" font-size="12" text-anchor="middle">
+      <text x="88" y="225">infoset I₁</text>
+      <text x="220" y="225">infoset I₂</text>
+      <text x="352" y="225">infoset I₃</text>
+    </g>
+    <circle cx="220" cy="174" r="4" fill="#71debd"/>
+    <path d="M28 272h384" stroke="#31504f"/>
+    <text x="28" y="300" fill="#71debd" font-size="11">C++ · GAME TRAVERSAL</text>
+    <text x="28" y="323" fill="#91b2b1" font-size="11">Shared rule. Separate values at each infoset.</text>
+  </g>
+</svg>

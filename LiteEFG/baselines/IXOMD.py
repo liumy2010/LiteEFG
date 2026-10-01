@@ -5,7 +5,7 @@
 # Advances in Neural Information Processing Systems (2021).
 #######################################################
 
-import LiteEFG
+import LiteEFG as leg
 from LiteEFG.baselines.baseline import _baseline
 
 class graph(_baseline):
@@ -16,17 +16,17 @@ class graph(_baseline):
         self.gamma = gamma
         self.initialized = False
 
-        with LiteEFG.forward(is_static=True):
-            self.strategy = LiteEFG.const(self.action_set_size, 1.0/self.action_set_size)
-            expectation = LiteEFG.const(size=1, val=0.0)
-            self.Z = LiteEFG.const(size=1, val=1.0)
+        with leg.forward(is_static=True):
+            self.strategy = leg.const(self.action_set_size, 1.0/self.action_set_size)
+            expectation = leg.const(size=1, val=0.0)
+            self.Z = leg.const(size=1, val=1.0)
         
-        with LiteEFG.backward():
-            gradient = LiteEFG.aggregate(expectation, aggregator="sum") + self.utility / (self.reach_prob * self.strategy + self.gamma) * self.eta
+        with leg.backward():
+            gradient = leg.aggregate(expectation, aggregator="sum") + self.utility / (self.reach_prob * self.strategy + self.gamma) * self.eta
             # gradient = \eta * r_h^t + \log Z_{h+1}^t
 
-            logit_max = LiteEFG.max(gradient)
-            self.Z.inplace(LiteEFG.log(LiteEFG.sum(self.strategy * LiteEFG.exp(gradient - logit_max))) + logit_max) # Z_h^t
+            logit_max = leg.max(gradient)
+            self.Z.inplace(leg.log(leg.sum(self.strategy * leg.exp(gradient - logit_max))) + logit_max) # Z_h^t
             self._update(gradient, self.strategy, self.strategy)
             expectation.inplace(self.Z.copy())
 
@@ -40,10 +40,10 @@ class graph(_baseline):
         upd_u.inplace(upd_u.exp())
         upd_u.inplace(upd_u.project(distance="KL"))
 
-    def update_graph(self, env : LiteEFG.Environment) -> None:
+    def update_graph(self, env : leg.Environment) -> None:
         env.update(self.strategy)
 
-    def current_strategy(self) -> LiteEFG.GraphNode:
+    def current_strategy(self) -> leg.GraphNode:
         return self.strategy
 
 if __name__ == "__main__":

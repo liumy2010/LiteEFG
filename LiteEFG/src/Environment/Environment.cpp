@@ -2,6 +2,7 @@
 
 #include "Computation/Operations.h"
 #include "Basic/BasicFunction.h"
+#include "Basic/Parallel.h"
 
 #include <string>
 #include <stdexcept>
@@ -16,13 +17,14 @@ Environment::Environment(const int& player_num_, const std::string& traverse_)
 }
 
 void Environment::SetGraph(const Graph& graph_){
+    ResetParallelSchedule();
     graph = graph_;
     if(!Flags_Initialized){
         Initialize();
     }
 
     num_colors = graph.UpdateColorMapping(color_mapping);
-    is_color_to_update.resize(num_colors, true);
+    is_color_to_update.assign(num_colors, true);
 
     Is_Aggregate_Opponents = false;
     for(int i=0; i<graph.graph_nodes.size(); i++){
@@ -64,6 +66,7 @@ void Environment::SetGraph(const Graph& graph_){
             infoset.UpdateGraph(GraphNode::NodeStatus::static_forward_node, is_color_to_update);
         }
     }
+    if(Parallel::GetThreads() > 1) PrepareParallelSchedule();
 }
 
 double Environment::GetProb(Node* node, const int& strategy_node_idx, const int& action){
@@ -121,7 +124,7 @@ void Environment::Initialize(){
     for (int player=1; player<=player_num; player++){
         for(int i=0; i<infosets[player].size(); i++){
             Infoset& infoset = infosets[player][i];
-            infoset.results.resize(GraphNode::num_nodes, {});
+            infoset.results.resize(graph.graph_nodes.size(), {});
             infoset.size = 0;
             infoset.results[GraphNode::NodeIdx::action_set_size] = {Vector(1, double(infoset.children.size()))}; 
             infoset.results[GraphNode::NodeIdx::utility] = {Vector(infoset.children.size(), 0.0)};
@@ -178,7 +181,7 @@ void Environment::AggregateInformation(Infoset& infoset, const bool& is_parent, 
     }
 }
 
-void Environment::UpdateTraverse(const int& upd_player){
+void Environment::UpdateTraverse(const int& upd_player, const int& current_traverse){
 
     for(int t=traverse_order.size()-1; t>=0; t--) if(CheckValidNode(traverse_order[t], upd_player)){
         int player = traverse_order[t] -> player;
@@ -194,6 +197,11 @@ void Environment::UpdateTraverse(const int& upd_player){
             infoset.InitializeGraph(node -> reach[node -> player]);
             traverse_infoset.push_back(&infoset);
         }
+    }
+    if(Parallel::GetThreads() > 1) {
+        PrepareParallelSchedule();
+        for(auto& entry : parallel_infosets) entry.infoset->update_order = -1;
+        for(int i=0; i<traverse_infoset.size(); ++i) traverse_infoset[i]->update_order = i;
     }
     for(int player=1; player<=player_num; player++) if(CheckValidPlayer(player, upd_player)){
         infosets[player][0].InitializeGraph(1.0);
@@ -211,7 +219,7 @@ void Environment::UpdateTraverse(const int& upd_player){
             if(CheckValidPlayer(p, upd_player)){
                 auto parent = node -> parent_infoset[p];
                 infosets[p][parent.first].results[GraphNode::NodeIdx::utility][0][parent.second] += node -> GetUtility(p) * 
-                                                                                                        ((traverse==Traverse::Enumerate) ? cum_mul * reach_prob_cum_mul[p+1] : 1.0);
+                                                                                                        ((current_traverse==Traverse::Enumerate) ? cum_mul * reach_prob_cum_mul[p+1] : 1.0);
                 if(p == node -> player)
                     infosets[node->player][node->infoset].results[GraphNode::NodeIdx::opponent_reach_prob][0][0] += cum_mul * reach_prob_cum_mul[p+1];
             }
@@ -220,6 +228,7 @@ void Environment::UpdateTraverse(const int& upd_player){
         }
     }
 
+    if(!UpdateParallel(GraphNode::NodeStatus::backward_node, current_traverse))
     for(int t=traverse_infoset.size()-1; t>=0; t--){
         Infoset& infoset = *traverse_infoset[t];
         AggregateInformation(infoset, true, GraphNode::NodeStatus::backward_node);
@@ -227,6 +236,7 @@ void Environment::UpdateTraverse(const int& upd_player){
         AggregateInformation(infoset, false, GraphNode::NodeStatus::backward_node);
     }
 
+    if(UpdateParallel(GraphNode::NodeStatus::forward_node, current_traverse)) return;
     for(int t=0; t<traverse_infoset.size(); t++){
         Infoset& infoset = *traverse_infoset[t];
         AggregateInformation(infoset, false, GraphNode::NodeStatus::forward_node);
@@ -251,6 +261,12 @@ void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_p
         traverse is the method to traverse the tree
         upd_player is the player to update the graph. If -1, update all players
     */
+    if(strategy_nodes.size() != player_num){
+        throw std::invalid_argument("strategies size needs to match player_num");
+    }
+    if(upd_player != -1 && (upd_player < 1 || upd_player > player_num)){
+        throw std::invalid_argument("upd_player must be -1 or a player in {1, ..., " + std::to_string(player_num) + "}");
+    }
     if(!Flags_Initialized){
         Initialize();
     }
@@ -288,7 +304,7 @@ void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_p
             node->reach[player] *= GetProb(nodes[node->parent.first], strategy_nodes[player].idx, node->parent.second);
             traverse_order[i] = node;
         }
-        UpdateTraverse(upd_player);
+        UpdateTraverse(upd_player, current_traverse);
     } else if (current_traverse == Traverse::Outcome){
         traverse_order.clear();
         traverse_order.push_back(nodes[0]);
@@ -302,7 +318,7 @@ void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_p
 
             traverse_order.push_back(next_node);
         }
-        UpdateTraverse(upd_player);
+        UpdateTraverse(upd_player, current_traverse);
     } else if (current_traverse == Traverse::External){
         for(int player=1; player<=player_num; player++) if(CheckValidPlayer(player, upd_player)){
             traverse_order.clear();
@@ -327,7 +343,7 @@ void Environment::Update(std::vector<GraphNode> strategy_nodes, const int& upd_p
                     traverse_order.push_back(next_node);
                 }
             }
-            UpdateTraverse(player);
+            UpdateTraverse(player, current_traverse);
         }
     } else{
         throw std::invalid_argument("Invalid Traverse");
@@ -515,5 +531,6 @@ void Environment::SetValue(const int& player, const GraphNode& node, const std::
 }
 
 Environment::~Environment(){
-    delete nodes[0]; // only the root node is defined by new and needs to be deleted
+    // Only the virtual root added by Initialize is individually allocated.
+    if(Flags_Initialized && !nodes.empty()) delete nodes[0];
 }

@@ -1,11 +1,8 @@
-def _import_all_modules():
-    import os
-    import importlib
-    package_dir = os.path.dirname(__file__)
+"""Tabular baselines; neural baselines are available in the drl subpackage."""
 
-    for filename in os.listdir(package_dir):
-        if filename.endswith('.py') and filename != '__init__.py' and filename != 'utils.py':
-            module_name = f'.{filename[:-3]}'
-            importlib.import_module(module_name, package=__name__)
+import importlib
+from pathlib import Path
 
-_import_all_modules()
+for _source in Path(__file__).parent.glob("*.py"):
+    if _source.stem not in ("__init__", "utils"):
+        importlib.import_module(f".{_source.stem}", package=__name__)

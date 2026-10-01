@@ -5,12 +5,12 @@
 # International Conference on Learning Representations (2023).
 #######################################################
 
-import LiteEFG
+import LiteEFG as leg
 from LiteEFG.baselines.baseline import _baseline
 from typing import Literal
 
 class graph(_baseline):
-    def __init__(self, eta=0.1, tau=0.1, regularizer: Literal["Euclidean", "Entropy"]="Entropy", 
+    def __init__(self, eta=0.1, tau=0.001, regularizer: Literal["Euclidean", "Entropy"]="Euclidean",
                         weighted=False, shrink_iter=100000, out_reg=False):
         super().__init__()
         self.eta = eta
@@ -20,27 +20,27 @@ class graph(_baseline):
         self.out_reg = out_reg
 
         # Create a new graph for CFR
-        with LiteEFG.backward(is_static=True):
+        with leg.backward(is_static=True):
         
             self.alpha = 1.0
             if weighted:
-                self.alpha = LiteEFG.const(1, 1.0)
-                self.alpha.inplace(LiteEFG.aggregate(self.alpha, "sum"))
+                self.alpha = leg.const(1, 1.0)
+                self.alpha.inplace(leg.aggregate(self.alpha, "sum"))
                 self.alpha.inplace((self.alpha.max() + 1) * 2)
 
-            ev = LiteEFG.const(size=1, val=0.0)
-            bar_ev = LiteEFG.const(size=1, val=0.0)
+            ev = leg.const(size=1, val=0.0)
+            bar_ev = leg.const(size=1, val=0.0)
 
-            self.tau = LiteEFG.const(1, tau)
+            self.tau = leg.const(1, tau)
             self.eta_coef = self.alpha / eta
             self.coef = self.tau
-            self.u = LiteEFG.const(self.action_set_size, 1.0 / self.action_set_size)
+            self.u = leg.const(self.action_set_size, 1.0 / self.action_set_size)
             self.bar_u = self.u.copy()
 
-        with LiteEFG.backward(color=0):
+        with leg.backward(color=0):
 
-            bar_gradient = LiteEFG.aggregate(bar_ev, "sum") + self.utility
-            gradient = LiteEFG.aggregate(ev, "sum") + self.utility
+            bar_gradient = leg.aggregate(bar_ev, "sum") + self.utility
+            gradient = leg.aggregate(ev, "sum") + self.utility
 
             self.prev_bar_u =  self.bar_u.copy()
             self._update(bar_gradient, self.bar_u, self.bar_u)
@@ -49,7 +49,7 @@ class graph(_baseline):
             self._get_ev(bar_gradient, bar_ev, self.bar_u, self.prev_bar_u)
             self._get_ev(gradient, ev, self.u, self.bar_u)
         
-        with LiteEFG.backward(color=1):
+        with leg.backward(color=1):
             self.tau.inplace(self.tau * 0.5)
             self.coef.inplace(self.tau)
 
@@ -60,30 +60,31 @@ class graph(_baseline):
     def _get_ev(self, gradient, ev, strategy, ref_strategy):
         if not self.out_reg:
             if self.regularizer == "Euclidean":
-                ev.inplace(LiteEFG.dot(gradient, strategy) - LiteEFG.euclidean(strategy - ref_strategy) * self.eta_coef
-                                                            - (LiteEFG.dot(ref_strategy, strategy)) * self.tau * self.alpha)
+                # The reference-only term matters when this value reaches a parent.
+                linear_reg = leg.dot(ref_strategy, strategy) - leg.euclidean(ref_strategy)
+                ev.inplace(leg.dot(gradient, strategy) - leg.euclidean(strategy - ref_strategy) * self.eta_coef
+                                                            - linear_reg * self.tau * self.alpha)
             else:
-                kl = LiteEFG.dot((strategy / ref_strategy).log(), strategy) * self.eta_coef
-                ev.inplace(LiteEFG.dot(gradient, strategy) - kl - (LiteEFG.dot(ref_strategy.log(), strategy)) * self.tau * self.alpha)
+                kl = leg.dot((strategy / ref_strategy).log(), strategy) * self.eta_coef
+                ev.inplace(leg.dot(gradient, strategy) - kl - (leg.dot(ref_strategy.log(), strategy)) * self.tau * self.alpha)
         else:
             if self.regularizer == "Euclidean":
-                ev.inplace(LiteEFG.dot(gradient, strategy) - LiteEFG.euclidean(strategy - ref_strategy) * self.eta_coef
-                                                            - LiteEFG.euclidean(strategy) * self.tau * self.alpha)
+                ev.inplace(leg.dot(gradient, strategy) - leg.euclidean(strategy - ref_strategy) * self.eta_coef
+                                                            - leg.euclidean(strategy) * self.tau * self.alpha)
             else:
-                kl = LiteEFG.dot((strategy / ref_strategy).log(), strategy) * self.eta_coef
-                ev.inplace(LiteEFG.dot(gradient, strategy) - kl - LiteEFG.negative_entropy(strategy) * self.tau * self.alpha)
+                kl = leg.dot((strategy / ref_strategy).log(), strategy) * self.eta_coef
+                ev.inplace(leg.dot(gradient, strategy) - kl - leg.negative_entropy(strategy) * self.tau * self.alpha)
 
     def _update(self, gradient, upd_u, ref_u):
         if not self.out_reg:
+            # Keep the raw gradient for _get_ev, which accounts for regularization.
             if self.regularizer == "Euclidean":
-                gradient.inplace(gradient - ref_u * self.alpha * self.tau)
-                gradient_div = gradient / self.eta_coef
+                gradient_div = (gradient - ref_u * self.alpha * self.tau) / self.eta_coef
                 upd_u.inplace(ref_u + gradient_div)
                 upd_u.inplace(upd_u.project(distance="L2"))
 
             else:
-                gradient.inplace(gradient - (ref_u.log() + 1) * self.alpha * self.tau)
-                gradient_div = gradient / self.eta_coef
+                gradient_div = (gradient - (ref_u.log() + 1) * self.alpha * self.tau) / self.eta_coef
                 upd_u.inplace(ref_u.log() + gradient_div)
                 upd_u.inplace(upd_u - upd_u.max())
                 upd_u.inplace(upd_u.exp())
@@ -101,11 +102,11 @@ class graph(_baseline):
                 upd_u.inplace(upd_u.exp())
                 upd_u.inplace(upd_u.project(distance="KL"))
     
-    def update_graph(self, env : LiteEFG.Environment) -> None:
+    def update_graph(self, env : leg.Environment) -> None:
         self.timestep += 1
         env.update(self.u, upd_color=[0, 1]) if self.timestep % self.shrink_iter == 0 else env.update(self.u, upd_color=[0])
 
-    def current_strategy(self) -> LiteEFG.GraphNode:
+    def current_strategy(self) -> leg.GraphNode:
         return self.u
 
 if __name__ == "__main__":

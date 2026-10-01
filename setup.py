@@ -1,4 +1,6 @@
-# Modified from https://github.com/pybind/cmake_example.git
+# Reference (adapted build integration): pybind11's cmake_example.
+# https://github.com/pybind/cmake_example
+# License: cmake_example-LICENSE.txt
 
 import os
 import re
@@ -130,9 +132,17 @@ class CMakeBuild(build_ext):
 
 setup(
     name="LiteEFG",
-    version="0.1.5",
+    version="1.0.0",
     author="Mingyang Liu",
     author_email="liumy0723@gmail.com",
+    license="MIT",
+    license_files=[
+        "LICENSE",
+        "THIRD_PARTY_NOTICES.txt",
+        "cmake_example-LICENSE.txt",
+        "pybind11-LICENSE.txt",
+        "pybind11-tools-LICENSE.txt",
+    ],
     description="An efficient EFG solver based on computation graph",
     long_description="",
     #packages=find_packages(),
@@ -141,7 +151,16 @@ setup(
     #package_data={"LiteEFG.baselines": ["LiteEFG/baselines/*.py"], "LiteEFG.games": ["LiteEFG/GameInstances/*.game"]},
     zip_safe=False,
     packages=find_packages(),
-    #extras_require={"test": ["pytest>=6.0"]},
-    python_requires=">=3.7",
-    install_requires=["open_spiel >= 1.2", "pandas >= 2.0"],
+    package_data={
+        "": ["*.pyi", "py.typed"],
+        "LiteEFG": ["include/LiteEFG/*.h"],
+    },
+    python_requires=">=3.10",
+    install_requires=[
+        "open_spiel >= 1.2",
+        "pandas >= 2.0",
+        "jax>=0.6.2,<0.8",
+        "optax>=0.2.5,<0.3",
+        "flax>=0.10.7,<0.11",
+    ],
 )

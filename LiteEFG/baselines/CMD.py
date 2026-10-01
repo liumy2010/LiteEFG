@@ -5,12 +5,12 @@
 # Advances in Neural Information Processing Systems (2022).
 #######################################################
 
-import LiteEFG
+import LiteEFG as leg
 from LiteEFG.baselines.baseline import _baseline
 from typing import Literal
 
 class graph(_baseline):
-    def __init__(self, eta=0.1, inner_epoch=10, regularizer: Literal["Euclidean", "Entropy"]="Entropy", weighted=False):
+    def __init__(self, eta=0.1, inner_epoch=10, regularizer: Literal["Euclidean", "Entropy"]="Euclidean", weighted=False):
         super().__init__()
         self.eta = eta
         self.regularizer = regularizer
@@ -18,28 +18,28 @@ class graph(_baseline):
         self.inner_epoch = inner_epoch
 
         # Create a new graph for CFR
-        with LiteEFG.backward(is_static=True):
+        with leg.backward(is_static=True):
         
             self.alpha = 1.0
             if weighted:
-                self.alpha = LiteEFG.const(1, 1.0)
-                self.alpha.inplace(LiteEFG.aggregate(self.alpha, "sum"))
+                self.alpha = leg.const(1, 1.0)
+                self.alpha.inplace(leg.aggregate(self.alpha, "sum"))
                 self.alpha.inplace((self.alpha.max() + 1) * 2)
 
-            ev = LiteEFG.const(size=1, val=0.0)
+            ev = leg.const(size=1, val=0.0)
 
             self.coef = self.alpha / eta
-            self.u = LiteEFG.const(self.action_set_size, 1.0 / self.action_set_size)
+            self.u = leg.const(self.action_set_size, 1.0 / self.action_set_size)
             self.bar_u = self.u.copy()
 
-        with LiteEFG.backward():
+        with leg.backward():
 
-            gradient = LiteEFG.aggregate(ev, "sum") + self.utility
+            gradient = leg.aggregate(ev, "sum") + self.utility
 
             self._update(gradient, self.u, self.bar_u)
             self._get_ev(gradient, ev, self.u, self.bar_u)
         
-        with LiteEFG.backward(color=1):
+        with leg.backward(color=1):
             
             self.bar_u.inplace(self.u.copy())
 
@@ -49,10 +49,10 @@ class graph(_baseline):
     
     def _get_ev(self, gradient, ev, strategy, ref_strategy):
         if self.regularizer == "Euclidean":
-            ev.inplace(LiteEFG.dot(gradient, strategy) - LiteEFG.euclidean(strategy - ref_strategy) * self.coef)
+            ev.inplace(leg.dot(gradient, strategy) - leg.euclidean(strategy - ref_strategy) * self.coef)
         else:
-            kl = LiteEFG.dot((strategy / ref_strategy).log(), strategy) * self.coef
-            ev.inplace(LiteEFG.dot(gradient, strategy) - kl)
+            kl = leg.dot((strategy / ref_strategy).log(), strategy) * self.coef
+            ev.inplace(leg.dot(gradient, strategy) - kl)
 
     def _update(self, gradient, upd_u, ref_u):
         gradient_div = gradient / self.coef
@@ -67,7 +67,7 @@ class graph(_baseline):
             upd_u.inplace(upd_u.exp())
             upd_u.inplace(upd_u.project(distance="KL"))
     
-    def update_graph(self, env : LiteEFG.Environment) -> None:
+    def update_graph(self, env : leg.Environment) -> None:
         self.timestep += 1
         if self.timestep % self.inner_epoch == 0:
             env.update(self.u, upd_color=[0, 1])
@@ -75,7 +75,7 @@ class graph(_baseline):
             env.update(self.u, upd_color=[0])
 
     
-    def current_strategy(self) -> LiteEFG.GraphNode:
+    def current_strategy(self) -> leg.GraphNode:
         return self.bar_u
     
 if __name__ == "__main__":

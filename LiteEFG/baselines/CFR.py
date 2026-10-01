@@ -10,34 +10,34 @@
 # Advances in neural information processing systems (2009).
 #######################################################
 
-import LiteEFG
+import LiteEFG as leg
 from LiteEFG.baselines.baseline import _baseline
 
 class graph(_baseline):
     def __init__(self):
         super().__init__()
         
-        with LiteEFG.backward(is_static=True):
+        with leg.backward(is_static=True):
 
-            expectation = LiteEFG.const(size=1, val=0.0)
-            self.strategy = LiteEFG.const(self.action_set_size, 1.0 / self.action_set_size)
-            self.regret_buffer = LiteEFG.const(self.action_set_size, 0.0)
+            expectation = leg.const(size=1, val=0.0)
+            self.strategy = leg.const(self.action_set_size, 1.0 / self.action_set_size)
+            self.regret_buffer = leg.const(self.action_set_size, 0.0)
 
-        with LiteEFG.backward():
+        with leg.backward():
 
-            counterfactual_value = LiteEFG.aggregate(expectation, aggregator="sum") + self.utility
-            expectation.inplace(LiteEFG.dot(counterfactual_value, self.strategy))
+            counterfactual_value = leg.aggregate(expectation, aggregator="sum") + self.utility
+            expectation.inplace(leg.dot(counterfactual_value, self.strategy))
             self.regret_buffer.inplace(self.regret_buffer + counterfactual_value - expectation)
-            self.strategy.inplace(LiteEFG.normalize(self.regret_buffer, p_norm=1.0, ignore_negative=True))
+            self.strategy.inplace(leg.normalize(self.regret_buffer, p_norm=1.0, ignore_negative=True))
 
         print("===============Graph is ready for CFR===============")
         print()
         print("====================================================\n")
     
-    def update_graph(self, env : LiteEFG.Environment) -> None:
+    def update_graph(self, env : leg.Environment) -> None:
         env.update(self.strategy)
     
-    def current_strategy(self) -> LiteEFG.GraphNode:
+    def current_strategy(self) -> leg.GraphNode:
         return self.strategy
     
 if __name__ == "__main__":

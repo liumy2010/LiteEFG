@@ -1,0 +1,25 @@
+{
+  "commit": "80913416964fb8f5aa9166248bd6f32b9ae32ee1",
+  "files_sha256": {
+    "Balanced_FTRL.py": "3989a3fdb27cad766897558148f94512de94775af27c7aa33a00523568ea1351",
+    "Balanced_OMD.py": "2ef885a64d052550b6454d99618992240a1699eecf58e335f59fd400a79a31e3",
+    "CFR.py": "7c9004a0fc0fcd68c8042cfbc200a6ce011ca81d139747e66f866389c605dfb3",
+    "CFRplus.py": "69bdce98bad0456523c3c12fd22f86fc89f5bde147bad251d29a9efaf5f8071d",
+    "CMD.py": "d005c06ceee2547199013b2e4ce2e147260679984bd48fe86f6905c1673499a4",
+    "DCFR.py": "fdc65bb6ee3d4d31dcb506257478c49f0d7c60e374f80c5aff876b604bcbbd96",
+    "DOMD.py": "a50374929d54406d4fd812e21ebe96ba30ce13c696e7d0cc32912e227218e2d0",
+    "FTPL.py": "693eefac2f3578fa85da6379f85f0a86957a4fd1516c727823a761b7773f9c0c",
+    "IXOMD.py": "01ee9be8d33bdebbf6139ccbbdee0e0f0df37d9c63ca931d3c258344e1c75a6d",
+    "MMD.py": "aaae4f5e0947dcb1cd2c2fc6da263d112b61493fd9955c307ddb26eaf96b645d",
+    "OS_MCCFR.py": "e4f61aab7291e1cf2d3fda05f0077d23894f12262ec308e5758c5d2a4a18043d",
+    "PCFR.py": "a1819159fc1ad0455d2d23c5c55d058e14ab3dd85e1a34217c88e124a93ea9ef",
+    "QFR.py": "950a9a3273a205fa0b24e7ef16f954903d14338b0ce506981e5032cb6162c53e",
+    "Reg_CFR.py": "ae16e033e972f60dbe57a99424b286de2723e87f5139ee30d1256d9d57732ff3",
+    "Reg_DOMD.py": "925105401428596efc8850a7565986a1ee5a3b3b0ddbc3ae123f52b619762064",
+    "__init__.py": "0816e7465ad77d9b2a169f3891d88138a6e9f080f976758e8d7c7f5aa4972247",
+    "baseline.py": "f7dae0971de48328d1b92d3d64d1ced12eb08b0b8d89da52ce0b4847ff341e94",
+    "utils.py": "e9ed6347badf5a1fa1d77a10df0017b58b7e4cab1eca174789b6ae73903cfb51"
+  },
+  "repository": "https://github.com/liumy2010/LiteEFG",
+  "source_directory": "LiteEFG/baselines"
+}

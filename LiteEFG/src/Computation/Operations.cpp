@@ -15,6 +15,7 @@ void CopyOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) 
 }
 
 void AddOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    thread_local Vector tmp;
     if (inputs.size() == 0) {
         throw std::invalid_argument("Sum requires at least one input");
     }
@@ -27,6 +28,7 @@ void AddOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
 }
 
 void SubOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    thread_local Vector tmp;
     if (inputs.size() != 2) {
         throw std::invalid_argument("Sub requires only two inputs");
     }
@@ -37,6 +39,7 @@ void SubOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
 }
 
 void MulOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    thread_local Vector tmp;
     if (inputs.size() == 0) {
         throw std::invalid_argument("Mul requires at least one inputs");
     }
@@ -49,6 +52,7 @@ void MulOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
 }
 
 void DivOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    thread_local Vector tmp;
     if (inputs.size() != 2) {
         throw std::invalid_argument("Div requires two inputs");
     }
@@ -157,8 +161,13 @@ void ArgmaxOperation::Execute(Vector& result, const std::vector<Vector*>& inputs
         throw std::invalid_argument("Argmax requires only one input");
     }
 
-    int argmax = 0, maximum = -Constants::INF;
-    for(int i = 0; i < inputs[0]->size; ++i) {
+    if (inputs[0]->size == 0) {
+        throw std::invalid_argument("Argmax requires a non-empty input");
+    }
+
+    int argmax = 0;
+    double maximum = (*inputs[0])[0];
+    for(int i = 1; i < inputs[0]->size; ++i) {
         if((*inputs[0])[i] > maximum){
             argmax = i;
             maximum = (*inputs[0])[i];
@@ -174,8 +183,13 @@ void ArgminOperation::Execute(Vector& result, const std::vector<Vector*>& inputs
         throw std::invalid_argument("Argmin requires only one input");
     }
 
-    int argmin = 0, minimum = Constants::INF;
-    for(int i = 0; i < inputs[0]->size; ++i) {
+    if (inputs[0]->size == 0) {
+        throw std::invalid_argument("Argmin requires a non-empty input");
+    }
+
+    int argmin = 0;
+    double minimum = (*inputs[0])[0];
+    for(int i = 1; i < inputs[0]->size; ++i) {
         if((*inputs[0])[i] < minimum){
             argmin = i;
             minimum = (*inputs[0])[i];
@@ -187,6 +201,7 @@ void ArgminOperation::Execute(Vector& result, const std::vector<Vector*>& inputs
 }
 
 void MaximumOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    thread_local Vector tmp;
     if (inputs.size() != 2) {
         throw std::invalid_argument("Maximum requires only two inputs");
     }
@@ -203,6 +218,7 @@ void MaximumOperation::Execute(Vector& result, const std::vector<Vector*>& input
 }
 
 void MinimumOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    thread_local Vector tmp;
     if (inputs.size() != 2) {
         throw std::invalid_argument("Minimum requires only two inputs");
     }
@@ -238,10 +254,13 @@ void NegativeEntropyOperation::Execute(Vector& result, const std::vector<Vector*
 
     double sum = (shifted)?std::log(double(inputs[0]->size)):0.0; // shifted entropy so that the minimum value is 0
     for(int i = 0; i < inputs[0]->size; ++i) {
-        if((*inputs[0])[i] < -Constants::EPS) {
+        double probability = (*inputs[0])[i];
+        if(probability < -Constants::EPS) {
             throw std::invalid_argument("Entropy requires all elements to be non-negative");
         }
-        sum += (*inputs[0])[i] * std::log((*inputs[0])[i]);
+        // Extend x log(x) continuously at zero, including tolerated roundoff.
+        if(probability <= 0.0) continue;
+        sum += probability * std::log(probability);
     }
     result.Resize(1); 
     result[0] = sum;
@@ -249,7 +268,7 @@ void NegativeEntropyOperation::Execute(Vector& result, const std::vector<Vector*
 
 AggregateOperation::AggregateOperation(std::shared_ptr<Operation> aggregator_, const std::string& object, const std::string& player, const double& padding, const bool& is_static_)
                                         : Operation("Aggregate", is_static_), aggregator{aggregator_} {
-    if(aggregator -> name != "Max" && aggregator -> name != "Min" && aggregator -> name != "Sum") {
+    if(aggregator -> name != "Max" && aggregator -> name != "Min" && aggregator -> name != "Sum" && aggregator -> name != "Mean") {
         throw std::invalid_argument("Aggregator must be Max, Min, Sum or Mean");
     }
     if(object != "children" && object != "parent") {
@@ -265,6 +284,7 @@ AggregateOperation::AggregateOperation(std::shared_ptr<Operation> aggregator_, c
 }
 
 void AggregateOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    thread_local Vector tmp;
     result.Resize(inputs.size()); // Since result will never be one of the inputs for aggregator operation, it is fine here
     for(int i = 0; i < inputs.size(); ++i) {
         if(inputs[i] -> size == 0){

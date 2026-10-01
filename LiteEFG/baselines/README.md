@@ -9,7 +9,7 @@ Currently, the following algorithms are implemented.
 - Magnetic Mirror Descent (MMD) [[5]](#5)
 - Clairvoyant Mirror Descent (CMD) [[6]](#6)
 - Discounted Counterfactual Regret Minimization (DCFR) [[7]](#7)
-- Predictive Counterfactual Regret Minimization (PCFR) [[8]](#8)
+- Predictive Counterfactual Regret Minimization+ (PCFR+) [[8]](#8)
 - Q-Function based Regret Minimization (QFR) [[9]](#9)
 - Regularized Dilated Optimistic Mirror Descent (Reg-DOMD) [[10]](#10)
 - Regularized Counterfactual Regret Minimization (Reg-CFR) [[10]](#10)
@@ -17,6 +17,8 @@ Currently, the following algorithms are implemented.
 - Balanced Online Mirror Descent (Balanced OMD) [[12]](#12)
 - Balanced Follow the Regularized Leader (Balanced FTRL) [[13]](#13)
 - Follow the Perturbed Leader (FTPL) [[14]](#14)
+
+Deep Reinforcement Learning (DRL) algorithms are listed in the [DRL baselines](./drl/README.md).
 
 ## References
 <a id="1">[1]</a> 

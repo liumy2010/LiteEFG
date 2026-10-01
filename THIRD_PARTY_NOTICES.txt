@@ -1,0 +1,47 @@
+LiteEFG third-party notices
+==========================
+
+LiteEFG's own code is licensed under the MIT license in LICENSE. Third-party
+code retains the licenses and copyright notices identified below. The named
+license files accompany this notice in source and wheel distributions; in the
+source tree they are stored in the project root.
+
+pybind11
+--------
+Source: https://github.com/pybind/pybind11
+License file: pybind11-LICENSE.txt
+
+The source distribution includes pybind11. Its headers are compiled into the
+LiteEFG native extension. Copyright notices in the compiled headers include:
+
+Copyright (c) 2016 Wenzel Jakob <wenzel.jakob@epfl.ch>
+Copyright (c) 2017 Wenzel Jakob <wenzel.jakob@epfl.ch>
+Copyright (c) 2017 Jason Rhinelander <jason@imaginary.ca>
+Copyright (c) 2023 The pybind Community.
+Copyright (c) 2024 The pybind Community.
+Copyright (c) 2023 Dustin Spicuzza <dustin@virtualroadside.com>
+Copyright (c) 2024 The Pybind Development Team.
+Copyright (c) 2016-2024 The Pybind Development Team.
+All rights reserved.
+
+These headers use the BSD-style terms in pybind11-LICENSE.txt. Individual source
+files retain their original notices. The source-only FindEigen3.cmake and
+JoinPaths.cmake helpers have separate terms in pybind11-tools-LICENSE.txt.
+FindPythonLibsNew.cmake retains its complete Kitware and Continuum Analytics
+license notice within that source file.
+
+pybind11 cmake_example
+---------------------
+Source: https://github.com/pybind/cmake_example
+License file: cmake_example-LICENSE.txt
+
+setup.py and pyproject.toml contain build integration adapted from this project.
+Copyright (c) 2016 The Pybind Development Team, All rights reserved.
+The complete upstream license, including its Enhancements paragraph, is in the
+accompanying license file.
+
+Separately installed dependencies
+--------------------------------
+Python runtime, optional, and test dependencies retain their own licenses and
+notices supplied by their respective distributions. Declaring a dependency does
+not relicense that dependency under LiteEFG's MIT license.

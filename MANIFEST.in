@@ -1,3 +1,4 @@
 recursive-include pybind11 *
 recursive-include LiteEFG *
-include LICENSE README.md pyproject.toml setup.py CMakeLists.txt 
+include LICENSE THIRD_PARTY_NOTICES.txt README.md pyproject.toml setup.py CMakeLists.txt
+include cmake_example-LICENSE.txt pybind11-LICENSE.txt pybind11-tools-LICENSE.txt

@@ -1,0 +1,16 @@
+# Match the recorded Python/OpenSpiel environment so dependency changes do not
+# silently alter game trees, policies, or numeric output. CI uses Python 3.12
+# on Linux/libstdc++; C++ random engines/distributions differ across standard
+# libraries, so a seed alone does not make stochastic goldens portable.
+open_spiel==1.5
+numpy==2.1.1
+pandas==2.2.2
+tqdm==4.66.5
+pytest==8.4.2
+
+# Build the checked-out C++ extension, including the pybind11 submodule.
+# CMake 4 removes compatibility required by the existing build configuration.
+setuptools>=42
+wheel
+cmake>=3.18,<4
+ninja

@@ -5,35 +5,35 @@
 # Proceedings of the AAAI Conference on Artificial Intelligence (2021).
 #######################################################
 
-import LiteEFG
+import LiteEFG as leg
 from LiteEFG.baselines.baseline import _baseline
 
 class graph(_baseline):
     def __init__(self):
         super().__init__()
-        with LiteEFG.backward(is_static=True):
+        with leg.backward(is_static=True):
             
-            ev = 1.0 * LiteEFG.const(1, 0.0)
-            self.strategy = LiteEFG.const(self.action_set_size, 1.0 / self.action_set_size)
-            self.regret_buffer = LiteEFG.const(self.action_set_size, 0.0)
+            ev = 1.0 * leg.const(1, 0.0)
+            self.strategy = leg.const(self.action_set_size, 1.0 / self.action_set_size)
+            self.regret_buffer = leg.const(self.action_set_size, 0.0)
 
         # RM+
-        with LiteEFG.backward():
+        with leg.backward():
 
-            gradient = LiteEFG.aggregate(ev, aggregator="sum") + self.utility
-            ev.inplace(LiteEFG.dot(gradient, self.strategy))
-            self.regret_buffer.inplace(LiteEFG.maximum(self.regret_buffer + gradient - ev, 0.0))
-            self.strategy.inplace(LiteEFG.normalize(self.regret_buffer + gradient - ev, p_norm=1.0, ignore_negative=True))
+            gradient = leg.aggregate(ev, aggregator="sum") + self.utility
+            ev.inplace(leg.dot(gradient, self.strategy))
+            self.regret_buffer.inplace(leg.maximum(self.regret_buffer + gradient - ev, 0.0))
+            self.strategy.inplace(leg.normalize(self.regret_buffer + gradient - ev, p_norm=1.0, ignore_negative=True))
         
         print("===============Graph is ready for PCFR+===============")
         print()
         print("======================================================\n")
 
-    def update_graph(self, env : LiteEFG.Environment) -> None:
+    def update_graph(self, env : leg.Environment) -> None:
         env.update(self.strategy, upd_player=1)
         env.update(self.strategy, upd_player=2)
 
-    def current_strategy(self) -> LiteEFG.GraphNode:
+    def current_strategy(self) -> leg.GraphNode:
         return self.strategy
 
 if __name__ == "__main__":

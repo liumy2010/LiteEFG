@@ -21,3 +21,14 @@ dist/
 *.whl
 *.openspiel
 *.csv
+
+# Generated build, test, and runtime logs
+*.log
+
+# Documentation tooling and generated site
+node_modules/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+
+# Generated artifacts and intermediate results (references live under tests/).
+/artifacts/

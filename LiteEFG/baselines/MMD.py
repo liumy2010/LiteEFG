@@ -5,7 +5,7 @@
 # International Conference on Learning Representations (2023).
 #######################################################
 
-import LiteEFG
+import LiteEFG as leg
 from LiteEFG.baselines.baseline import _baseline
 from typing import Literal
 
@@ -19,22 +19,22 @@ class graph(_baseline):
         self.regularizer = regularizer
         self.feedback = feedback
 
-        with LiteEFG.backward(is_static=True):
+        with leg.backward(is_static=True):
 
             self.alpha = 1.0
             if weighted:
-                self.alpha = LiteEFG.const(1, 1.0)
-                self.alpha.inplace(LiteEFG.aggregate(self.alpha, "sum"))
+                self.alpha = leg.const(1, 1.0)
+                self.alpha.inplace(leg.aggregate(self.alpha, "sum"))
                 self.alpha.inplace((self.alpha.max() + 1) * 2)
 
-            self.ev = LiteEFG.const(1, 0.0)
+            self.ev = leg.const(1, 0.0)
             self.coef = self.tau
             self.mu = self.subtree_size.normalize(p_norm=1.0, ignore_negative=True)
             self.eta_coef = self.eta * self.coef
             
-            self.u = LiteEFG.const(self.action_set_size, 1.0 / self.action_set_size)
+            self.u = leg.const(self.action_set_size, 1.0 / self.action_set_size)
 
-        with LiteEFG.backward():
+        with leg.backward():
 
             if(self.feedback in ["Q", "traj-Q", "counterfactual"]):
                 self.full_information()
@@ -54,16 +54,16 @@ class graph(_baseline):
             self.m_th = self.opponent_reach_prob
         
         self.eta_tau = self.eta_coef + 1
-        gradient = LiteEFG.aggregate(self.ev, "sum") + self.utility
+        gradient = leg.aggregate(self.ev, "sum") + self.utility
 
-        self.ev.inplace(LiteEFG.dot(gradient, self.u))
+        self.ev.inplace(leg.dot(gradient, self.u))
         
         self._update(self.u, self.u, gradient / (self.m_th / self.eta * self.alpha))
     
     def outcome_sampling(self):
         self.m_th = 1.0 / self.reach_prob
         self.eta_tau = self.eta_coef + 1 # 1 + eta * tau / m_th
-        gradient = LiteEFG.aggregate(self.ev, "sum") + self.utility
+        gradient = leg.aggregate(self.ev, "sum") + self.utility
 
         self.ev.inplace(gradient.sum())
 
@@ -79,10 +79,10 @@ class graph(_baseline):
             upd_u.inplace(upd_u.exp())
             upd_u.inplace(upd_u.project(distance="KL", gamma=self.gamma, mu=self.mu))
 
-    def update_graph(self, env : LiteEFG.Environment) -> None:
+    def update_graph(self, env : leg.Environment) -> None:
         env.update(self.u)
 
-    def current_strategy(self) -> LiteEFG.GraphNode:
+    def current_strategy(self) -> leg.GraphNode:
         return self.u
 
 if __name__ == "__main__":
@@ -93,10 +93,10 @@ if __name__ == "__main__":
     parser.add_argument("--iter", type=int, default=100000)
     parser.add_argument("--print_freq", type=int, default=1000)
 
-    parser.add_argument("--eta", help="learning rate", type=float, default=0.1)
-    parser.add_argument("--tau", help="regularization coefficient", type=float, default=0.01)
-    parser.add_argument("--gamma", type=float, default=0.01)
-    parser.add_argument("--regularizer", type=str, choices=["Euclidean", "Entropy"], default="Euclidean")
+    parser.add_argument("--eta", help="learning rate", type=float, default=0.005)
+    parser.add_argument("--tau", help="regularization coefficient", type=float, default=0.05)
+    parser.add_argument("--gamma", type=float, default=0.0)
+    parser.add_argument("--regularizer", type=str, choices=["Euclidean", "Entropy"], default="Entropy")
     parser.add_argument("--feedback", type=str, choices=["Q", "traj-Q", "counterfactual", "Outcome"], default="Q")
     parser.add_argument("--weighted", help="weighted dilated regularizer or not", action="store_true")
 

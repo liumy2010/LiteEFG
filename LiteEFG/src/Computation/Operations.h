@@ -10,7 +10,7 @@ class Operation {
 public:
     bool is_static = false;
     std::string name;
-    Vector tmp, info; // tmp is an auxiliary vector, info (optional) stores the information of the operation
+    Vector tmp, info; // tmp is retained for old checkpoints; execution scratch is thread-local
 
     Operation(const std::string& name_, const bool& is_static_=false) : name{name_}, is_static{is_static_} {}
     virtual void Execute(Vector& result, const std::vector<Vector*>& inputs) = 0;
@@ -159,6 +159,7 @@ public:
         type_num = 5,
     };
     CompareOperation(const int& type_, const bool& is_static_=false);
+    int GetType() const { return type; }
     void Execute(Vector& result, const std::vector<Vector*>& inputs) override;
 };
 
@@ -178,6 +179,8 @@ class RandomUniformOperation : public Operation {
     double lower, upper;
 public:
     RandomUniformOperation(const double& lower_, const double& upper_, const bool& is_static_=false) : Operation("RandomUniform", is_static_), lower{lower_}, upper{upper_} {}
+    double GetLower() const { return lower; }
+    double GetUpper() const { return upper; }
     void Execute(Vector& result, const std::vector<Vector*>& inputs) override;
 };
 
@@ -185,6 +188,8 @@ class RandomNormalOperation : public Operation {
     double mean, stddev;
 public:
     RandomNormalOperation(const double& mean_, const double& stddev_, const bool& is_static_=false) : Operation("RandomNormal", is_static_), mean{mean_}, stddev{stddev_} {}
+    double GetMean() const { return mean; }
+    double GetStddev() const { return stddev; }
     void Execute(Vector& result, const std::vector<Vector*>& inputs) override;
 };
 
@@ -192,6 +197,7 @@ class RandomExponentialOperation : public Operation {
     double lambda;
 public:
     RandomExponentialOperation(const double& lambda_, const bool& is_static_=false) : Operation("RandomExponential", is_static_), lambda{lambda_} {}
+    double GetLambda() const { return lambda; }
     void Execute(Vector& result, const std::vector<Vector*>& inputs) override;
 };
 

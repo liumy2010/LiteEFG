@@ -7,8 +7,6 @@
 #include <string>
 
 class ProjectionOperation : public Operation {
-private:
-    Vector lowerbound;
 public:
     std::string distance_name;
     ProjectionOperation(const std::string &distance_name_, const bool& is_static_=false);

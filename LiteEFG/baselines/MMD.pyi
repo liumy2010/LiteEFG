@@ -1,17 +1,18 @@
-import LiteEFG as LiteEFG
-from LiteEFG.baselines.baseline import _baseline
 from __future__ import annotations
-__all__ = ['LiteEFG', 'graph']
-class graph(LiteEFG.baselines.baseline._baseline):
+import typing
+import LiteEFG as leg
+from LiteEFG.baselines.baseline import _baseline
+__all__ = ['leg', 'graph']
+class graph(leg.baselines.baseline._baseline):
     def __init__(self, eta = 0.005, tau = 0.05, gamma = 0.0, regularizer: typing.Literal['Euclidean', 'Entropy'] = 'Entropy', feedback = 'Q', weighted = False):
         ...
     def _update(self, upd_u, ref_u, gradient):
         ...
-    def current_strategy(self) -> LiteEFG._LiteEFG.GraphNode:
+    def current_strategy(self) -> leg._LiteEFG.GraphNode:
         ...
     def full_information(self):
         ...
     def outcome_sampling(self):
         ...
-    def update_graph(self, env: LiteEFG._LiteEFG.Environment) -> None:
+    def update_graph(self, env: leg._LiteEFG.Environment) -> None:
         ...

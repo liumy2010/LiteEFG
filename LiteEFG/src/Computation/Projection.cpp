@@ -17,6 +17,11 @@ ProjectionOperation::ProjectionOperation(const std::string &distance_name_, cons
 void SparseMax(Vector& strategy, const double& gamma, const Vector& lowerbound){
     int n = strategy.size;
 
+    // Translate the lower-bounded simplex before projecting. A common shift
+    // does not affect the projection, so preserve the uniform-bound arithmetic.
+    for(int i=0; i<n; ++i)
+        strategy[i] -= gamma * (lowerbound[i] - lowerbound[0]);
+
     std::vector<double> aux(n);
     for(int i=0;i<n;i++) aux[i] = strategy[i];
     std::sort(aux.begin(), aux.end());
@@ -85,6 +90,7 @@ void EntropyMax(Vector& strategy, const double& gamma, const Vector& lowerbound)
 }
 
 void ProjectionOperation::Execute(Vector& result, const std::vector<Vector*>& inputs) {
+    thread_local Vector lowerbound;
     /*
         inputs[0] is the vector to be projected
         inputs[1] is a 1*1 vector, the \gamma. Default is 0

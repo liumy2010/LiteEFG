@@ -1,6 +1,6 @@
+from __future__ import annotations
 from LiteEFG import _LiteEFG
 from LiteEFG._LiteEFG import GraphNode
-from __future__ import annotations
 __all__: list = ['uniform', 'normal', 'exponential']
 def _get_binding(name: str):
     ...

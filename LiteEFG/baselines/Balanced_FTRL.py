@@ -5,7 +5,7 @@
 # International Conference on Machine Learning (2023).
 #######################################################
 
-import LiteEFG
+import LiteEFG as leg
 from LiteEFG.baselines.baseline import _baseline
 
 class graph(_baseline):
@@ -16,35 +16,35 @@ class graph(_baseline):
         self.gamma = gamma
         self.initialized = False
 
-        with LiteEFG.backward(is_static=True):
+        with leg.backward(is_static=True):
             self.subtree_action_number = self.action_set_size.copy()
 
-            self.subtree_action_number.inplace(LiteEFG.aggregate(self.subtree_action_number, "sum", object="children", player="self", padding=0))
-            self.strategy = LiteEFG.normalize(self.subtree_action_number + 1, p_norm=1.0)
-            self.parent_subtree_size = LiteEFG.const(1, 0.0)
+            self.subtree_action_number.inplace(leg.aggregate(self.subtree_action_number, "sum", object="children", player="self", padding=0))
+            self.strategy = leg.normalize(self.subtree_action_number + 1, p_norm=1.0)
+            self.parent_subtree_size = leg.const(1, 0.0)
 
             self.subtree_action_number_vector = self.subtree_action_number.copy()
             self.subtree_action_number.inplace(self.subtree_action_number.sum() + self.action_set_size)
             
-        with LiteEFG.forward(is_static=True):
-            self.zero = LiteEFG.const(size=1, val=0.0)
-            self.is_root = LiteEFG.aggregate(self.zero, "sum", object="parent", player="self", padding=1.0)
+        with leg.forward(is_static=True):
+            self.zero = leg.const(size=1, val=0.0)
+            self.is_root = leg.aggregate(self.zero, "sum", object="parent", player="self", padding=1.0)
 
-        with LiteEFG.forward(color=1):
-            expectation = LiteEFG.const(size=1, val=0.0)
-            self.visit_prob = LiteEFG.const(size=1, val=1.0)
-            self.Z = LiteEFG.const(size=1, val=0.0)
+        with leg.forward(color=1):
+            expectation = leg.const(size=1, val=0.0)
+            self.visit_prob = leg.const(size=1, val=1.0)
+            self.Z = leg.const(size=1, val=0.0)
 
-            self.visit_prob.inplace(LiteEFG.aggregate(self.visit_prob, "sum", object="parent", player="self", padding=1.0))
-            self.parent_subtree_size.inplace(LiteEFG.aggregate(self.subtree_action_number_vector, "sum", object="parent", player="self", padding=0) *\
+            self.visit_prob.inplace(leg.aggregate(self.visit_prob, "sum", object="parent", player="self", padding=1.0))
+            self.parent_subtree_size.inplace(leg.aggregate(self.subtree_action_number_vector, "sum", object="parent", player="self", padding=0) *\
                                               (1.0 - self.is_root) + self.parent_subtree_size * self.is_root)
             self.visit_prob.inplace(self.visit_prob / self.parent_subtree_size * self.subtree_action_number)
         
-        with LiteEFG.backward(color=0):
-            gradient = LiteEFG.aggregate(expectation, aggregator="sum") + self.utility / (self.reach_prob * self.strategy + self.gamma / self.visit_prob) * self.eta
+        with leg.backward(color=0):
+            gradient = leg.aggregate(expectation, aggregator="sum") + self.utility / (self.reach_prob * self.strategy + self.gamma / self.visit_prob) * self.eta
 
-            logit_max = LiteEFG.max(gradient)
-            self.Z.inplace(LiteEFG.log(LiteEFG.sum(self.strategy * LiteEFG.exp(gradient - logit_max))) + logit_max) # Z_h^t
+            logit_max = leg.max(gradient)
+            self.Z.inplace(leg.log(leg.sum(self.strategy * leg.exp(gradient - logit_max))) + logit_max) # Z_h^t
             self._update(gradient, self.strategy, self.strategy)
             expectation.inplace(self.Z.copy())
 
@@ -58,7 +58,7 @@ class graph(_baseline):
         upd_u.inplace(upd_u.exp())
         upd_u.inplace(upd_u.project(distance="KL"))
     
-    def update_graph(self, env : LiteEFG.Environment) -> None:
+    def update_graph(self, env : leg.Environment) -> None:
         if not self.initialized:
             self.initialized = True
             for i in range(1, 3):
@@ -79,7 +79,7 @@ class graph(_baseline):
 
         env.update(self.strategy, upd_color=[0])
 
-    def current_strategy(self) -> LiteEFG.GraphNode:
+    def current_strategy(self) -> leg.GraphNode:
         return self.strategy
 
 if __name__ == "__main__":

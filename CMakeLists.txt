@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(pybind11)
+find_package(Threads REQUIRED)
 file(GLOB_RECURSE all_src
      "LiteEFG/src/*.h"
      "LiteEFG/src/*.cpp"
@@ -12,7 +13,8 @@ file(GLOB_RECURSE all_src
 
 message(${all_src})
 pybind11_add_module(_LiteEFG ${all_src})
-target_include_directories(_LiteEFG PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/LiteEFG/src)
+target_link_libraries(_LiteEFG PRIVATE Threads::Threads ${CMAKE_DL_LIBS})
+target_include_directories(_LiteEFG PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/LiteEFG/src ${CMAKE_CURRENT_SOURCE_DIR}/LiteEFG/include)
 target_compile_options(_LiteEFG PRIVATE -O3)
 
 # EXAMPLE_VERSION_INFO is defined by setup.py and passed into the C++ code as a

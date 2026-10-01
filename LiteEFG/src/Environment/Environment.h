@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <map>
+#include <array>
 
 class Environment{
 public:
@@ -29,19 +30,20 @@ public:
 
     Graph graph;
     std::map<int, int> color_mapping;
-    int num_colors;
+    int num_colors = 0;
     std::vector<bool> is_color_to_update;
 
     Environment(const int& player_num_, const std::string& traverse_="Enumerate");
 
     void SetGraph(const Graph& graph_);
+    void ResetParallelSchedule();
 
     virtual void Initialize();
     double GetProb(Node* node, const int& strategy_node_idx, const int& action);
     Vector* GetProb(Node* node, const int& strategy_node_idx);
 
     void AggregateInformation(Infoset& infoset, const bool& is_parent, const int& node_status);
-    void UpdateTraverse(const int& upd_player);
+    void UpdateTraverse(const int& upd_player, const int& current_traverse);
     void Update(const GraphNode& strategy_node, const int& upd_player=-1, std::vector<int> upd_color={-1}, const std::string& traverse_type="default");
     void Update(std::vector<GraphNode> strategy_nodes, const int& upd_player=-1, std::vector<int> upd_color={-1}, const std::string& traverse_type="default");
     
@@ -65,7 +67,28 @@ public:
     void SetValue(const int& player, const GraphNode& node, const std::vector<std::vector<double>>& values);
     void SetValue(const int& player, const GraphNode& node, const std::vector<double>& values);
 
-    ~Environment();
+    virtual ~Environment();
+
+private:
+    struct ParallelInfoset {
+        Infoset* infoset;
+        int depth = 0;
+        std::vector<std::pair<Infoset*, int>> children;
+        std::array<double, 2> work{};
+    };
+    struct ParallelLayer {
+        std::vector<int> infosets;
+        // Separate weighted contiguous partitions for backward and forward.
+        std::array<std::vector<size_t>, 2> boundaries;
+    };
+    std::vector<ParallelInfoset> parallel_infosets;
+    std::vector<ParallelLayer> parallel_layers;
+    std::array<std::vector<int>, 2> parallel_random_nodes;
+    std::array<bool, 2> parallel_safe{{true, true}};
+    int scheduled_threads = 0;
+    void PrepareParallelSchedule();
+    bool UpdateParallel(const int& status, const int& current_traverse);
+    void GatherChildren(ParallelInfoset& entry, int status, bool sampled);
 };
 
 #endif
